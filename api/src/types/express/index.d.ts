@@ -1,13 +1,13 @@
-import { Document, Model } from 'mongoose';
-import { IUser } from '../../interfaces/IUser';
+import { User } from '../../entity/user';
+
 declare global {
   namespace Express {
     export interface Request {
-      currentUser: IUser & Document;
-    }    
+      currentUser: User;
+    }
   }
 
   namespace Models {
-    export type UserModel = Model<IUser & Document>;
+    export type UserModel = User;
   }
 }

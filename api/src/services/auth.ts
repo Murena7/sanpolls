@@ -4,20 +4,25 @@ import MailerService from './mailer';
 import config from '../config';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import { IUser, IUserInputDTO } from '../interfaces/IUser';
+import { IUserInputDTO } from '../interfaces/IUser';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
+import { getRepository, Repository } from 'typeorm';
+import { User } from '../entity/user';
 
 @Service()
 export default class AuthService {
-  constructor(
-      @Inject('userModel') private userModel : Models.UserModel,
-      private mailer: MailerService,
-      @Inject('logger') private logger,
-      @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
-  ) {}
+  userRepository: Repository<User>;
 
-  public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {
+  constructor(
+    private mailer: MailerService,
+    @Inject('logger') private logger,
+    @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
+  ) {
+    this.userRepository = getRepository(User);
+  }
+
+  public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: User; token: string }> {
     try {
       const salt = randomBytes(32);
 
@@ -40,11 +45,15 @@ export default class AuthService {
       this.logger.silly('Hashing password');
       const hashedPassword = await argon2.hash(userInputDTO.password, { salt });
       this.logger.silly('Creating user db record');
-      const userRecord = await this.userModel.create({
-        ...userInputDTO,
-        salt: salt.toString('hex'),
-        password: hashedPassword,
-      });
+
+      const userRecord = await this.userRepository
+        .create({
+          ...userInputDTO,
+          salt: salt.toString('hex'),
+          password: hashedPassword,
+        })
+        .save();
+
       this.logger.silly('Generating JWT');
       const token = this.generateToken(userRecord);
 
@@ -62,7 +71,7 @@ export default class AuthService {
        * that transforms data from layer to layer
        * but that's too over-engineering for now
        */
-      const user = userRecord.toObject();
+      const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
       return { user, token };
@@ -72,8 +81,8 @@ export default class AuthService {
     }
   }
 
-  public async SignIn(email: string, password: string): Promise<{ user: IUser; token: string }> {
-    const userRecord = await this.userModel.findOne({ email });
+  public async SignIn(email: string, password: string): Promise<{ user: User; token: string }> {
+    const userRecord = await this.userRepository.findOne({ email });
     if (!userRecord) {
       throw new Error('User not registered');
     }
@@ -87,7 +96,7 @@ export default class AuthService {
       this.logger.silly('Generating JWT');
       const token = this.generateToken(userRecord);
 
-      const user = userRecord.toObject();
+      const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
       /**
@@ -99,7 +108,7 @@ export default class AuthService {
     }
   }
 
-  private generateToken(user) {
+  private generateToken(user: User) {
     const today = new Date();
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);
@@ -113,12 +122,12 @@ export default class AuthService {
      * because it doesn't have _the secret_ to sign it
      * more information here: https://softwareontheroad.com/you-dont-need-passport
      */
-    this.logger.silly(`Sign JWT for userId: ${user._id}`);
+    this.logger.silly(`Sign JWT for userId: ${user.id}`);
     return jwt.sign(
       {
-        _id: user._id, // We are gonna use this in the middleware 'isAuth'
+        _id: user.id, // We are gonna use this in the middleware 'isAuth'
         role: user.role,
-        name: user.name,
+        name: user.username,
         exp: exp.getTime() / 1000,
       },
       config.jwtSecret,
