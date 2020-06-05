@@ -19,8 +19,8 @@ export default {
   /**
    * That long string from mlab
    */
-  databaseURL: process.env.MONGODB_URI,
-
+  databaseURL: process.env.POSTGRES_URI,
+  redisURL: process.env.REDIS_URI,
   /**
    * Your secret sauce
    */
@@ -45,7 +45,7 @@ export default {
   /**
    * Agendash config
    */
-  agendash: {
+  bullBoard: {
     user: 'agendash',
     password: '123456',
   },

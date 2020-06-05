@@ -6,6 +6,8 @@ import express from 'express';
 
 import Logger from './loaders/logger';
 
+import 'reflect-metadata';
+
 async function startServer() {
   const app = express();
 
@@ -17,7 +19,7 @@ async function startServer() {
    **/
   await require('./loaders').default({ expressApp: app });
 
-  app.listen(config.port, err => {
+  app.listen(config.port, (err) => {
     if (err) {
       Logger.error(err);
       process.exit(1);
@@ -25,7 +27,7 @@ async function startServer() {
     }
     Logger.info(`
       ################################################
-      🛡️  Server listening on port: ${config.port} 🛡️ 
+      🛡️  Server listening on port: ${config.port} 🛡️
       ################################################
     `);
   });
