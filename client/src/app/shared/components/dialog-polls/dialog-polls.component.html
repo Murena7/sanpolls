@@ -1,0 +1,17 @@
+<div class="container">
+  <small>Имя пользователя: {{ data.name }}</small>
+  <h1 mat-dialog-title>Отдать голос за: {{ data.song }}</h1>
+  <div mat-dialog-content>
+    <span class="minus"> – </span>
+    <mat-form-field>
+      <mat-label>Колличество голосов:</mat-label>
+      <input matInput placeholder="1" value="1" />
+    </mat-form-field>
+    <span class="plus"> + </span>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close="false">Отмена</button>
+    <button mat-raised-button color="accent" mat-dialog-close="true">Проголосовать</button>
+  </div>
+</div>

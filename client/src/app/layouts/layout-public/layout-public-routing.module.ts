@@ -12,6 +12,8 @@ const routes: Routes = [
       { path: 'about', loadChildren: () => import('@pages/about/about.module').then((m) => m.AboutModule) },
       { path: 'contacts', loadChildren: () => import('@pages/contacts/contacts.module').then((m) => m.ContactsModule) },
       { path: 'login', loadChildren: () => import('@pages/login/login.module').then((m) => m.LoginModule) },
+      { path: 'poll/:id', loadChildren: () => import('@pages/poll/poll.module').then((m) => m.PollModule) },
+      { path: 'profile', loadChildren: () => import('@pages/profile/profile.module').then((m) => m.ProfileModule) },
     ],
   },
 ];

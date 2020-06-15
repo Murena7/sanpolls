@@ -10,8 +10,6 @@ export class HomeComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getPolls().subscribe((res) => {
-      console.log(res);
-    });
+    this.apiService.getPolls();
   }
 }
