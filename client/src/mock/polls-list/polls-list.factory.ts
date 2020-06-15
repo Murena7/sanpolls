@@ -8,6 +8,7 @@ export class PollsListFactory implements Factory<IPoll> {
   generate(faker: Faker.FakerStatic, id: number): IPoll {
     return {
       id,
+      uuid: faker.random.uuid(),
       author: faker.name.lastName(),
       name: faker.name.jobTitle(),
       votesCount: faker.random.number({ min: 100, max: 2000 }),
