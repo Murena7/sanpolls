@@ -1,0 +1,35 @@
+<ngx-datatable
+  [style.height.vh]="60"
+  class="material custom-table"
+  [rows]="rowsData"
+  [columnMode]="'flex'"
+  [headerHeight]="40"
+  [scrollbarV]="false"
+  [footerHeight]="35"
+  [rowHeight]="50"
+  [sorts]="[{ prop: 'votesCount', dir: 'desc' }]"
+>
+  <ngx-datatable-column name="Место" prop="text" [flexGrow]="1">
+    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+      <span class="word-item">{{ rowIndex + 1 }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span class="word-item">{{ row.author }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Песня (Автор)" prop="contextText" [flexGrow]="3">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span class="word-item">{{ row.name }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span class="word-item">{{ row.votesCount }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

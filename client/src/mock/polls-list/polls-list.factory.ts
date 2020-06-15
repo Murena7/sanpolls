@@ -3,7 +3,7 @@ import { IPoll } from '@core/polls/polls.types';
 
 export class PollsListFactory implements Factory<IPoll> {
   db = 'polls';
-  count = 10;
+  count = 100;
 
   generate(faker: Faker.FakerStatic, id: number): IPoll {
     return {

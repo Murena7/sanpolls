@@ -1,0 +1,27 @@
+<div class="add-song">
+  <h3 class="add-song-voices">Мои голоса: 10</h3>
+  <form class="add-song-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Добавить свою песню:</h2>
+    <mat-form-field class="add-song-form-full-width">
+      <mat-label>Кто должен исполнить песню</mat-label>
+      <input matInput placeholder="Путин" value="" formControlName="author" />
+    </mat-form-field>
+
+    <mat-form-field class="add-song-form-full-width">
+      <mat-label>Песня (Автор)</mat-label>
+      <input matInput placeholder="Rammstein - Mutter" value="" formControlName="song" />
+    </mat-form-field>
+
+    <mat-form-field class="add-song-form-full-width">
+      <mat-label>Комментарий</mat-label>
+      <textarea matInput placeholder="Тут должен быть комментарий ..." formControlName="comment"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="add-song-form-full-width" appearance="fill">
+      <mat-label>Отдать свой голос за новую песню</mat-label>
+      <input matInput placeholder="1" value="1" formControlName="votes" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Добавить</button>
+  </form>
+</div>

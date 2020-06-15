@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 300px;
+  min-width: 350px;
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+mat-form-field {
+  text-align: center;
+}
+
+.minus,
+.plus {
+  margin: 0 2rem;
+  font-size: 24px;
+}

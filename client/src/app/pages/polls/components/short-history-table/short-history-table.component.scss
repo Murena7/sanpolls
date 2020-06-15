@@ -1,0 +1,28 @@
+.polls-short-history {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 370px;
+  border: 1px solid #0000001f;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+button {
+  height: 75px;
+  max-width: 90px;
+}
+
+.short-history-list {
+  text-align: left;
+  max-width: 288px;
+}
+
+.history-list-title {
+  font-weight: bold;
+  text-align: center;
+}

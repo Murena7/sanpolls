@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.right {
+  flex: 1;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  background-color: #3f51b51f;
+  max-width: 450px;
+  min-width: 400px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: normal;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.polls-results-block,
+.add-song-block {
+  margin: 15px auto;
+}

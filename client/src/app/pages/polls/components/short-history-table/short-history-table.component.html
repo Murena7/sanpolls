@@ -1,0 +1,9 @@
+<div class="polls-short-history">
+  <div class="short-history-list">
+    <h3 class="history-list-title">Результаты предыдущих голосований</h3>
+    <ol>
+      <li *ngFor="let h of historyData">{{ h.title }}</li>
+    </ol>
+  </div>
+  <button mat-raised-button color="primary">История</button>
+</div>
