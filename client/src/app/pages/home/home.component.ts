@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '@core/services/api.service';
+import { PollsService } from '@core/services/polls.service';
 
 @Component({
   selector: 'san-home',
@@ -7,7 +7,7 @@ import { ApiService } from '@core/services/api.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: PollsService) {}
 
   ngOnInit(): void {
     this.apiService.getPolls();

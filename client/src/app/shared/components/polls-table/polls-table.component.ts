@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { ApiService } from '@core/services/api.service';
+import { PollsService } from '@core/services/polls.service';
 import { IPoll } from '@core/polls/polls.types';
 
 @Component({
@@ -16,7 +16,7 @@ export class PollsTableComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(private apiService: ApiService, private el: ElementRef) {}
+  constructor(private apiService: PollsService, private el: ElementRef) {}
 
   ngOnInit() {
     this.onScroll(0);

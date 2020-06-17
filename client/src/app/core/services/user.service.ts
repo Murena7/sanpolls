@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@environment';
-import { Observable } from 'rxjs';
 
-const apiUrl = environment.UI_SERVER;
+import { environment } from '@environment';
+import { User } from '../user/user.models';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class UserService {
   constructor(private http: HttpClient) {}
 
-  getPolls(): Observable<any> {
-    return this.http.get<any>(`${apiUrl}/polls`);
+  getUser(): Observable<User> {
+    return this.http.get<User>(`${environment.UI_SERVER}/auth/user`);
   }
 }

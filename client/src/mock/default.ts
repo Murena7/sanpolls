@@ -2,11 +2,13 @@ import Scenario from './proto/scenario';
 import { PollsListFactory } from './polls-list/polls-list.factory';
 import PollsRoutes from './polls-list/polls-list.routes';
 import PollRoutes from './poll/poll.routes';
+import { UserFactory } from './user/user.factory';
+import AuthRoutes from './auth/auth.routes';
 
 export default class DefaultScenario extends Scenario {
   run() {
-    this.createList([PollsListFactory]);
+    this.createList([PollsListFactory, UserFactory]);
 
-    this.loadRoutes([PollsRoutes, PollRoutes]);
+    this.loadRoutes([PollsRoutes, PollRoutes, AuthRoutes]);
   }
 }
