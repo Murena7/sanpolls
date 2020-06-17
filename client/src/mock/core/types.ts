@@ -1,8 +1,10 @@
 import { Database, DatabaseSchema, Response, Router } from 'kakapo';
 import { IPoll } from '@core/polls/polls.types';
+import { User } from '@core/user/user.models';
 
 export interface DbSchema extends DatabaseSchema {
   polls: IPoll;
+  users: User;
 }
 
 export type UIRouter = Router<DbSchema>;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IPoll } from '@core/polls/polls.types';
-import { ApiService } from '@core/services/api.service';
+import { PollsService } from '@core/services/polls.service';
 
 @Component({
   selector: 'san-polls-short-table',
@@ -9,7 +9,7 @@ import { ApiService } from '@core/services/api.service';
 })
 export class PollsShortTableComponent implements OnInit {
   rowsData: IPoll[] = [];
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: PollsService) {}
 
   ngOnInit(): void {
     this.apiService.getPolls().subscribe((res) => {
