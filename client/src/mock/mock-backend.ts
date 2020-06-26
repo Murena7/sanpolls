@@ -21,7 +21,7 @@ class MockBackend {
   constructor() {
     const uiRouter = new Router<DbSchema>({
       host: environment.UI_SERVER,
-      requestDelay: 0,
+      requestDelay: 300,
       logging: requestsLogging,
     });
     const db = new Database<DbSchema>();

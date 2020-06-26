@@ -14,7 +14,7 @@ export default class PollRoutes {
     const returnData = db.all('polls').find((x) => x.data.uuid === _request.params.id);
 
     return {
-      data: returnData ? returnData : {},
+      data: returnData ? returnData.data : {},
     };
   }
 }

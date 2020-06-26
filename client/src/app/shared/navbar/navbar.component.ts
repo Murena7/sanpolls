@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@core/auth/auth.service';
+import { User } from '@core/user/user.models';
+import { UserStatus } from '@core/user/user.types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'san-navbar',
@@ -6,7 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+  userData: User;
+  userStatus = UserStatus;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe((user) => {
+      this.userData = user;
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }

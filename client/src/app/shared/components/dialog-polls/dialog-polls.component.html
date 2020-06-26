@@ -2,12 +2,16 @@
   <small>Имя пользователя: {{ data.name }}</small>
   <h1 mat-dialog-title>Отдать голос за: {{ data.song }}</h1>
   <div mat-dialog-content>
-    <span class="minus"> – </span>
+    <span class="material-icons minus">
+      keyboard_arrow_left
+    </span>
     <mat-form-field>
       <mat-label>Колличество голосов:</mat-label>
       <input matInput placeholder="1" value="1" />
     </mat-form-field>
-    <span class="plus"> + </span>
+    <span class="material-icons plus">
+      keyboard_arrow_right
+    </span>
   </div>
 
   <div mat-dialog-actions>

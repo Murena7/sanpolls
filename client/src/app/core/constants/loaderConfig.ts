@@ -1,0 +1,25 @@
+import { NgxUiLoaderConfig } from 'ngx-ui-loader';
+
+export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  blur: 5,
+  delay: 0,
+  fastFadeOut: true,
+  fgsColor: '#3f51b5',
+  fgsPosition: 'center-center',
+  fgsSize: 60,
+  fgsType: 'rectangle-bounce-party',
+  gap: 24,
+  logoPosition: 'center-center',
+  logoSize: 120,
+  logoUrl: '',
+  masterLoaderId: 'master',
+  overlayBorderRadius: '0',
+  overlayColor: 'rgba(63,81,181,0.15)',
+  pbColor: '#e9467e',
+  pbDirection: 'ltr',
+  pbThickness: 3,
+  hasProgressBar: true,
+  text: 'SANSAN',
+  textColor: '#3f51b5',
+  textPosition: 'center-center',
+};

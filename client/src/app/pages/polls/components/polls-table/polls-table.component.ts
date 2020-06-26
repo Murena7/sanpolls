@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PollsService } from '@core/services/polls.service';
 import { IPoll } from '@core/polls/polls.types';
 
@@ -8,22 +8,18 @@ import { IPoll } from '@core/polls/polls.types';
   styleUrls: ['./polls-table.component.scss'],
 })
 export class PollsTableComponent implements OnInit {
-  rows: IPoll[] = [];
+  @Input() rows: IPoll[] = [];
+  @Input() isLoading = false;
+  @Output() pagination = new EventEmitter<number>();
 
   readonly headerHeight = 50;
   readonly rowHeight = 50;
   readonly pageLimit = 60;
 
-  isLoading: boolean;
-
-  constructor(private apiService: PollsService, private el: ElementRef) {}
+  constructor(private el: ElementRef) {}
 
   ngOnInit() {
     this.onScroll(0);
-
-    this.apiService.getPolls().subscribe((res) => {
-      this.rows = res.data;
-    });
   }
 
   onScroll(offsetY: number) {
@@ -44,20 +40,7 @@ export class PollsTableComponent implements OnInit {
         // (otherwise, we won't be able to scroll past it)
         limit = Math.max(pageSize, this.pageLimit);
       }
-      this.loadPage(limit);
+      this.pagination.emit(limit);
     }
-  }
-
-  private loadPage(limit: number) {
-    // set the loading flag, which serves two purposes:
-    // 1) it prevents the same page from being loaded twice
-    // 2) it enables display of the loading indicator
-    this.isLoading = true;
-
-    this.apiService.getPolls().subscribe((res) => {
-      const rows = [...this.rows, ...res.data];
-      this.rows = rows;
-      this.isLoading = false;
-    });
   }
 }

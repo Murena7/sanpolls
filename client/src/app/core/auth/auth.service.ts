@@ -15,10 +15,10 @@ export class AuthService {
   JWTHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {
-    // this.currentUserSubject = new BehaviorSubject<User>(
-    //   this.decodeUser(JSON.parse(localStorage.getItem('currentUser')))
-    // );
-    this.currentUserSubject = new BehaviorSubject<User>(null);
+    this.currentUserSubject = new BehaviorSubject<User>(
+      this.decodeUser(JSON.parse(localStorage.getItem('currentUser')))
+    );
+    // this.currentUserSubject = new BehaviorSubject<User>(null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -26,21 +26,19 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.http
-      .post<any>(`${environment.UI_SERVER}/auth/login`, { username, password })
-      .pipe(
-        map((user) => {
-          // login successful if there's a jwt token in the response
-          if (user && user.accessToken) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(this.decodeUser(user));
-          }
+  login(userData) {
+    return this.http.post<any>(`${environment.UI_SERVER}/auth/login`, userData).pipe(
+      map((user) => {
+        // login successful if there's a jwt token in the response
+        if (user && user.accessToken) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(this.decodeUser(user));
+        }
 
-          return user;
-        })
-      );
+        return user;
+      })
+    );
   }
 
   logout() {
