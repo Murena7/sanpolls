@@ -1,1 +1,13 @@
-<p>profile works!</p>
+<mat-drawer-container class="profile-container">
+  <mat-drawer mode="side" opened>
+    <mat-button-toggle-group class="profile-nav">
+      <mat-button-toggle class="button-toggle" routerLink="/profile">Профиль</mat-button-toggle>
+      <mat-button-toggle class="button-toggle" routerLink="history">Моя история</mat-button-toggle>
+      <mat-button-toggle class="button-toggle" routerLink="polls-history">История голосований</mat-button-toggle>
+      <mat-button-toggle class="button-toggle" routerLink="password">Изменить пароль</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

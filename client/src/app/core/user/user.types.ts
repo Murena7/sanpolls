@@ -3,7 +3,7 @@ import { User } from '@core/user/user.models';
 export enum UserStatus {
   Active = 'active',
   Inactive = 'inactive',
-  Archived = 'archived',
+  // Archived = 'archived',
 }
 
 export interface UserResponse {

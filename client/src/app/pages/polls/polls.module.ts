@@ -9,6 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddSongComponent } from './components/add-song/add-song.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
+import { PollsTableModule } from '@pages/polls/components/polls-table/polls-table.module';
 
 @NgModule({
   declarations: [PollsComponent, ShortHistoryTableComponent, AddSongComponent],
@@ -20,6 +21,7 @@ import { MaterialModule } from '@shared/material/material.module';
     SharedModule,
     ReactiveFormsModule,
     MaterialModule,
+    PollsTableModule,
   ],
 })
 export class PollsModule {}

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.component';
+import { switchMap, tap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IPoll } from '@core/polls/polls.types';
+import { PollsService } from '@core/services/polls.service';
 
 @Component({
   selector: 'san-poll',
@@ -8,9 +13,17 @@ import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.comp
   styleUrls: ['./poll.component.scss'],
 })
 export class PollComponent implements OnInit {
-  constructor(private dialog: MatDialog) {}
+  poll$: Observable<IPoll>;
 
-  ngOnInit(): void {}
+  constructor(private dialog: MatDialog, private pollService: PollsService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.poll$ = this.route.params.pipe(
+      switchMap((params) => {
+        return this.pollService.getPollById(params.id);
+      })
+    );
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogPollsComponent, {

@@ -6,6 +6,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -18,6 +23,11 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatInputModule,
     MatFormFieldModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MatButtonModule,
@@ -27,6 +37,11 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatInputModule,
     MatFormFieldModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatButtonToggleModule,
   ],
 })
 export class MaterialModule {}

@@ -1,0 +1,30 @@
+.login-card {
+  margin-top: 100px;
+  max-width: 400px;
+  min-height: 300px;
+  padding: 25px;
+}
+
+.full-width {
+  width: 100%;
+}
+.stretched-tabs {
+  max-width: 800px;
+  height: 100%;
+}
+
+.mat-card-content {
+  overflow: hidden;
+}
+
+.form-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.forgot-password-link {
+  display: flex;
+  align-self: start;
+  cursor: pointer;
+  margin-top: 15px;
+}

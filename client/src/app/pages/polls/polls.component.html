@@ -2,7 +2,11 @@
   <div class="countdown">
     <san-countdown></san-countdown>
   </div>
-  <san-polls-table></san-polls-table>
+  <san-polls-table
+    [rows]="pollsTableData"
+    [isLoading]="pollsTableLoader"
+    (pagination)="pollsTablePagination($event)"
+  ></san-polls-table>
 </div>
 <mat-divider [vertical]="true"></mat-divider>
 <div class="right">

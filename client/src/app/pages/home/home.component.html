@@ -6,7 +6,7 @@
     <san-countdown></san-countdown>
   </div>
   <div class="short-table" routerLink="/polls">
-    <san-polls-short-table></san-polls-short-table>
+    <san-polls-short-table [rowsData]="polls"></san-polls-short-table>
   </div>
   <button mat-raised-button color="accent" routerLink="/polls">Показать больше!</button>
 </div>

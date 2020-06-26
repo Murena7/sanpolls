@@ -1,1 +1,73 @@
-<h3>Login page works!</h3>
+<mat-card class="login-card">
+  <mat-tab-group class="stretched-tabs">
+    <mat-tab class="mat-tab" label="Войти">
+      <mat-card-content class="mat-card-content">
+        <form class="login-form" [formGroup]="formLog" (ngSubmit)="submitLogin()">
+          <mat-form-field class="full-width form-field">
+            <input matInput placeholder="Email" type="email" id="email" required formControlName="email" />
+            <mat-error *ngIf="formLog.get('email').touched && formLog.get('email').invalid" class="validation">
+              <p *ngIf="formLog.get('email').errors.required">Введите email</p>
+              <p *ngIf="formLog.get('email').errors.email">Неправильный формат email</p>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width form-field">
+            <input matInput placeholder="Пароль" type="password" id="password" required formControlName="password" />
+            <mat-error *ngIf="formLog.get('password').touched && formLog.get('password').invalid" class="validation">
+              <p *ngIf="formLog.get('password').errors.required">Введите пароль</p>
+              <p *ngIf="formLog.get('password').errors.minlength">
+                Колличество символов должно быть не менее {{ formLog.get('password').errors.minlength.requiredLength }}.
+                Вы ввели {{ formLog.get('password').errors.minlength.actualLength }}
+              </p>
+            </mat-error>
+          </mat-form-field>
+          <span class="forgot-password-link">
+            <small routerLink="/forgotpassword">Не можете войти?</small>
+          </span>
+
+          <mat-card-actions>
+            <button mat-raised-button type="submit" color="primary" [disabled]="formLog.invalid || submitted">
+              Войти
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+    <mat-tab class="mat-tab" label="Регистрация">
+      <mat-card-content>
+        <form class="login-form" [formGroup]="formReg" (ngSubmit)="submitRegister()">
+          <mat-form-field class="full-width form-field">
+            <input matInput placeholder="Email" type="email" id="regEmail" required formControlName="email" />
+            <mat-error *ngIf="formReg.get('email').touched && formReg.get('email').invalid" class="validation">
+              <p *ngIf="formReg.get('email').errors.required">Введите email</p>
+              <p *ngIf="formReg.get('email').errors.email">Неправильный формат email</p>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width form-field">
+            <input matInput placeholder="Пароль" type="password" id="regPassword" required formControlName="password" />
+            <mat-error *ngIf="formReg.get('password').touched && formReg.get('password').invalid" class="validation">
+              <p *ngIf="formReg.get('password').errors.required">Введите пароль</p>
+              <p *ngIf="formReg.get('password').errors.minlength">
+                Колличество символов должно быть не менее {{ formReg.get('password').errors.minlength.requiredLength }}.
+                Вы ввели {{ formReg.get('password').errors.minlength.actualLength }}
+              </p>
+            </mat-error>
+          </mat-form-field>
+          <mat-checkbox formControlName="checkbox" class="checkbox-field">
+            <small>* Я соглашаюсь с правилами использования сервиса.</small>
+          </mat-checkbox>
+          <mat-card-actions>
+            <button
+              class="registration-button"
+              mat-raised-button
+              type="submit"
+              color="primary"
+              [disabled]="formReg.invalid || submitted"
+            >
+              Зарегистрироваться
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

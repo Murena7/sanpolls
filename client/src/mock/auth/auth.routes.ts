@@ -61,7 +61,7 @@ export default class AuthRoutes {
 
   private generateToken(user): Promise<string> {
     return new Promise((resolve, reject) => {
-      JWTSign({ foo: 'bar' }, 'secret', 'HS256', (err, token) => {
+      JWTSign(user.data, 'secret', 'HS256', (err, token) => {
         resolve(token);
       });
     });

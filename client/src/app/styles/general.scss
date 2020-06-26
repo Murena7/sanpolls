@@ -10,3 +10,17 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.mat-tab-header {
+  margin-bottom: 25px;
+}
+
+.profile-container {
+  & .mat-tab-labels {
+    flex-direction: column;
+  }
+
+  & .mat-tab-body-content {
+    width: 800px;
+  }
+}

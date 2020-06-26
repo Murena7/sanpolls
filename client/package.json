@@ -26,6 +26,7 @@
     "kakapo": "git+https://github.com/alltouch/Kakapo.js.git#974a84e1b9dc27cf8fb08da8bb6ca8238b3164d4",
     "moment-timezone": "^0.5.31",
     "ngx-countdown": "^9.0.1",
+    "ngx-ui-loader": "^9.1.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "webcrypto-jwt": "^0.2.2",
