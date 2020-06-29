@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environment';
 import { User } from '../user/user.models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpService } from '@core/common-services/http.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpService) {}
 
   getUser(): Observable<User> {
     return this.http.get<any>(`${environment.UI_SERVER}/auth/user`).pipe(map((data) => data.data));

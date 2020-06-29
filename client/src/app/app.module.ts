@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,10 +10,9 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { SharedModule } from '@shared/shared.module';
 import { LayoutsModule } from '@layouts/layouts.module';
-import { JwtInterceptor } from '@core/helpers/jwt.interceptor';
-import { ErrorInterceptor } from '@core/helpers/error.interceptor';
-import { InitAppService } from '@core/services/init-app.service';
+import { InitAppService } from '@core/common-services/init-app.service';
 import { ngxUiLoaderConfig } from '@core/constants/loaderConfig';
+import { CoreModule } from '@core/core.module';
 
 export function appInit(initService: InitAppService) {
   return () => initService.initUser();
@@ -24,6 +23,7 @@ export function appInit(initService: InitAppService) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    CoreModule,
     LayoutsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -31,8 +31,6 @@ export function appInit(initService: InitAppService) {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
       useFactory: appInit,

@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PollsService } from '@core/services/polls.service';
 import { IPoll } from '@core/polls/polls.types';
 
 @Component({

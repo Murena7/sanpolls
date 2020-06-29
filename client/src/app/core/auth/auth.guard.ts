@@ -9,12 +9,6 @@ export class AuthGuard implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser) {
-      if (currentUser.status !== 'active') {
-        // status not active so redirect to home page
-        this.router.navigate(['/']);
-        return false;
-      }
-
       // check if route is restricted by role
       if (route.data.roles && route.data.roles.find(this.checkRole)) {
         // role not authorised so redirect to home page

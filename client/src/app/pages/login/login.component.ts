@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';
-import { UserService } from '@core/services/user.service';
+import { UserService } from '@core/api-services/user.service';
 import { User } from '@core/user/user.models';
 import { UserRole } from '@core/user/role.models';
 import { UserStatus } from '@core/user/user.types';
+import { AuthApiService } from '@core/api-services/auth-api.service';
 
 @Component({
   selector: 'san-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   formReg: FormGroup;
   submitted = false;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
+  constructor(private authApiService: AuthApiService, private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.formLog = new FormGroup({
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       password: this.formLog.value.password,
     };
 
-    this.authService.login(user).subscribe(
+    this.authApiService.login(user).subscribe(
       (res) => {
         this.formLog.reset();
         this.router.navigate(['/profile']);
