@@ -5,7 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IPoll } from '@core/polls/polls.types';
-import { PollsService } from '@core/services/polls.service';
+import { PollsService } from '@core/api-services/polls.service';
 
 @Component({
   selector: 'san-poll',

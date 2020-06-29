@@ -9,8 +9,8 @@
   </nav>
 
   <nav>
-    <span *ngIf="userData && userData.status === userStatus.Active" mat-button>Мои голоса: 1</span>
-    <button *ngIf="userData && userData.status === userStatus.Active" mat-button [matMenuTriggerFor]="afterMenu">
+    <span *ngIf="userData" mat-button>Мои голоса: 1</span>
+    <button *ngIf="userData" mat-button [matMenuTriggerFor]="afterMenu">
       <i class="material-icons md-light">face </i> Мой профиль
     </button>
     <mat-menu #afterMenu="matMenu">
@@ -20,8 +20,6 @@
       <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>
       <button mat-menu-item (click)="logout()">Выйти</button>
     </mat-menu>
-    <a *ngIf="!userData || (userData && userData.status === userStatus.Inactive)" mat-button routerLink="/login"
-      >Авторизация</a
-    >
+    <a *ngIf="!userData" mat-button routerLink="/login">Авторизация</a>
   </nav>
 </nav>

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CountdownComponent implements OnInit {
   timeLeft = {
-    leftTime: 604800,
+    leftTime: 60480,
   };
 
   constructor() {}

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PollsService } from '@core/services/polls.service';
+import { PollsService } from '@core/api-services/polls.service';
 import { IPoll } from '@core/polls/polls.types';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'san-polls',
@@ -12,13 +11,11 @@ export class PollsComponent implements OnInit {
   pollsTableData: IPoll[] = [];
   pollsTableLoader = false;
 
-  constructor(private apiService: PollsService, private ngxLoader: NgxUiLoaderService) {}
+  constructor(private apiService: PollsService) {}
 
   ngOnInit(): void {
-    this.ngxLoader.start();
     this.apiService.getPolls().subscribe((res) => {
       this.pollsTableData = res;
-      this.ngxLoader.stop();
     });
   }
 
