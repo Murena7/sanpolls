@@ -12,7 +12,7 @@ export class AuthService {
   JWTHelper = new JwtHelperService();
 
   constructor() {
-    this.currentUserSubject = new BehaviorSubject<User>(this.decodeUser(JSON.parse(localStorage.getItem('token'))));
+    this.currentUserSubject = new BehaviorSubject<User>(this.decodeUser(localStorage.getItem('token')));
     // this.currentUserSubject = new BehaviorSubject<User>(null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
