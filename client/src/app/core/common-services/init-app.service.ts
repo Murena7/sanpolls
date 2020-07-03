@@ -12,7 +12,7 @@ export class InitAppService {
   constructor(private authService: AuthService, private userService: UserService) {}
 
   public initUser(): Promise<any> {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('isAuthorized')) {
       return this.userService
         .getUser()
         .pipe(

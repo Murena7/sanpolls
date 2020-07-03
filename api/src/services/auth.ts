@@ -1,5 +1,4 @@
 import { Service, Inject } from 'typedi';
-import jwt from 'jsonwebtoken';
 import MailerService from './mailer';
 import config from '../config';
 import argon2 from 'argon2';
@@ -15,14 +14,14 @@ export default class AuthService {
   userRepository: Repository<User>;
 
   constructor(
-    private mailer: MailerService,
+    // private mailer: MailerService,
     @Inject('logger') private logger,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {
     this.userRepository = getRepository(User);
   }
 
-  public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: User; token: string }> {
+  public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: User }> {
     try {
       const salt = randomBytes(32);
 
@@ -42,26 +41,29 @@ export default class AuthService {
        * watches every API call and if it spots a 'password' and 'email' property then
        * it decides to steal them!? Would you even notice that? I wouldn't :/
        */
+      const userExist = await this.userRepository.findOne({ email: userInputDTO.email });
+      if (userExist) {
+        throw new Error('This email already used');
+      }
+
       this.logger.silly('Hashing password');
       const hashedPassword = await argon2.hash(userInputDTO.password, { salt });
       this.logger.silly('Creating user db record');
 
       const userRecord = await this.userRepository
         .create({
-          ...userInputDTO,
+          email: userInputDTO.email,
           salt: salt.toString('hex'),
           password: hashedPassword,
+          role: 'user',
         })
         .save();
-
-      this.logger.silly('Generating JWT');
-      const token = this.generateToken(userRecord);
 
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
       this.logger.silly('Sending welcome email');
-      await this.mailer.SendWelcomeEmail(userRecord);
+      // await this.mailer.SendWelcomeEmail(userRecord);
 
       this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
 
@@ -74,17 +76,17 @@ export default class AuthService {
       const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
-      return { user, token };
+      return { user };
     } catch (e) {
       this.logger.error(e);
       throw e;
     }
   }
 
-  public async SignIn(email: string, password: string): Promise<{ user: User; token: string }> {
+  public async SignIn(email: string, password: string, cb: Function) {
     const userRecord = await this.userRepository.findOne({ email });
     if (!userRecord) {
-      throw new Error('User not registered');
+      return cb(null, false);
     }
     /**
      * We use verify from argon2 to prevent 'timing based' attacks
@@ -93,44 +95,15 @@ export default class AuthService {
     const validPassword = await argon2.verify(userRecord.password, password);
     if (validPassword) {
       this.logger.silly('Password is valid!');
-      this.logger.silly('Generating JWT');
-      const token = this.generateToken(userRecord);
-
       const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
       /**
        * Easy as pie, you don't need passport.js anymore :)
        */
-      return { user, token };
+      return cb(null, user);
     } else {
-      throw new Error('Invalid Password');
+      return cb(null, false);
     }
-  }
-
-  private generateToken(user: User) {
-    const today = new Date();
-    const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    /**
-     * A JWT means JSON Web Token, so basically it's a json that is _hashed_ into a string
-     * The cool thing is that you can add custom properties a.k.a metadata
-     * Here we are adding the userId, role and name
-     * Beware that the metadata is public and can be decoded without _the secret_
-     * but the client cannot craft a JWT to fake a userId
-     * because it doesn't have _the secret_ to sign it
-     * more information here: https://softwareontheroad.com/you-dont-need-passport
-     */
-    this.logger.silly(`Sign JWT for userId: ${user.id}`);
-    return jwt.sign(
-      {
-        _id: user.id, // We are gonna use this in the middleware 'isAuth'
-        role: user.role,
-        name: user.username,
-        exp: exp.getTime() / 1000,
-      },
-      config.jwtSecret,
-    );
   }
 }

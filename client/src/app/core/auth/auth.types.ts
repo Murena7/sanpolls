@@ -1,3 +1,5 @@
+import { User } from '@core/user/user.models';
+
 export interface ILoginResponse {
-  accessToken: string;
+  data: User;
 }
