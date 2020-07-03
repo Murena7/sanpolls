@@ -13,13 +13,11 @@ export class UserFactory implements Factory<User> {
       id,
       email: `test${id}@test.com`,
       username: faker.name.firstName(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
       role: UserRole.Admin,
       password: `test-${id}`,
       status: faker.random.arrayElement(Object.values(UserStatus)),
-      timeCreatedAt: now().toISOString(),
-      timeUpdatedAt: now().toISOString(),
+      createdAt: now().toISOString(),
+      updatedAt: now().toISOString(),
     };
   }
 }

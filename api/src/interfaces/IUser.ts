@@ -9,7 +9,11 @@
 // }
 
 export interface IUserInputDTO {
-  username: string;
   email: string;
   password: string;
+}
+
+export enum UserStatus {
+  Active = 'active',
+  Inactive = 'inactive',
 }

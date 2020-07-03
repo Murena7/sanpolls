@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { User } from '@core/user/user.models';
-import { ILoginResponse } from '@core/auth/auth.types';
+import { removeAllCookies } from '../../../mock/core/cookie.helper';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  JWTHelper = new JwtHelperService();
 
   constructor() {
-    this.currentUserSubject = new BehaviorSubject<User>(this.decodeUser(localStorage.getItem('token')));
-    // this.currentUserSubject = new BehaviorSubject<User>(null);
+    // this.currentUserSubject = new BehaviorSubject<User>(this.decodeUser(localStorage.getItem('token')));
+    this.currentUserSubject = new BehaviorSubject<User>(null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -25,21 +23,10 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
-  public setUserFromJWT(token: string) {
-    this.currentUserSubject.next(this.decodeUser(token));
-  }
-
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('token');
+    localStorage.removeItem('isAuthorized');
+    removeAllCookies();
     this.currentUserSubject.next(null);
-  }
-
-  private decodeUser(accessToken: string): User {
-    try {
-      return accessToken ? { ...this.JWTHelper.decodeToken(accessToken), accessToken } : null;
-    } catch (e) {
-      return null;
-    }
   }
 }

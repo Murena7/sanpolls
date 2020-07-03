@@ -2,7 +2,7 @@ import { Request } from 'kakapo';
 import { MyDatabase, MyOptions, ErrorResponse } from '../core/types';
 import { environment } from '@environment';
 import { ILoginResponse } from '@core/auth/auth.types';
-import { signJWT as JWTSign } from 'webcrypto-jwt';
+import { deleteCookie, setCookie } from '../core/cookie.helper';
 
 export default class AuthRoutes {
   constructor({ uiRouter }: MyOptions) {
@@ -22,9 +22,18 @@ export default class AuthRoutes {
       password: body.password,
     });
 
+    if (user) {
+      deleteCookie('connect.sid');
+      deleteCookie('user.id');
+      setCookie('connect.sid', 's%3ATW_zAy3vwzv36d0Z45hUTjnaFOB8DlvT.gUeaXPfqSPFH9GyRzG2oXea82jGxmEUKAQtRRwHQAXI', {
+        'max-age': 3600,
+      });
+      setCookie('user.id', user.data.id, { 'max-age': 3600 });
+    }
+
     return user
       ? {
-          accessToken: await this.generateToken(user),
+          data: user.data,
         }
       : new ErrorResponse('Credentials are invalid');
   }
@@ -57,13 +66,5 @@ export default class AuthRoutes {
       : new ErrorResponse(
           'This email address is not associated with an account. Please try again with a different email.'
         );
-  }
-
-  private generateToken(user): Promise<string> {
-    return new Promise((resolve, reject) => {
-      JWTSign(user.data, 'secret', 'HS256', (err, token) => {
-        resolve(token);
-      });
-    });
   }
 }

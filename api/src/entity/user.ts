@@ -10,15 +10,15 @@ import {
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import { UserStatus } from '../interfaces/IUser';
 
 @Entity()
-@Unique(['username'])
+@Unique(['email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  @Length(4, 20)
+  @Column({ default: null, nullable: true })
   username: string;
 
   @Column()
@@ -37,6 +37,14 @@ export class User extends BaseEntity {
   @IsNotEmpty()
   salt: string;
 
+  @Column({
+    type: 'enum',
+    enum: UserStatus,
+    default: UserStatus.Active,
+  })
+  @IsNotEmpty()
+  status: UserStatus;
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;
@@ -45,7 +53,7 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column({ default: null, nullable: true })
   lastLogin: Date;
 
   async hashPassword() {

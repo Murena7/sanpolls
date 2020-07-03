@@ -3,7 +3,14 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../config';
-export default ({ app }: { app: express.Application }) => {
+import helmet from 'helmet';
+import { Redis } from 'ioredis';
+import SessionInit from './session';
+import PassportInit from './passport';
+import cookieParser from 'cookie-parser';
+export default ({ app, redisConnection }: { app: express.Application; redisConnection: Redis }) => {
+  app.use(helmet());
+
   /**
    * Health Check endpoints
    * @TODO Explain why they are here
@@ -29,8 +36,16 @@ export default ({ app }: { app: express.Application }) => {
   // Maybe not needed anymore ?
   app.use(require('method-override')());
 
+  app.use(cookieParser());
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser.json());
+
+  // Init Session
+  SessionInit({ app, redisConnection });
+
+  // Init PassportJS
+  PassportInit({ app, redisConnection });
+
   // Load API routes
   app.use(config.api.prefix, routes());
 
@@ -47,10 +62,7 @@ export default ({ app }: { app: express.Application }) => {
      * Handle 401 thrown by express-jwt library
      */
     if (err.name === 'UnauthorizedError') {
-      return res
-        .status(err.status)
-        .send({ message: err.message })
-        .end();
+      return res.status(err.status).send({ message: err.message }).end();
     }
     return next(err);
   });

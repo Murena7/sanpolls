@@ -5,6 +5,7 @@ import { IUserInputDTO } from '../../interfaces/IUser';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import { Logger } from 'winston';
+import passport from 'passport';
 
 const route = Router();
 
@@ -12,10 +13,9 @@ export default (app: Router) => {
   app.use('/auth', route);
 
   route.post(
-    '/signup',
+    '/sign-up',
     celebrate({
       body: Joi.object({
-        name: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required(),
       }),
@@ -25,8 +25,8 @@ export default (app: Router) => {
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
       try {
         const authServiceInstance = Container.get(AuthService);
-        const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
-        return res.status(201).json({ user, token });
+        const { user } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
+        return res.status(201).json({ status: 'Success' });
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);
@@ -35,21 +35,20 @@ export default (app: Router) => {
   );
 
   route.post(
-    '/signin',
+    '/login',
     celebrate({
       body: Joi.object({
         email: Joi.string().required(),
         password: Joi.string().required(),
       }),
     }),
+    passport.authenticate('local', { failWithError: true }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get('logger');
-      logger.debug('Calling Sign-In endpoint with body: %o', req.body);
+      logger.debug('Calling login endpoint with body: %o', req.body);
       try {
-        const { email, password } = req.body;
-        const authServiceInstance = Container.get(AuthService);
-        const { user, token } = await authServiceInstance.SignIn(email, password);
-        return res.json({ user, token }).status(200);
+        const user = req.user;
+        return res.json({ data: user }).status(200);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);
@@ -66,11 +65,14 @@ export default (app: Router) => {
    * emitted for the session and add it to a black list.
    * It's really annoying to develop that but if you had to, please use Redis as your data store
    */
-  route.post('/logout', middlewares.isAuth, (req: Request, res: Response, next: NextFunction) => {
+  route.post('/logout', middlewares.checkAuth(), (req: Request, res: Response, next: NextFunction) => {
     const logger: Logger = Container.get('logger');
     logger.debug('Calling Sign-Out endpoint with body: %o', req.body);
     try {
       //@TODO AuthService.Logout(req.user) do some clever stuff
+      //PassportJS Logout
+      req.logout();
+
       return res.status(200).end();
     } catch (e) {
       logger.error('🔥 error %o', e);

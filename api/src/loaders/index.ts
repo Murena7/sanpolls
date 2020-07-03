@@ -28,6 +28,6 @@ export default async ({ expressApp }) => {
   });
   Logger.info('✌️ Dependency Injector loaded');
 
-  await expressLoader({ app: expressApp });
+  await expressLoader({ app: expressApp, redisConnection });
   Logger.info('✌️ Express loaded');
 };

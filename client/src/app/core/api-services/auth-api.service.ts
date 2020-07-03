@@ -12,17 +12,21 @@ export class AuthApiService {
   constructor(private http: HttpService, private authService: AuthService) {}
 
   login(userData) {
-    return this.http.post<any>(`${environment.UI_SERVER}/auth/login`, userData).pipe(
-      map((user: User) => {
-        // login successful if there's a jwt token in the response
-        if (user && user.accessToken) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('token', user.accessToken);
-          this.authService.setUser(user);
-        }
+    return this.http
+      .skipErrorHandler()
+      .post<any>(`${environment.UI_SERVER}/auth/login`, userData)
+      .pipe(
+        map((data) => data.data),
+        map((user: User) => {
+          // login successful if there's a jwt token in the response
+          if (user) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('isAuthorized', '1');
+            this.authService.setUser(user);
+          }
 
-        return user;
-      })
-    );
+          return user;
+        })
+      );
   }
 }

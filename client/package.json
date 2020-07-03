@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,7 +21,6 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
-    "@auth0/angular-jwt": "^4.2.0",
     "@swimlane/ngx-datatable": "^17.0.0",
     "kakapo": "git+https://github.com/alltouch/Kakapo.js.git#974a84e1b9dc27cf8fb08da8bb6ca8238b3164d4",
     "moment-timezone": "^0.5.31",
@@ -29,7 +28,6 @@
     "ngx-ui-loader": "^9.1.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "webcrypto-jwt": "^0.2.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

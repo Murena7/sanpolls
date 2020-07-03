@@ -10,8 +10,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ErrorInterceptor } from '@core/interceptors/error.interceptor';
-import { JwtInterceptor } from '@core/interceptors/jwt.interceptor';
 import { LoaderInterceptor } from '@core/interceptors/loader.interceptor';
+import { WithCredentialsInterceptor } from '@core/interceptors/withCredentials.interceptor';
 
 // From @angular/common-services/http/src/interceptors: allows to chain interceptors
 class HttpInterceptorHandler implements HttpHandler {
@@ -50,7 +50,7 @@ export class HttpService extends HttpClient {
       // Configure default interceptors that can be disabled here
       this.interceptors = [
         this.injector.get(ErrorInterceptor),
-        this.injector.get(JwtInterceptor),
+        this.injector.get(WithCredentialsInterceptor),
         this.injector.get(LoaderInterceptor),
       ];
     }
@@ -60,12 +60,12 @@ export class HttpService extends HttpClient {
     return this.removeInterceptor(ErrorInterceptor);
   }
 
-  disableTokenInterceptor(): HttpClient {
-    return this.removeInterceptor(JwtInterceptor);
-  }
-
   disableLoaderInterceptor(): HttpClient {
     return this.removeInterceptor(LoaderInterceptor);
+  }
+
+  disableWithCredentialInterceptor(): HttpClient {
+    return this.removeInterceptor(WithCredentialsInterceptor);
   }
 
   // Override the original method to wire interceptors when triggering the request.
