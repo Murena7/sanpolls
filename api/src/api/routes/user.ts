@@ -3,13 +3,12 @@ import middlewares from '../middlewares';
 const route = Router();
 
 export default (app: Router) => {
-  app.use('/users', route);
+  app.use('/user', route);
 
   route.get('/me', middlewares.checkAuth(), (req: Request, res: Response) => {
-    return res.json({ user: req.currentUser }).status(200);
-  });
-
-  route.get('/test', middlewares.checkAuth(['admin']), (req: Request, res: Response) => {
-    return res.json({ user: 'ok' }).status(200);
+    const user = { ...req.user };
+    Reflect.deleteProperty(user, 'password');
+    Reflect.deleteProperty(user, 'salt');
+    return res.json({ data: user }).status(200);
   });
 };

@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { UserStatus } from '../../interfaces/IUser';
+import { UserStatus } from '../../interfaces/user';
 
 const checkAuth = (roles?: string[]) => {
   return (req, res: Response, next) => {

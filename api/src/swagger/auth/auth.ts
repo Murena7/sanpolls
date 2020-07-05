@@ -24,7 +24,7 @@ export const signUp = {
     },
   },
   responses: {
-    '200': {
+    '201': {
       description: 'User create operation status',
       content: {
         'application/json': {
@@ -89,13 +89,14 @@ export const login = {
         'application/json': {
           example: {
             data: {
-              id: 4,
+              id: 1,
               username: null,
               email: 'test1@test.com',
               role: 'user',
+              voiceBalance: 0,
               status: 'active',
-              createdAt: '2020-07-02T18:20:17.858Z',
-              updatedAt: '2020-07-02T18:20:17.858Z',
+              createdAt: '2020-07-05T13:25:54.860Z',
+              updatedAt: '2020-07-05T13:25:54.860Z',
               lastLogin: null,
             },
           },

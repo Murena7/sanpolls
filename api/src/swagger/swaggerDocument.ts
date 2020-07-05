@@ -1,5 +1,6 @@
-import { getPets } from './user/user';
 import { login, logout, signUp } from './auth/auth';
+import { getMe } from './user/user';
+import { getActivePoll } from './poll/poll';
 
 export const swaggerDocument = {
   openapi: '3.0.1',
@@ -25,6 +26,7 @@ export const swaggerDocument = {
     },
   ],
   paths: {
+    //// AUTH Routes
     '/auth/sign-up': {
       post: signUp,
     },
@@ -33,6 +35,14 @@ export const swaggerDocument = {
     },
     '/auth/logout': {
       post: logout,
+    },
+    //// USER Routes
+    '/user/me': {
+      get: getMe,
+    },
+    //// POLL Routes
+    '/poll/active': {
+      get: getActivePoll,
     },
   },
 };

@@ -7,16 +7,16 @@ import {
   UpdateDateColumn,
   BaseEntity,
 } from 'typeorm';
-import { Length, IsNotEmpty, IsEmail } from 'class-validator';
+import { Length, IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import { UserStatus } from '../interfaces/IUser';
+import { UserStatus } from '../interfaces/user';
 
 @Entity()
 @Unique(['email'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ default: null, nullable: true })
   username: string;
@@ -32,6 +32,10 @@ export class User extends BaseEntity {
   @Column()
   @IsNotEmpty()
   role: string;
+
+  @Column({ default: 0 })
+  @IsNumber()
+  voiceBalance: number;
 
   @Column()
   @IsNotEmpty()
