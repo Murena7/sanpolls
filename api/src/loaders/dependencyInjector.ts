@@ -5,7 +5,7 @@ import mailgun from 'mailgun-js';
 
 export default ({ bullJobs }: { bullJobs: { name: string; job: any }[] }) => {
   try {
-    bullJobs.forEach((m) => {
+    bullJobs.forEach(m => {
       Container.set(m.name, m.job);
     });
 
