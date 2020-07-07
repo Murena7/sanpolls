@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { LikeDislike } from './like-dislike';
+import moment from 'moment';
 
 @Entity()
 export class Song extends BaseEntity {
@@ -7,10 +9,12 @@ export class Song extends BaseEntity {
   id: string;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   userId: string;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   eventId: string;
 
@@ -29,11 +33,11 @@ export class Song extends BaseEntity {
   @IsNumber()
   voiceCount: number;
 
-  @Column('int', { array: true })
-  likes: string[];
+  like: number;
 
-  @Column('int', { array: true })
-  dislike: string[];
+  dislike: number;
+
+  selfLike?: LikeDislike;
 
   @Column({ default: '' })
   @IsNotEmpty()
@@ -41,13 +45,25 @@ export class Song extends BaseEntity {
   additionalTextInfo: string;
 
   @Column({ default: null, nullable: true })
+  @IsString()
   youtubeVideoId: string;
 
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ type: 'timestamp' })
+  createdAt: string;
 
-  @Column()
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ type: 'timestamp' })
+  updatedAt: string;
+
+  @BeforeInsert()
+  public beforeInsert() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.createdAt = timeNowUTC;
+    this.updatedAt = timeNowUTC;
+  }
+
+  @BeforeUpdate()
+  public beforeUpdate() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.updatedAt = timeNowUTC;
+  }
 }

@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
-import { IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { IsNotEmpty, IsEmail, IsNumber, IsString, IsEnum } from 'class-validator';
 import { TransactionSource } from '../interfaces/poll-transaction';
+import moment from 'moment';
 
 @Entity()
 export class PollTransaction extends BaseEntity {
@@ -8,18 +9,22 @@ export class PollTransaction extends BaseEntity {
   id: string;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   userId: string;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   eventId: string;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   songId: string;
 
   @Column()
+  @IsNumber()
   @IsNotEmpty()
   amount: number;
 
@@ -27,14 +32,26 @@ export class PollTransaction extends BaseEntity {
     type: 'enum',
     enum: TransactionSource,
   })
+  @IsEnum(TransactionSource)
   @IsNotEmpty()
   source: TransactionSource;
 
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ type: 'timestamp' })
+  createdAt: string;
 
-  @Column()
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ type: 'timestamp' })
+  updatedAt: string;
+
+  @BeforeInsert()
+  public beforeInsert() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.createdAt = timeNowUTC;
+    this.updatedAt = timeNowUTC;
+  }
+
+  @BeforeUpdate()
+  public beforeUpdate() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.updatedAt = timeNowUTC;
+  }
 }

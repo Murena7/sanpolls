@@ -1,16 +1,9 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  Unique,
-  CreateDateColumn,
-  UpdateDateColumn,
-  BaseEntity,
-} from 'typeorm';
-import { Length, IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Length, IsNotEmpty, IsEmail, IsNumber, IsString, IsEnum } from 'class-validator';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import { UserStatus } from '../interfaces/user';
+import { Role, UserStatus } from '../interfaces/user';
+import moment from 'moment';
 
 @Entity()
 @Unique(['email'])
@@ -18,26 +11,35 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ default: null, nullable: true })
+  @Column({ nullable: true })
+  @IsString()
   username: string;
 
   @Column()
   @Length(4, 100)
+  @IsString()
   password: string;
 
   @Column()
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.User,
+  })
+  @IsEnum(Role)
   @IsNotEmpty()
-  role: string;
+  role: Role;
 
   @Column({ default: 0 })
+  @IsNotEmpty()
   @IsNumber()
   voiceBalance: number;
 
   @Column()
+  @IsString()
   @IsNotEmpty()
   salt: string;
 
@@ -46,19 +48,31 @@ export class User extends BaseEntity {
     enum: UserStatus,
     default: UserStatus.Active,
   })
+  @IsEnum(UserStatus)
   @IsNotEmpty()
   status: UserStatus;
 
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updatedAt: Date;
-
   @Column({ default: null, nullable: true })
   lastLogin: Date;
+
+  @Column({ type: 'timestamp' })
+  createdAt: string;
+
+  @Column({ type: 'timestamp' })
+  updatedAt: string;
+
+  @BeforeInsert()
+  public beforeInsert() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.createdAt = timeNowUTC;
+    this.updatedAt = timeNowUTC;
+  }
+
+  @BeforeUpdate()
+  public beforeUpdate() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.updatedAt = timeNowUTC;
+  }
 
   async hashPassword() {
     const salt = randomBytes(32);

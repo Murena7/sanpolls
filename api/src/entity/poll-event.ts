@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
-import { IsNotEmpty, IsEmail, IsNumber, IsString, IsDate } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { EventStatus, EventType } from '../interfaces/poll-event';
+import { Expose, Transform, Type } from 'class-transformer';
+import moment from 'moment';
 
 @Entity()
 export class PollEvent extends BaseEntity {
@@ -8,34 +9,33 @@ export class PollEvent extends BaseEntity {
   id: string;
 
   @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Expose()
   name: string;
 
   @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Expose()
   message: string;
 
   @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Expose()
   endMessage: string;
 
-  @Column()
-  @IsDate()
-  startDate: Date;
+  @Column({ type: 'timestamp' })
+  @Expose()
+  @Transform(value => new Date(value).toISOString())
+  startDate: string;
 
-  @Column()
-  @IsDate()
-  endDate: Date;
+  @Column({ type: 'timestamp' })
+  @Expose()
+  @Transform(value => new Date(value).toISOString())
+  endDate: string;
 
   @Column({
     type: 'enum',
     enum: EventStatus,
     default: EventStatus.Inactive,
   })
-  @IsNotEmpty()
+  @Expose()
   status: EventStatus;
 
   @Column({
@@ -43,14 +43,25 @@ export class PollEvent extends BaseEntity {
     enum: EventType,
     default: EventType.Infinite,
   })
-  @IsNotEmpty()
+  @Expose()
   type: EventType;
 
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ type: 'timestamp' })
+  createdAt: string;
 
-  @Column()
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ type: 'timestamp' })
+  updatedAt: string;
+
+  @BeforeInsert()
+  public beforeInsert() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.createdAt = timeNowUTC;
+    this.updatedAt = timeNowUTC;
+  }
+
+  @BeforeUpdate()
+  public beforeUpdate() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.updatedAt = timeNowUTC;
+  }
 }

@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { IsNotEmpty, IsEmail, IsNumber, IsString } from 'class-validator';
+import { LikeDislike } from './like-dislike';
+import moment from 'moment';
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -23,20 +25,31 @@ export class Comment extends BaseEntity {
   @IsString()
   text: string;
 
-  @Column('simple-array')
-  likes: string[];
+  like: number;
 
-  @Column('simple-array')
-  dislike: string[];
+  dislike: number;
+
+  selfLike?: LikeDislike;
 
   @Column({ default: 0 })
   replyCount: number;
 
-  @Column()
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ type: 'timestamp' })
+  createdAt: string;
 
-  @Column()
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ type: 'timestamp' })
+  updatedAt: string;
+
+  @BeforeInsert()
+  public beforeInsert() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.createdAt = timeNowUTC;
+    this.updatedAt = timeNowUTC;
+  }
+
+  @BeforeUpdate()
+  public beforeUpdate() {
+    const timeNowUTC = moment.utc().toISOString();
+    this.updatedAt = timeNowUTC;
+  }
 }

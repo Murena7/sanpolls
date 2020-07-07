@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import middlewares from '../middlewares';
+import { IBasicResponse } from '../../interfaces/response-types';
 const route = Router();
 
 export default (app: Router) => {
@@ -9,6 +10,7 @@ export default (app: Router) => {
     const user = { ...req.user };
     Reflect.deleteProperty(user, 'password');
     Reflect.deleteProperty(user, 'salt');
-    return res.json({ data: user }).status(200);
+    const apiResponse: IBasicResponse = { data: user };
+    return res.json(apiResponse).status(200);
   });
 };

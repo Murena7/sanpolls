@@ -3,7 +3,9 @@ import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDi
 import { getRepository, Repository } from 'typeorm';
 import { PollEvent } from '../entity/poll-event';
 import { Song } from '../entity/song';
-import { EventStatus } from '../interfaces/poll-event';
+import { EventStatus, ICreatePollBody, IGetPollListBody } from '../interfaces/poll-event';
+import { IBasicResponse } from '../interfaces/response-types';
+import { plainToClass } from 'class-transformer';
 
 @Service()
 export default class PollService {
@@ -15,21 +17,39 @@ export default class PollService {
     this.songRepository = getRepository(Song);
   }
 
-  public async activePoll({ skipCount, takeCount }): Promise<any> {
+  public async ratingList(body: IGetPollListBody): Promise<IBasicResponse> {
     try {
-      const take = takeCount || 50;
-      const skip = skipCount || 0;
+      const take: number = +body.take || 50;
+      const skip: number = +body.skip || 0;
+      let id: string = body.id;
 
-      const activeEvent = await this.pollEventRepository.findOneOrFail({ status: EventStatus.Active });
+      if (!id) {
+        const activeEvent = await this.pollEventRepository.findOneOrFail({ status: EventStatus.Active });
+        id = activeEvent.id;
+      }
 
       const [result, total] = await this.songRepository.findAndCount({
-        where: { eventId: activeEvent.id },
+        where: { eventId: id },
         order: { voiceCount: 'DESC' },
         take: take,
         skip: skip,
       });
 
       return { data: result, count: total };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async createPoll(body: ICreatePollBody): Promise<IBasicResponse> {
+    try {
+      const newPollEventInstance = this.pollEventRepository.create(
+        plainToClass(PollEvent, body, { excludeExtraneousValues: true }),
+      );
+      const data = await newPollEventInstance.save();
+
+      return { data: data };
     } catch (e) {
       this.logger.error(e);
       throw e;

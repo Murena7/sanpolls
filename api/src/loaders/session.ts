@@ -15,7 +15,7 @@ export default ({ app, redisConnection }: { app: express.Application; redisConne
       rolling: true,
       saveUninitialized: false,
       cookie: {
-        maxAge: 10 * 60 * 1000,
+        maxAge: 4 * 60 * 60 * 1000, // 4 hours
         httpOnly: true,
         secure: false,
       },

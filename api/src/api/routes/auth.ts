@@ -6,6 +6,7 @@ import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import { Logger } from 'winston';
 import passport from 'passport';
+import { IBasicResponse } from '../../interfaces/response-types';
 
 const route = Router();
 
@@ -26,7 +27,8 @@ export default (app: Router) => {
       try {
         const authServiceInstance = Container.get(AuthService);
         const { user } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
-        return res.status(201).json({ status: 'Success' });
+        const apiResponse: IBasicResponse = { status: 'Success' };
+        return res.status(201).json(apiResponse);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);
@@ -48,7 +50,8 @@ export default (app: Router) => {
       logger.debug('Calling login endpoint with body: %o', req.body);
       try {
         const user = req.user;
-        return res.json({ data: user }).status(200);
+        const apiResponse: IBasicResponse = { data: user };
+        return res.json(apiResponse).status(200);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);
@@ -72,8 +75,8 @@ export default (app: Router) => {
       //@TODO AuthService.Logout(req.user) do some clever stuff
       //PassportJS Logout
       req.logout();
-
-      return res.status(200).end();
+      const apiResponse: IBasicResponse = { status: 'Success' };
+      return res.status(200).json(apiResponse);
     } catch (e) {
       logger.error('🔥 error %o', e);
       return next(e);

@@ -3,7 +3,7 @@ import MailerService from './mailer';
 import config from '../config';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import { IUserInputDTO } from '../interfaces/user';
+import { IUserInputDTO, Role } from '../interfaces/user';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
 import { getRepository, Repository } from 'typeorm';
@@ -55,7 +55,7 @@ export default class AuthService {
           email: userInputDTO.email,
           salt: salt.toString('hex'),
           password: hashedPassword,
-          role: 'user',
+          role: Role.User,
         })
         .save();
 
