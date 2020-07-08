@@ -18,11 +18,15 @@ export class Song extends BaseEntity {
 
   @Column({ type: 'varchar' })
   @Expose()
+  songSinger: string;
+
+  @Column({ type: 'varchar' })
+  @Expose()
   songName: string;
 
   @Column({ type: 'varchar' })
   @Expose()
-  singer: string;
+  coverSinger: string;
 
   @Column({ type: 'int', default: 0 })
   @Expose()

@@ -39,8 +39,9 @@ export const addSongTransaction = async (body: IAddSongBody, currentUser: User) 
     const newSongData = {
       userId: user.id,
       eventId: body.eventId,
+      songSinger: body.songSinger,
       songName: body.songName,
-      singer: body.singer,
+      coverSinger: body.coverSinger,
       voiceCount: body.voiceCount,
       additionalTextInfo: body.additionalTextInfo,
       youtubeVideoId: body.youtubeVideoId,

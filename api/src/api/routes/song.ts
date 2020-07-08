@@ -42,10 +42,13 @@ export default (app: Router) => {
         eventId: Joi.string()
           .uuid()
           .required(),
+        songSinger: Joi.string()
+          .max(300)
+          .required(),
         songName: Joi.string()
           .max(300)
           .required(),
-        singer: Joi.string()
+        coverSinger: Joi.string()
           .max(300)
           .required(),
         voiceCount: Joi.number()

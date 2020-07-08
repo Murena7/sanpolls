@@ -1,7 +1,8 @@
 export interface IAddSongBody {
   eventId: string;
+  songSinger: string;
   songName: string;
-  singer: string;
+  coverSinger: string;
   voiceCount: number;
   additionalTextInfo: string;
   youtubeVideoId: string;
