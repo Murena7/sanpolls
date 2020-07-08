@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  UI_SERVER: 'http://sanpolls.upserver.co/api'
 };
