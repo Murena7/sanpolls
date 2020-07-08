@@ -1,0 +1,15 @@
+image: docker
+
+services:
+  - docker:dind
+
+stages:
+  - production
+
+production:
+  stage: production
+  only:
+    - master
+  script:
+    - sudo docker-compose -f ./docker/docker-compose-prod.yml up -d --build
+  when: manual

@@ -1,10 +1,12 @@
+import config from './src/config';
+
 module.exports = {
   type: 'postgres',
-  host: 'localhost',
+  host: config.postgresqlHost,
   port: 5432,
-  username: 'admin',
-  password: 'password123',
-  database: 'sansan',
+  username: config.postgresqlUser,
+  password: config.postgresqlPass,
+  database: config.postgresqlDB,
   synchronize: true,
   logging: false,
   maxQueryExecutionTime: 1000,

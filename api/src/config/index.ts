@@ -17,6 +17,13 @@ export default {
   port: parseInt(process.env.PORT, 10),
 
   /**
+   * PosgreSQL
+   */
+  postgresqlUser: process.env.PGSQL_USER,
+  postgresqlPass: process.env.PGSQL_PASS,
+  postgresqlDB: process.env.PGSQL_DB,
+  postgresqlHost: process.env.PGSQL_PGSQL_HOST,
+  /**
    * That long string from mlab
    */
   databaseURL: process.env.POSTGRES_URI,
@@ -24,7 +31,6 @@ export default {
   /**
    * Your secret sauce
    */
-  jwtSecret: process.env.JWT_SECRET,
   sessionSecret: process.env.SESSION_SECRET,
   /**
    * Used by winston logger
