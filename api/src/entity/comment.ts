@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { IsNotEmpty, IsEmail, IsNumber, IsString } from 'class-validator';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
 
@@ -8,21 +7,16 @@ export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
   userId: string;
 
-  @Column()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
   eventId: string;
 
-  @Column()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
   songId: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Column({ type: 'varchar' })
   text: string;
 
   like: number;
@@ -31,7 +25,7 @@ export class Comment extends BaseEntity {
 
   selfLike?: LikeDislike;
 
-  @Column({ default: 0 })
+  @Column({ type: 'int', default: 0 })
   replyCount: number;
 
   @Column({ type: 'timestamp' })

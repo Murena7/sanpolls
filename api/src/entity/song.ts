@@ -1,36 +1,31 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class Song extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  @Expose()
   userId: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  @Expose()
   eventId: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Column({ type: 'varchar' })
+  @Expose()
   songName: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Column({ type: 'varchar' })
+  @Expose()
   singer: string;
 
-  @Column({ default: 0 })
-  @IsNotEmpty()
-  @IsNumber()
+  @Column({ type: 'int', default: 0 })
+  @Expose()
   voiceCount: number;
 
   like: number;
@@ -39,13 +34,12 @@ export class Song extends BaseEntity {
 
   selfLike?: LikeDislike;
 
-  @Column({ default: '' })
-  @IsNotEmpty()
-  @IsString()
+  @Column({ type: 'varchar', default: '' })
+  @Expose()
   additionalTextInfo: string;
 
-  @Column({ default: null, nullable: true })
-  @IsString()
+  @Column({ type: 'varchar', default: null, nullable: true })
+  @Expose()
   youtubeVideoId: string;
 
   @Column({ type: 'timestamp' })

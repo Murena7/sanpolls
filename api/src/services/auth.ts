@@ -3,7 +3,7 @@ import MailerService from './mailer';
 import config from '../config';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
-import { IUserInputDTO, Role } from '../interfaces/user';
+import { IUserSignUpBody, Role } from '../interfaces/user';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
 import { getRepository, Repository } from 'typeorm';
@@ -21,7 +21,7 @@ export default class AuthService {
     this.userRepository = getRepository(User);
   }
 
-  public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: User }> {
+  public async SignUp(userInputDTO: IUserSignUpBody): Promise<{ user: User }> {
     try {
       const salt = randomBytes(32);
 
@@ -88,9 +88,7 @@ export default class AuthService {
     if (!userRecord) {
       return cb(null, false);
     }
-    /**
-     * We use verify from argon2 to prevent 'timing based' attacks
-     */
+
     this.logger.silly('Checking password');
     const validPassword = await argon2.verify(userRecord.password, password);
     if (validPassword) {
@@ -98,9 +96,11 @@ export default class AuthService {
       const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
-      /**
-       * Easy as pie, you don't need passport.js anymore :)
-       */
+
+      if (user.emailConfirmed === false) {
+        return cb(new Error("Email didn't confirm"));
+      }
+
       return cb(null, user);
     } else {
       return cb(null, false);

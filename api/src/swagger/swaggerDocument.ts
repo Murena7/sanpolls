@@ -1,6 +1,9 @@
 import { login, logout, signUp } from './auth/auth';
 import { getMe } from './user/user';
-import { getActivePoll } from './poll/poll';
+import { getActivePoll, getRatingList } from './poll/poll';
+import { postAddVoice, postPollCreate, postUserToAdmin } from './admin/admin';
+import { getSongById, postAddSong } from './song/song';
+import { postGiveVote } from './vote/vote';
 
 export const swaggerDocument = {
   openapi: '3.0.1',
@@ -20,11 +23,23 @@ export const swaggerDocument = {
     },
   },
   servers: [{ url: '/api' }],
-  tags: [
-    {
-      name: 'Auth',
-    },
-  ],
+  // components: {
+  //   securitySchemes: {
+  //     cookieAuth: {
+  //       type: 'apiKey',
+  //       in: 'cookie',
+  //       name: 'JSESSIONID',
+  //       flows: {
+  //         authorizationCode: {
+  //           scopes: {
+  //             admin: 'Grants access to admin operations',
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
+  // security: [{ cookieAuth: ['admin'] }],
   paths: {
     //// AUTH Routes
     '/auth/sign-up': {
@@ -43,6 +58,30 @@ export const swaggerDocument = {
     //// POLL Routes
     '/poll/active': {
       get: getActivePoll,
+    },
+    '/poll/rating-list': {
+      get: getRatingList,
+    },
+    ///// ADMIN
+    '/admin/user/user-to-admin': {
+      post: postUserToAdmin,
+    },
+    '/admin/user/add-voice': {
+      post: postAddVoice,
+    },
+    '/admin/poll/create': {
+      post: postPollCreate,
+    },
+    ///// SONG
+    '/song/by-id/{id}': {
+      get: getSongById,
+    },
+    '/song/add': {
+      post: postAddSong,
+    },
+    ///// VOTE
+    '/vote/give': {
+      post: postGiveVote,
     },
   },
 };

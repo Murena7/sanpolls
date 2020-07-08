@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { Length, IsNotEmpty, IsEmail, IsNumber, IsString, IsEnum } from 'class-validator';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { Role, UserStatus } from '../interfaces/user';
@@ -11,17 +10,13 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
-  @IsString()
+  @Column({ type: 'varchar', nullable: true })
   username: string;
 
-  @Column()
-  @Length(4, 100)
-  @IsString()
+  @Column({ type: 'varchar' })
   password: string;
 
-  @Column()
-  @IsEmail()
+  @Column({ type: 'varchar' })
   email: string;
 
   @Column({
@@ -29,18 +24,12 @@ export class User extends BaseEntity {
     enum: Role,
     default: Role.User,
   })
-  @IsEnum(Role)
-  @IsNotEmpty()
   role: Role;
 
-  @Column({ default: 0 })
-  @IsNotEmpty()
-  @IsNumber()
+  @Column({ type: 'int', default: 0 })
   voiceBalance: number;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'varchar' })
   salt: string;
 
   @Column({
@@ -48,11 +37,12 @@ export class User extends BaseEntity {
     enum: UserStatus,
     default: UserStatus.Active,
   })
-  @IsEnum(UserStatus)
-  @IsNotEmpty()
   status: UserStatus;
 
-  @Column({ default: null, nullable: true })
+  @Column({ type: 'boolean', default: true })
+  emailConfirmed: boolean;
+
+  @Column({ type: 'timestamp', default: null, nullable: true })
   lastLogin: Date;
 
   @Column({ type: 'timestamp' })

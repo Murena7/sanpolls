@@ -1,12 +1,12 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import AuthService from '../../services/auth';
-import { IUserInputDTO } from '../../interfaces/user';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import { Logger } from 'winston';
 import passport from 'passport';
 import { IBasicResponse } from '../../interfaces/response-types';
+import { ResponseStatusMessage } from '../../interfaces/response';
 
 const route = Router();
 
@@ -17,8 +17,12 @@ export default (app: Router) => {
     '/sign-up',
     celebrate({
       body: Joi.object({
-        email: Joi.string().required(),
-        password: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+        password: Joi.string()
+          .max(150)
+          .required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -26,8 +30,11 @@ export default (app: Router) => {
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
       try {
         const authServiceInstance = Container.get(AuthService);
-        const { user } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
-        const apiResponse: IBasicResponse = { status: 'Success' };
+
+        await authServiceInstance.SignUp(req.body);
+
+        const apiResponse: IBasicResponse = { status: ResponseStatusMessage.Success };
+
         return res.status(201).json(apiResponse);
       } catch (e) {
         logger.error('🔥 error: %o', e);
@@ -40,8 +47,12 @@ export default (app: Router) => {
     '/login',
     celebrate({
       body: Joi.object({
-        email: Joi.string().required(),
-        password: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+        password: Joi.string()
+          .max(150)
+          .required(),
       }),
     }),
     passport.authenticate('local', { failWithError: true }),
@@ -75,7 +86,7 @@ export default (app: Router) => {
       //@TODO AuthService.Logout(req.user) do some clever stuff
       //PassportJS Logout
       req.logout();
-      const apiResponse: IBasicResponse = { status: 'Success' };
+      const apiResponse: IBasicResponse = { status: ResponseStatusMessage.Success };
       return res.status(200).json(apiResponse);
     } catch (e) {
       logger.error('🔥 error %o', e);

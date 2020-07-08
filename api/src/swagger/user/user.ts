@@ -1,6 +1,7 @@
 export const getMe = {
   tags: ['User'],
   description: 'Get User Info',
+  summary: '[AUTH]',
   responses: {
     '200': {
       description: 'User Info',

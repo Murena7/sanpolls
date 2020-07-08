@@ -1,39 +1,34 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { IsNotEmpty, IsEmail, IsNumber, IsString, IsEnum } from 'class-validator';
 import { TransactionSource } from '../interfaces/poll-transaction';
 import moment from 'moment';
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class PollTransaction extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  @Expose()
   userId: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid', nullable: true })
+  @Expose()
   eventId: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid', nullable: true })
+  @Expose()
   songId: string;
 
-  @Column()
-  @IsNumber()
-  @IsNotEmpty()
+  @Column({ type: 'int' })
+  @Expose()
   amount: number;
 
   @Column({
     type: 'enum',
     enum: TransactionSource,
   })
-  @IsEnum(TransactionSource)
-  @IsNotEmpty()
+  @Expose()
   source: TransactionSource;
 
   @Column({ type: 'timestamp' })

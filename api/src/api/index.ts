@@ -4,6 +4,9 @@ import user from './routes/user';
 import agendash from './routes/bull-board';
 import swagger from './routes/swagger';
 import poll from './routes/poll';
+import song from './routes/song';
+import vote from './routes/vote';
+import admin from './routes/admin';
 
 // guaranteed to get dependencies
 export default () => {
@@ -13,6 +16,9 @@ export default () => {
   poll(app);
   agendash(app);
   swagger(app);
+  song(app);
+  vote(app);
+  admin(app);
 
   return app;
 };

@@ -8,7 +8,7 @@
 //   createdAt: Date;
 // }
 
-export interface IUserInputDTO {
+export interface IUserSignUpBody {
   email: string;
   password: string;
 }

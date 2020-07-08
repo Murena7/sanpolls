@@ -1,5 +1,8 @@
+import { ResponseStatusMessage } from '../../interfaces/response';
+
 export const signUp = {
   tags: ['Auth'],
+  summary: '[PUBLIC]',
   description: 'Sign-up new User',
   requestBody: {
     required: true,
@@ -37,7 +40,7 @@ export const signUp = {
             },
           },
           example: {
-            status: 'Success',
+            status: ResponseStatusMessage.Success,
           },
         },
       },
@@ -59,6 +62,7 @@ export const signUp = {
 
 export const login = {
   tags: ['Auth'],
+  summary: '[PUBLIC]',
   description: 'Login User',
   requestBody: {
     required: true,
@@ -89,15 +93,15 @@ export const login = {
         'application/json': {
           example: {
             data: {
-              id: 1,
+              id: 'da25ca78-e2ae-4b3d-bff0-2668747d8f89',
               username: null,
               email: 'test1@test.com',
               role: 'user',
               voiceBalance: 0,
               status: 'active',
-              createdAt: '2020-07-05T13:25:54.860Z',
-              updatedAt: '2020-07-05T13:25:54.860Z',
               lastLogin: null,
+              createdAt: '2020-07-07T21:16:36.455Z',
+              updatedAt: '2020-07-07T21:16:36.455Z',
             },
           },
         },
@@ -120,6 +124,7 @@ export const login = {
 
 export const logout = {
   tags: ['Auth'],
+  summary: '[AUTH]',
   description: 'Logout User',
   responses: {
     '200': {

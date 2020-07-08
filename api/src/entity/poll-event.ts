@@ -8,15 +8,15 @@ export class PollEvent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @Expose()
   name: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @Expose()
   message: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @Expose()
   endMessage: string;
 

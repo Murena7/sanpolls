@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { IsNotEmpty, IsEmail, IsNumber, IsString } from 'class-validator';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
 
@@ -8,14 +7,10 @@ export class ChildComment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsNumber()
+  @Column({ type: 'uuid' })
   commentId: string;
 
-  @Column()
-  @IsNotEmpty()
-  @IsString()
+  @Column({ type: 'varchar' })
   text: string;
 
   like: number;

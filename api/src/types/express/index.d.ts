@@ -1,13 +1,14 @@
-import { User } from '../../entity/user';
+import { User as CurrentUser } from '../../entity/user';
 
 declare global {
   namespace Express {
     export interface Request {
-      currentUser: User;
+      // @ts-ignore
+      user: CurrentUser;
     }
   }
 
   namespace Models {
-    export type UserModel = User;
+    export type UserModel = CurrentUser;
   }
 }

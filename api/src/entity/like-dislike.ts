@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ParentType } from '../interfaces/like-dislike';
 import moment from 'moment';
 
@@ -8,27 +7,19 @@ export class LikeDislike extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
   userId: string;
 
-  @Column()
-  @IsString()
-  @IsNotEmpty()
+  @Column({ type: 'uuid' })
   parentId: string;
 
   @Column({
     type: 'enum',
     enum: ParentType,
   })
-  @IsEnum(ParentType)
-  @IsNotEmpty()
   parentType: ParentType;
 
-  @Column()
-  @IsNotEmpty()
-  @IsBoolean()
+  @Column({ type: 'boolean' })
   isLike: boolean;
 
   @Column({ type: 'timestamp' })

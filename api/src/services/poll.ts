@@ -55,4 +55,18 @@ export default class PollService {
       throw e;
     }
   }
+
+  public async activePoll(): Promise<IBasicResponse> {
+    try {
+      const activeEvent = await this.pollEventRepository.findOne({ status: EventStatus.Active });
+      if (!activeEvent) {
+        throw new Error('No active poll');
+      }
+
+      return { data: activeEvent };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
 }
