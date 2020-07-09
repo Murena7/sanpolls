@@ -1,12 +1,10 @@
-import config from './src/config';
-
 module.exports = {
   type: 'postgres',
-  host: config.postgresqlHost,
+  host: process.env.PGSQL_PGSQL_HOST,
   port: 5432,
-  username: config.postgresqlUser,
-  password: config.postgresqlPass,
-  database: config.postgresqlDB,
+  username: process.env.PGSQL_USER,
+  password: process.env.PGSQL_PASS,
+  database: process.env.PGSQL_DB,
   synchronize: true,
   logging: false,
   maxQueryExecutionTime: 1000,
