@@ -7,6 +7,7 @@ import { Redis } from 'ioredis';
 import SessionInit from './session';
 import PassportInit from './passport';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 export default ({ app, redisConnection }: { app: express.Application; redisConnection: Redis }) => {
   app.use(helmet());
 
@@ -47,6 +48,14 @@ export default ({ app, redisConnection }: { app: express.Application; redisConne
 
   // Load API routes
   app.use(config.api.prefix, routes());
+
+  // Angular - Frontend
+  app.use(express.static(path.resolve(__dirname, '../../public')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../public/index.html'));
+  });
+  //
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {

@@ -8,8 +8,8 @@ import Logger from './logger';
 import './events';
 
 export default async ({ expressApp }) => {
+  const redisConnection = redisLoader();
   const pgConnection = await pgLoader();
-  const redisConnection = await redisLoader();
   Logger.info('✌️ DB loaded and connected!');
 
   /**

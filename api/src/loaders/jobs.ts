@@ -6,7 +6,7 @@ import { setQueues } from 'bull-board';
 
 export default ({ redisConnection }: { redisConnection: Redis.Redis }): { name: string; job: any }[] => {
   // @ts-ignore
-  const sendEmail = new Queue('send-email', { createClient: redisConnection });
+  const sendEmail = new Queue('send-email', config.redisURL);
   sendEmail.process(new EmailSequenceJob().handler);
 
   setQueues([sendEmail]);
