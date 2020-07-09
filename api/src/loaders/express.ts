@@ -4,6 +4,7 @@ import routes from '../api';
 import config from '../config';
 import helmet from 'helmet';
 import { Redis } from 'ioredis';
+import compression from 'compression';
 import SessionInit from './session';
 import PassportInit from './passport';
 import cookieParser from 'cookie-parser';
@@ -21,6 +22,9 @@ export default ({ app, redisConnection }: { app: express.Application; redisConne
   app.head('/status', (req, res) => {
     res.status(200).end();
   });
+
+  // Enable Compression
+  app.use(compression());
 
   // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   // It shows the real origin IP in the heroku or Cloudwatch logs

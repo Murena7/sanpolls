@@ -38,6 +38,7 @@
     "celebrate": "^9.1.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "compression": "^1.7.4",
     "connect-redis": "^4.0.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.4",
