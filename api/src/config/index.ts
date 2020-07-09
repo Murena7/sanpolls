@@ -24,7 +24,7 @@ export default {
   postgresqlUser: process.env.PGSQL_USER,
   postgresqlPass: process.env.PGSQL_PASS,
   postgresqlDB: process.env.PGSQL_DB,
-  postgresqlHost: process.env.PGSQL_PGSQL_HOST,
+  postgresqlHost: process.env.PGSQL_HOST,
   /**
    * That long string from mlab
    */

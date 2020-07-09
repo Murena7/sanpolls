@@ -5,5 +5,6 @@ const outDir = 'dist';
 s.rm('-rf', outDir);
 s.mkdir(outDir);
 s.cp('.env', `${outDir}/.env`);
+s.mkdir('-p', `${outDir}/public`);
 s.cd('../');
 s.cp('-R', 'client/dist/SanSanPolls/*', `api/dist/public`);
