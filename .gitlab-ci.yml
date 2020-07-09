@@ -9,7 +9,7 @@ stages:
 production:
   stage: production
   only:
-    - master
+    - devopstest
   script:
     - sudo docker-compose -f ./docker/docker-compose-prod.yml up -d --build
   when: manual
