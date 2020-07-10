@@ -1,12 +1,26 @@
 <div class="container">
-  <div>
-    <img src="assets/logo/main-web1.jpg" alt="SanSan" class="main-img" />
+  <div class="logo-container"></div>
+  <div class="text-container">
+    <div class="text-wrapper-left">
+      <div class="text-1 color-1">1. Приветствую на официальном сайте YouTube канала SanSan</div>
+    </div>
+    <div class="text-wrapper-right">
+      <div class="text-2 color-2">2. Здесь можно больше узнать о нас</div>
+    </div>
+    <div class="text-wrapper-left">
+      <div class="text-1 color-3">3. Проголосовать за песню для следующего видео</div>
+    </div>
+    <div class="text-wrapper-right">
+      <div class="text-2 color-4">4. Поддержать и улучшить проект =)</div>
+    </div>
   </div>
-  <div class="countdown">
-    <san-countdown></san-countdown>
+  <div class="countdown-container">
+    <div class="countdown">
+      <san-countdown></san-countdown>
+    </div>
+    <div class="short-table" routerLink="/polls">
+      <san-polls-short-table [rowsData]="polls"></san-polls-short-table>
+      <button mat-raised-button color="accent" routerLink="/polls">Показать больше!</button>
+    </div>
   </div>
-  <div class="short-table" routerLink="/polls">
-    <san-polls-short-table [rowsData]="polls"></san-polls-short-table>
-  </div>
-  <button mat-raised-button color="accent" routerLink="/polls">Показать больше!</button>
 </div>
