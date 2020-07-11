@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '@core/auth/auth.guard';
 import { SanadminComponent } from '@pages/sanadmin/sanadmin.component';
 import { StatisticsComponent } from '@pages/sanadmin/statistics/statistics.component';
+import { UsersComponent } from '@pages/sanadmin/users/users.component';
+import { TransactionsComponent } from '@pages/sanadmin/transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -15,7 +17,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'statistics',
+        pathMatch: 'full'
+      },
+      {
+        path: 'statistics',
         component: StatisticsComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent
       }
     ]
   }

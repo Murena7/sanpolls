@@ -4,3 +4,44 @@
   flex: 1 0 auto;
   background-color: #d7ccc8;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: space-evenly;
+  margin-top: 40px;
+  .total-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 250px;
+    height: 100px;
+    background-color: #a1887f;
+    border-radius: 5px;
+  }
+
+  hr {
+    width: 100%;
+    margin: 0;
+  }
+
+  .text {
+    color: white;
+    font-size: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .number {
+    color: white;
+    font-size: 25px;
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
