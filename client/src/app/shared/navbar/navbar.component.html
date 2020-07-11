@@ -19,6 +19,9 @@
       <button mat-menu-item routerLink="/profile/polls-history">История голосований</button>
       <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>
       <button mat-menu-item (click)="logout()">Выйти</button>
+      <button mat-menu-item *ngIf="userData && userData.role === role.Admin" routerLink="/san-admin">
+        <mat-icon color="primary">admin_panel_settings</mat-icon>
+      </button>
     </mat-menu>
     <a *ngIf="!userData" mat-button routerLink="/login">Авторизация</a>
   </nav>

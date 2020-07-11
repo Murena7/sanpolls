@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { LayoutPublicRoutingModule } from './layout-public-routing.module';
 import { LayoutPublicComponent } from './layout-public.component';
-import { FooterComponent } from './footer/footer.component';
-import { NavbarModule } from '../../shared/navbar/navbar.module';
+import { NavbarModule } from '@shared/navbar/navbar.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [LayoutPublicComponent, FooterComponent],
-  imports: [CommonModule, LayoutPublicRoutingModule, NavbarModule],
-  exports: [LayoutPublicComponent],
+  declarations: [LayoutPublicComponent],
+  imports: [CommonModule, LayoutPublicRoutingModule, NavbarModule, SharedModule],
+  exports: [LayoutPublicComponent]
 })
 export class LayoutPublicModule {}

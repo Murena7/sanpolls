@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSidenavModule,
     MatMenuModule,
     MatButtonToggleModule,
+    MatIconModule
   ],
   exports: [
     MatButtonModule,
@@ -42,6 +44,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSidenavModule,
     MatMenuModule,
     MatButtonToggleModule,
-  ],
+    MatIconModule
+  ]
 })
 export class MaterialModule {}
