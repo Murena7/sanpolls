@@ -1,7 +1,7 @@
 import { login, logout, signUp } from './auth/auth';
 import { getMe } from './user/user';
 import { getActivePoll, getRatingList } from './poll/poll';
-import { postAddVoice, postPollCreate, postUserToAdmin } from './admin/admin';
+import { postAddVoice, postPollCreate, putUserToAdmin } from './admin/admin';
 import { getSongById, postAddSong } from './song/song';
 import { postGiveVote } from './vote/vote';
 
@@ -63,8 +63,8 @@ export const swaggerDocument = {
       get: getRatingList,
     },
     ///// ADMIN
-    '/admin/user/user-to-admin': {
-      post: postUserToAdmin,
+    '/admin/user/{userId}/user-to-admin': {
+      put: putUserToAdmin,
     },
     '/admin/user/add-voice': {
       post: postAddVoice,

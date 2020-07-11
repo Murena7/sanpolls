@@ -1,1 +1,21 @@
-<p>transactions works!</p>
+<div class="container">
+  <div class="table-container">
+    <input
+      type="text"
+      style="padding: 8px; margin: 15px auto; width: 30%;"
+      placeholder="Фильтр по email пользователя"
+      (keyup)="updateFilter($event)"
+    />
+    <ngx-datatable
+      class="material"
+      [columns]="columns"
+      [columnMode]="ColumnMode.force"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+      [rows]="usersData"
+    >
+    </ngx-datatable>
+  </div>
+</div>

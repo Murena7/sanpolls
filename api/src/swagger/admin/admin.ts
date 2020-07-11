@@ -1,25 +1,17 @@
-export const postUserToAdmin = {
+export const putUserToAdmin = {
   tags: ['Admin'],
   description: 'User to Admin',
   summary: '[AUTH]',
-  requestBody: {
-    required: true,
-    content: {
-      'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            userId: {
-              type: 'string',
-            },
-          },
-        },
-        example: {
-          userId: 'da25ca78-e2ae-4b3d-bff0-2668747d8f89',
-        },
+  parameters: [
+    {
+      in: 'path',
+      name: 'userId',
+      schema: {
+        type: 'string',
       },
+      description: 'User ID',
     },
-  },
+  ],
   responses: {
     '200': {
       description: 'Data',

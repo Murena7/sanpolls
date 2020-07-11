@@ -10,7 +10,7 @@ import { AuthApiService } from '@core/api-services/auth-api.service';
 @Component({
   selector: 'san-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   formLog: FormGroup;
@@ -22,12 +22,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.formLog = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
     });
     this.formReg = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      checkbox: new FormControl(null, Validators.requiredTrue),
+      checkbox: new FormControl(null, Validators.requiredTrue)
     });
   }
 
@@ -39,13 +39,13 @@ export class LoginComponent implements OnInit {
 
     const user = {
       email: this.formLog.value.email,
-      password: this.formLog.value.password,
+      password: this.formLog.value.password
     };
 
     this.authApiService.login(user).subscribe(
-      (res) => {
-        this.formLog.reset();
+      res => {
         this.router.navigate(['/profile']);
+        this.formLog.reset();
         this.submitted = false;
       },
       () => {
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       email: this.formReg.value.email,
       password: this.formReg.value.password,
       role: UserRole.User,
-      status: UserStatus.Active,
+      status: UserStatus.Active
     };
 
     this.userService.createNewUser(userReg).subscribe(() => {

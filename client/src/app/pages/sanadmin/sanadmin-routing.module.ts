@@ -5,6 +5,7 @@ import { SanadminComponent } from '@pages/sanadmin/sanadmin.component';
 import { StatisticsComponent } from '@pages/sanadmin/statistics/statistics.component';
 import { UsersComponent } from '@pages/sanadmin/users/users.component';
 import { TransactionsComponent } from '@pages/sanadmin/transactions/transactions.component';
+import { PollsComponent } from '@pages/sanadmin/polls/polls.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'transactions',
         component: TransactionsComponent
+      },
+      {
+        path: 'polls',
+        component: PollsComponent
       }
     ]
   }

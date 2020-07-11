@@ -1,1 +1,25 @@
-<p>polls works!</p>
+<div class="container">
+  <div class="table-container">
+    <div class="action-container">
+      <button mat-fab [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item matTooltip="Добавить новый event/голосование">
+          <span>Добавить Голосование</span>
+        </button>
+      </mat-menu>
+    </div>
+    <ngx-datatable
+      class="material"
+      [columns]="columns"
+      [columnMode]="ColumnMode.force"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+      [rows]="usersData"
+    >
+    </ngx-datatable>
+  </div>
+</div>

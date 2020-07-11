@@ -11,13 +11,14 @@ import PollService from '../../services/poll';
 const route = Router();
 
 export default (app: Router) => {
-  app.use('/admin', route);
+  app.use('/admin', middlewares.checkAuth([Role.Admin]), route);
 
-  route.post(
-    '/user/user-to-admin',
-    middlewares.checkAuth(),
+  /// USER ////
+
+  route.put(
+    '/user/:userId/user-to-admin',
     celebrate({
-      body: Joi.object({
+      params: Joi.object({
         userId: Joi.string()
           .uuid()
           .required(),
@@ -28,7 +29,7 @@ export default (app: Router) => {
       logger.debug('Calling /admin/user/user-to-admin endpoint');
       try {
         const devToolsServiceInstance = Container.get(AdminService);
-        const result: IBasicResponse = await devToolsServiceInstance.userToAdmin(req.body.userId);
+        const result: IBasicResponse = await devToolsServiceInstance.userToAdmin(req.params.userId);
 
         return res.status(200).json(result);
       } catch (e) {
@@ -40,7 +41,6 @@ export default (app: Router) => {
 
   route.post(
     '/user/add-voice',
-    middlewares.checkAuth([Role.Admin]),
     celebrate({
       body: Joi.object({
         userId: Joi.string()
@@ -66,10 +66,10 @@ export default (app: Router) => {
       }
     },
   );
-
+  ///////
+  /////// POLL //////////
   route.post(
-    '/create',
-    middlewares.checkAuth([Role.Admin]),
+    '/poll/create',
     celebrate({
       body: Joi.object({
         name: Joi.string()

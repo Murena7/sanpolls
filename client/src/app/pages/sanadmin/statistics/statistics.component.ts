@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'san-statistics',
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss']
 })

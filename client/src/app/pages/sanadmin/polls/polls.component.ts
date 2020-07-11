@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { User } from '@core/user/user.models';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'san-polls',
   templateUrl: './polls.component.html',
   styleUrls: ['./polls.component.scss']
 })
 export class PollsComponent implements OnInit {
+  usersData: User[] = [];
+  ColumnMode = ColumnMode;
+  columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  updateFilter(event: any) {}
 }

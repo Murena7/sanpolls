@@ -1,1 +1,31 @@
-<div class="container"></div>
+<div class="container">
+  <div class="table-container">
+    <div class="action-container">
+      <input
+        type="text"
+        style="padding: 8px; margin: 15px auto; width: 30%;"
+        placeholder="Фильтр по email пользователя"
+        (keyup)="updateFilter($event)"
+      />
+      <button mat-fab [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item matTooltip="Добавить голоса пользователю по userId">
+          <span>Добавить Голоса</span>
+        </button>
+      </mat-menu>
+    </div>
+    <ngx-datatable
+      class="material"
+      [columns]="columns"
+      [columnMode]="ColumnMode.force"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [limit]="10"
+      [rows]="usersData"
+    >
+    </ngx-datatable>
+  </div>
+</div>
