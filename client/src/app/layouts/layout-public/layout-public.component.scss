@@ -2,14 +2,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  flex: 1 0 auto;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   padding-top: 56px;
-  align-items: center;
-  text-align: center;
+  flex: 1 0 auto;
 }
