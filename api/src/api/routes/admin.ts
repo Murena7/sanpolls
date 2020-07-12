@@ -14,6 +14,28 @@ export default (app: Router) => {
   app.use('/admin', middlewares.checkAuth([Role.Admin]), route);
 
   /// USER ////
+  route.get(
+    '/user/all',
+    celebrate({
+      query: Joi.object({
+        skip: Joi.string(),
+        take: Joi.string(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /admin/user/all endpoint');
+      try {
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.getAllUsers(+req.query.skip, +req.query.take);
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
 
   route.put(
     '/user/:userId/user-to-admin',
@@ -101,4 +123,70 @@ export default (app: Router) => {
       }
     },
   );
+
+  route.get(
+    '/poll/all',
+    celebrate({
+      query: Joi.object({
+        skip: Joi.string(),
+        take: Joi.string(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /admin/poll/all endpoint');
+      try {
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.getAllPolls(+req.query.skip, +req.query.take);
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+  ///
+  ////Statistics
+  route.get('/user/statistic/total', async (req: Request, res: Response, next: NextFunction) => {
+    const logger: Logger = Container.get('logger');
+    logger.debug('Calling /user/statistic/total endpoint');
+    try {
+      const devToolsServiceInstance = Container.get(AdminService);
+      const result: IBasicResponse = await devToolsServiceInstance.getStatisticTotal();
+
+      return res.status(200).json(result);
+    } catch (e) {
+      logger.error('🔥 error: %o', e);
+      return next(e);
+    }
+  });
+  ////////
+  /////Transactions
+  route.get(
+    '/transaction/all',
+    celebrate({
+      query: Joi.object({
+        skip: Joi.string(),
+        take: Joi.string(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /admin/transaction/all endpoint');
+      try {
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.getAllTransactions(
+          +req.query.skip,
+          +req.query.take,
+        );
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+  ////
 };

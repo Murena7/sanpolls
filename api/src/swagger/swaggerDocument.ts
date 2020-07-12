@@ -1,7 +1,15 @@
 import { login, logout, signUp } from './auth/auth';
 import { getMe } from './user/user';
 import { getActivePoll, getRatingList } from './poll/poll';
-import { postAddVoice, postPollCreate, putUserToAdmin } from './admin/admin';
+import {
+  getAllPolls,
+  getAllTransactions,
+  getAllUsers,
+  getStatisticTotal,
+  postAddVoice,
+  postPollCreate,
+  putUserToAdmin,
+} from './admin/admin';
 import { getSongById, postAddSong } from './song/song';
 import { postGiveVote } from './vote/vote';
 
@@ -69,8 +77,20 @@ export const swaggerDocument = {
     '/admin/user/add-voice': {
       post: postAddVoice,
     },
+    '/admin/user/all': {
+      get: getAllUsers,
+    },
     '/admin/poll/create': {
       post: postPollCreate,
+    },
+    '/admin/poll/all': {
+      get: getAllPolls,
+    },
+    '/admin/transaction/all': {
+      get: getAllTransactions,
+    },
+    '/admin/statistic/total': {
+      get: getStatisticTotal,
     },
     ///// SONG
     '/song/by-id/{id}': {

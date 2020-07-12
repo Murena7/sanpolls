@@ -3,6 +3,7 @@ import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { Role, UserStatus } from '../interfaces/user';
 import moment from 'moment';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Unique(['email'])
@@ -14,6 +15,7 @@ export class User extends BaseEntity {
   username: string;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar' })
@@ -30,6 +32,7 @@ export class User extends BaseEntity {
   voiceBalance: number;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   salt: string;
 
   @Column({

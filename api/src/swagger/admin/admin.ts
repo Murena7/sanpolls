@@ -1,7 +1,7 @@
 export const putUserToAdmin = {
   tags: ['Admin'],
   description: 'User to Admin',
-  summary: '[AUTH]',
+  summary: '[AUTH: ADMIN]',
   parameters: [
     {
       in: 'path',
@@ -154,6 +154,165 @@ export const postPollCreate = {
     },
     '500': {
       description: 'Validation or other error',
+    },
+  },
+};
+
+export const getAllUsers = {
+  tags: ['Admin'],
+  summary: '[AUTH: ADMIN]',
+  description: 'Get All Users',
+  parameters: [
+    {
+      in: 'query',
+      name: 'take',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result count',
+    },
+    {
+      in: 'query',
+      name: 'skip',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result skip',
+    },
+  ],
+  responses: {
+    '200': {
+      description: 'Data',
+      content: {
+        'application/json': {
+          example: {
+            data: [
+              {
+                id: 'd7dad88f-f8f6-409a-b62e-8cc598829232',
+                username: null,
+                email: 'test1@test.com',
+                role: 'admin',
+                voiceBalance: 0,
+                status: 'active',
+                emailConfirmed: true,
+                lastLogin: null,
+                createdAt: '2020-07-11T21:30:40.476Z',
+                updatedAt: '2020-07-11T21:30:40.476Z',
+              },
+            ],
+            count: 1,
+          },
+        },
+      },
+    },
+    '401': {
+      description: 'Unauthorized',
+    },
+  },
+};
+
+export const getAllPolls = {
+  tags: ['Admin'],
+  summary: '[AUTH: ADMIN]',
+  description: 'Get All Polls',
+  parameters: [
+    {
+      in: 'query',
+      name: 'take',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result count',
+    },
+    {
+      in: 'query',
+      name: 'skip',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result skip',
+    },
+  ],
+  responses: {
+    '200': {
+      description: 'Data',
+      content: {
+        'application/json': {
+          example: {
+            data: [],
+            count: 1,
+          },
+        },
+      },
+    },
+    '401': {
+      description: 'Unauthorized',
+    },
+  },
+};
+
+export const getAllTransactions = {
+  tags: ['Admin'],
+  summary: '[AUTH: ADMIN]',
+  description: 'Get All Transactions',
+  parameters: [
+    {
+      in: 'query',
+      name: 'take',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result count',
+    },
+    {
+      in: 'query',
+      name: 'skip',
+      schema: {
+        type: 'integer',
+      },
+      description: 'result skip',
+    },
+  ],
+  responses: {
+    '200': {
+      description: 'Data',
+      content: {
+        'application/json': {
+          example: {
+            data: [],
+            count: 1,
+          },
+        },
+      },
+    },
+    '401': {
+      description: 'Unauthorized',
+    },
+  },
+};
+
+export const getStatisticTotal = {
+  tags: ['Admin'],
+  description: 'User to Admin',
+  summary: '[AUTH: ADMIN]',
+  responses: {
+    '200': {
+      description: 'Data',
+      content: {
+        'application/json': {
+          example: {
+            data: {
+              totalUsers: 1,
+              totalUsersToday: 1,
+              totalTransactions: 0,
+              totalTransactionsToday: 0,
+            },
+          },
+        },
+      },
+    },
+    '401': {
+      description: 'Unauthorized',
     },
   },
 };
