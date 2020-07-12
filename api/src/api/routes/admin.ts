@@ -18,8 +18,8 @@ export default (app: Router) => {
     '/user/all',
     celebrate({
       query: Joi.object({
-        skip: Joi.string(),
-        take: Joi.string(),
+        skip: Joi.number(),
+        take: Joi.number(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -128,8 +128,8 @@ export default (app: Router) => {
     '/poll/all',
     celebrate({
       query: Joi.object({
-        skip: Joi.string(),
-        take: Joi.string(),
+        skip: Joi.number(),
+        take: Joi.number(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -167,8 +167,8 @@ export default (app: Router) => {
     '/transaction/all',
     celebrate({
       query: Joi.object({
-        skip: Joi.string(),
-        take: Joi.string(),
+        skip: Joi.number(),
+        take: Joi.number(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {

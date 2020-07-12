@@ -2,8 +2,6 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import { Logger } from 'winston';
 import PollService from '../../services/poll';
-import middlewares from '../middlewares';
-import { Role } from '../../interfaces/user';
 import { IBasicResponse } from '../../interfaces/response-types';
 import { celebrate, Joi } from 'celebrate';
 
@@ -31,9 +29,9 @@ export default (app: Router) => {
     '/rating-list',
     celebrate({
       query: Joi.object({
-        skip: Joi.string(),
-        take: Joi.string(),
-        id: Joi.string(),
+        skip: Joi.number(),
+        take: Joi.number(),
+        id: Joi.string().uuid(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
