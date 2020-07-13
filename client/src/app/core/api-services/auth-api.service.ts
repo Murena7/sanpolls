@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environment';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@core/auth/auth.service';
-import { User } from '@core/entities/user/user.models';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
+import { IUser } from '@core/entities/user/user.types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthApiService {
       .post<IBasicResponse>(`${environment.UI_SERVER}/auth/login`, userData)
       .pipe(
         map(data => data.data),
-        map((user: User) => {
+        map((user: IUser) => {
           // login successful if there's a jwt token in the response
           if (user) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

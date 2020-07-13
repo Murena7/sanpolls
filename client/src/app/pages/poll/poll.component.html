@@ -2,10 +2,10 @@
   <div class="card-header">
     <div class="card-header-left">
       <p>
-        Кто добавил: <strong>{{ poll.author }}</strong>
+        Кто добавил: <strong>{{ poll.userId }}</strong>
       </p>
       <p>
-        Кто будет петь: <strong>{{ poll.author }}</strong>
+        Кто будет петь: <strong>{{ poll.userId }}</strong>
       </p>
     </div>
     <div class="card-header-right">
@@ -13,14 +13,14 @@
         Место в рейтинге: <strong>{{ poll.id }}</strong>
       </p>
       <p>
-        Композиция: <strong>{{ poll.name }}</strong>
+        Композиция: <strong>{{ poll.songName }}</strong>
       </p>
       <p>Дата завершения: <strong>30-01-2021</strong></p>
     </div>
   </div>
   <mat-card-content class="card-content">
     <div class="polls-number">
-      Колличество голосов: <span class="polls-count">{{ poll.votesCount }}</span>
+      Колличество голосов: <span class="polls-count">{{ poll.voiceCount }}</span>
     </div>
     <div>
       <h3>Дополнительная Информация:</h3>

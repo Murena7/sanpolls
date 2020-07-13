@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { User } from '@core/entities/user/user.models';
-import { UserStatus } from '@core/entities/user/user.types';
+import { IUser, UserStatus } from '@core/entities/user/user.types';
 import { Router } from '@angular/router';
-import { UserRole } from '@core/entities/user/role.models';
+import { UserRole } from '@core/entities/user/role.types';
 
 @Component({
   selector: 'san-navbar',
@@ -11,7 +10,7 @@ import { UserRole } from '@core/entities/user/role.models';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  userData: User;
+  userData: IUser;
   userStatus = UserStatus;
   role = UserRole;
 

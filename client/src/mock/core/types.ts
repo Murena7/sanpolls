@@ -1,10 +1,10 @@
 import { Database, DatabaseSchema, Response, Router } from 'kakapo';
-import { IPoll } from '@core/entities/polls/polls.types';
-import { User } from '@core/entities/user/user.models';
+import { IUser } from '@core/entities/user/user.types';
+import { ISong } from '@core/entities/song/song.types';
 
 export interface DbSchema extends DatabaseSchema {
-  polls: IPoll;
-  users: User;
+  polls: ISong;
+  users: IUser;
 }
 
 export type UIRouter = Router<DbSchema>;

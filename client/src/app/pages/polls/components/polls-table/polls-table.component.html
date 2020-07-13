@@ -18,25 +18,25 @@
 
     <ngx-datatable-column name="Кто исполнит" prop="author" [flexGrow]="2">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/poll', row.uuid]">{{ row.author }}</span>
+        <span class="poll-link" [routerLink]="['/poll', row.id]">{{ row.coverSinger }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Песня (Автор)" prop="name" [flexGrow]="3">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/poll', row.uuid]">{{ row.name }}</span>
+        <span class="poll-link" [routerLink]="['/poll', row.id]">{{ row.songName }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.8">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/poll', row.uuid]">{{ row.votesCount }}</span>
+        <span class="poll-link" [routerLink]="['/poll', row.id]">{{ row.voiceCount }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Проголосовать" [flexGrow]="2">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <a class="poll-button" mat-raised-button color="accent" [routerLink]="['/poll', row.uuid]">Проголосовать</a>
+        <a class="poll-button" mat-raised-button color="accent" [routerLink]="['/poll', row.id]">Проголосовать</a>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

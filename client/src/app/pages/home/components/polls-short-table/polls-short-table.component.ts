@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPoll } from '@core/entities/polls/polls.types';
+import { ISong } from '@core/entities/song/song.types';
 
 @Component({
   selector: 'san-polls-short-table',
@@ -7,5 +7,5 @@ import { IPoll } from '@core/entities/polls/polls.types';
   styleUrls: ['./polls-short-table.component.scss']
 })
 export class PollsShortTableComponent {
-  @Input() rowsData: IPoll[] = [];
+  @Input() rowsData: ISong[] = [];
 }

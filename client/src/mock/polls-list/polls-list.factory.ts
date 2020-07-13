@@ -1,17 +1,17 @@
 import { Factory } from '../core/types';
-import { IPoll } from '@core/entities/polls/polls.types';
+import { ISong } from '@core/entities/song/song.types';
 
-export class PollsListFactory implements Factory<IPoll> {
+export class PollsListFactory implements Factory<ISong> {
   db = 'polls';
   count = 100;
 
-  generate(faker: Faker.FakerStatic, id: number): IPoll {
+  generate(faker: Faker.FakerStatic, id: number): ISong {
     return {
-      id,
-      uuid: faker.random.uuid(),
-      author: faker.name.lastName(),
-      name: faker.name.jobTitle(),
-      votesCount: faker.random.number({ min: 100, max: 2000 })
-    };
+      id: faker.random.uuid(),
+      userId: faker.random.uuid(),
+      coverSinger: faker.name.lastName(),
+      songName: faker.name.jobTitle(),
+      voiceCount: faker.random.number({ min: 100, max: 2000 })
+    } as ISong;
   }
 }

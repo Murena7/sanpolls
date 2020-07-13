@@ -11,10 +11,10 @@ export default class PollRoutes {
 
   // tslint:disable-next-line:variable-name
   findById(_request: Request, db: MyDatabase) {
-    const returnData = db.all('polls').find((x) => x.data.uuid === _request.params.id);
+    const returnData = db.all('polls').find(x => x.data.id === _request.params.id);
 
     return {
-      data: returnData ? returnData.data : {},
+      data: returnData ? returnData.data : {}
     };
   }
 }

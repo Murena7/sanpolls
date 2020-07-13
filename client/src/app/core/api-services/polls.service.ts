@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IPoll } from '@core/entities/polls/polls.types';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
+import { ISong } from '@core/entities/song/song.types';
 
 const apiUrl = environment.UI_SERVER;
 
@@ -14,7 +14,7 @@ const apiUrl = environment.UI_SERVER;
 export class PollsService {
   constructor(private http: HttpService) {}
 
-  getPolls(): Observable<IPoll[]> {
+  getPolls(): Observable<ISong[]> {
     return this.http.get<IBasicResponse>(`${apiUrl}/polls`).pipe(map(data => data.data));
   }
 

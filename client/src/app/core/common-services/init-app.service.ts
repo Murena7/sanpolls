@@ -3,7 +3,7 @@ import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { User } from '@core/entities/user/user.models';
+import { IUser } from '@core/entities/user/user.types';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class InitAppService {
       return this.userService
         .getUser()
         .pipe(
-          tap((user: User) => {
+          tap((user: IUser) => {
             this.authService.setUser(user);
           })
         )

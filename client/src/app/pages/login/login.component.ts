@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@core/api-services/user.service';
-import { User } from '@core/entities/user/user.models';
-import { UserRole } from '@core/entities/user/role.models';
-import { UserStatus } from '@core/entities/user/user.types';
+import { UserRole } from '@core/entities/user/role.types';
+import { IUser, IUserRegistrationBody, UserStatus } from '@core/entities/user/user.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
 
 @Component({
@@ -55,7 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitRegister() {
-    const userReg: User = {
+    const userReg: IUserRegistrationBody = {
       email: this.formReg.value.email,
       password: this.formReg.value.password,
       role: UserRole.User,

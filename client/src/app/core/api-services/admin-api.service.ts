@@ -6,10 +6,10 @@ import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse, ResponseStatusMessage } from '@core/core.types';
 import { ICreatePollBody, IPaginationQueryParams, IUserToAdminBody } from '@core/entities/admin/admin.types';
 import { toQueryString } from '@core/helpers/http';
-import { User } from '@core/entities/user/user.models';
 import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
-import { IPollTransaction } from '@core/entities/transaction/transaction.types';
+import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
 import { IStatisticTotal } from '@core/entities/statistic/statistic.types';
+import { IUser } from '@core/entities/user/user.types';
 
 @Injectable()
 export class AdminApiService {
@@ -27,8 +27,8 @@ export class AdminApiService {
       .pipe(map(data => data.status));
   }
 
-  getAllUsers(queryParams?: IPaginationQueryParams): Observable<IBasicResponse<User[]>> {
-    return this.http.get<IBasicResponse<User[]>>(
+  getAllUsers(queryParams?: IPaginationQueryParams): Observable<IBasicResponse<IUser[]>> {
+    return this.http.get<IBasicResponse<IUser[]>>(
       `${environment.UI_SERVER}/admin/user/all${toQueryString(queryParams)}`
     );
   }

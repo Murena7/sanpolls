@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from '@environment';
-import { User } from '../entities/user/user.models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
+import { IUser } from '@core/entities/user/user.types';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ import { IBasicResponse } from '@core/core.types';
 export class UserService {
   constructor(private http: HttpService) {}
 
-  getUser(): Observable<User> {
+  getUser(): Observable<IUser> {
     return this.http.get<IBasicResponse>(`${environment.UI_SERVER}/auth/user`).pipe(map(data => data.data));
   }
 

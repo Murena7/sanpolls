@@ -4,8 +4,8 @@ import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.comp
 import { switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IPoll } from '@core/entities/polls/polls.types';
 import { PollsService } from '@core/api-services/polls.service';
+import { ISong } from '@core/entities/song/song.types';
 
 @Component({
   selector: 'san-poll',
@@ -13,7 +13,7 @@ import { PollsService } from '@core/api-services/polls.service';
   styleUrls: ['./poll.component.scss']
 })
 export class PollComponent implements OnInit {
-  poll$: Observable<IPoll>;
+  poll$: Observable<ISong>;
 
   constructor(private dialog: MatDialog, private pollService: PollsService, private route: ActivatedRoute) {}
 

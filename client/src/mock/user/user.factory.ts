@@ -1,21 +1,23 @@
 import { Factory } from '../core/types';
-import { UserStatus } from '@core/entities/user/user.types';
+import { IUser, UserStatus } from '@core/entities/user/user.types';
 import { now } from '@core/helpers/moment';
-import { User } from '@core/entities/user/user.models';
-import { UserRole } from '@core/entities/user/role.models';
+import { UserRole } from '@core/entities/user/role.types';
 
-export class UserFactory implements Factory<User> {
+export class UserFactory implements Factory<IUser> {
   db = 'users';
   count = 10;
 
-  generate(faker: Faker.FakerStatic, id: number): User {
+  generate(faker: Faker.FakerStatic, id: number): IUser {
     return {
-      id,
-      email: `test${id}@test.com`,
+      id: faker.random.uuid(),
       username: faker.name.firstName(),
-      role: UserRole.Admin,
       password: `test-${id}`,
+      email: `test${id}@test.com`,
+      role: UserRole.Admin,
+      voiceBalance: 500,
       status: faker.random.arrayElement(Object.values(UserStatus)),
+      emailConfirmed: true,
+      lastLogin: null,
       createdAt: now().toISOString(),
       updatedAt: now().toISOString()
     };

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { IPoll } from '@core/entities/polls/polls.types';
+import { ISong } from '@core/entities/song/song.types';
 
 @Component({
   selector: 'san-polls',
@@ -8,7 +8,7 @@ import { IPoll } from '@core/entities/polls/polls.types';
   styleUrls: ['./polls.component.scss']
 })
 export class PollsComponent implements OnInit {
-  pollsTableData: IPoll[] = [];
+  pollsTableData: ISong[] = [];
   pollsTableLoader = false;
 
   constructor(private apiService: PollsService) {}

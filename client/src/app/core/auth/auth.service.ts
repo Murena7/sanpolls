@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { User } from '@core/entities/user/user.models';
 import { removeAllCookies } from '../../../mock/core/cookie.helper';
+import { IUser } from '@core/entities/user/user.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<IUser>;
+  public currentUser: Observable<IUser>;
 
   constructor() {
     // this.currentUserSubject = new BehaviorSubject<User>(this.decodeUser(localStorage.getItem('token')));
-    this.currentUserSubject = new BehaviorSubject<User>(null);
+    this.currentUserSubject = new BehaviorSubject<IUser>(null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
+  public get currentUserValue(): IUser {
     return this.currentUserSubject.value;
   }
 
-  public setUser(user: User) {
+  public setUser(user: IUser) {
     this.currentUserSubject.next(user);
   }
 

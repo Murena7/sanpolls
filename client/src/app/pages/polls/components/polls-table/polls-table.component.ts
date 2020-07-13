@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IPoll } from '@core/entities/polls/polls.types';
+import { ISong } from '@core/entities/song/song.types';
 
 @Component({
   selector: 'san-polls-table',
@@ -7,7 +7,7 @@ import { IPoll } from '@core/entities/polls/polls.types';
   styleUrls: ['./polls-table.component.scss']
 })
 export class PollsTableComponent implements OnInit {
-  @Input() rows: IPoll[] = [];
+  @Input() rows: ISong[] = [];
   @Input() isLoading = false;
   @Output() pagination = new EventEmitter<number>();
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { IPoll } from '@core/entities/polls/polls.types';
+import { ISong } from '@core/entities/song/song.types';
 
 @Component({
   selector: 'san-home',
@@ -8,7 +8,7 @@ import { IPoll } from '@core/entities/polls/polls.types';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  polls: IPoll[] = [];
+  polls: ISong[] = [];
 
   constructor(private apiService: PollsService) {}
 
