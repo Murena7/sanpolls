@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { User } from '@core/user/user.models';
-import { UserStatus } from '@core/user/user.types';
+import { User } from '@core/entities/user/user.models';
+import { UserStatus } from '@core/entities/user/user.types';
 import { Router } from '@angular/router';
-import { UserRole } from '@core/user/role.models';
+import { UserRole } from '@core/entities/user/role.models';
 
 @Component({
   selector: 'san-navbar',

@@ -1,5 +1,5 @@
 import { UserRole } from './role.models';
-import { UserStatus } from '@core/user/user.types';
+import { UserStatus } from '@core/entities/user/user.types';
 
 export class User {
   id?: number;

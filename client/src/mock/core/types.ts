@@ -1,6 +1,6 @@
 import { Database, DatabaseSchema, Response, Router } from 'kakapo';
-import { IPoll } from '@core/polls/polls.types';
-import { User } from '@core/user/user.models';
+import { IPoll } from '@core/entities/polls/polls.types';
+import { User } from '@core/entities/user/user.models';
 
 export interface DbSchema extends DatabaseSchema {
   polls: IPoll;
@@ -39,9 +39,9 @@ export class ErrorResponse extends Response {
           {
             code: 422,
             title: message,
-            detail: message,
-          },
-        ],
+            detail: message
+          }
+        ]
       },
       {}
     );

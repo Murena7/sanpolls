@@ -3,10 +3,10 @@ import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { User } from '@core/user/user.models';
+import { User } from '@core/entities/user/user.models';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InitAppService {
   constructor(private authService: AuthService, private userService: UserService) {}

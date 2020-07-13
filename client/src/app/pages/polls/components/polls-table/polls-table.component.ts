@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IPoll } from '@core/polls/polls.types';
+import { IPoll } from '@core/entities/polls/polls.types';
 
 @Component({
   selector: 'san-polls-table',
   templateUrl: './polls-table.component.html',
-  styleUrls: ['./polls-table.component.scss'],
+  styleUrls: ['./polls-table.component.scss']
 })
 export class PollsTableComponent implements OnInit {
   @Input() rows: IPoll[] = [];

@@ -4,13 +4,13 @@ import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.comp
 import { switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IPoll } from '@core/polls/polls.types';
+import { IPoll } from '@core/entities/polls/polls.types';
 import { PollsService } from '@core/api-services/polls.service';
 
 @Component({
   selector: 'san-poll',
   templateUrl: './poll.component.html',
-  styleUrls: ['./poll.component.scss'],
+  styleUrls: ['./poll.component.scss']
 })
 export class PollComponent implements OnInit {
   poll$: Observable<IPoll>;
@@ -19,7 +19,7 @@ export class PollComponent implements OnInit {
 
   ngOnInit(): void {
     this.poll$ = this.route.params.pipe(
-      switchMap((params) => {
+      switchMap(params => {
         return this.pollService.getPollById(params.id);
       })
     );
@@ -29,10 +29,10 @@ export class PollComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogPollsComponent, {
       data: {
         song: 'Путин - Mutter (user: SanSan)',
-        name: 'John',
-      },
+        name: 'John'
+      }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe(result => {});
   }
 }

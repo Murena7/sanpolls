@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '@core/api-services/user.service';
-import { User } from '@core/user/user.models';
-import { UserRole } from '@core/user/role.models';
-import { UserStatus } from '@core/user/user.types';
+import { User } from '@core/entities/user/user.models';
+import { UserRole } from '@core/entities/user/role.models';
+import { UserStatus } from '@core/entities/user/user.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
 
 @Component({

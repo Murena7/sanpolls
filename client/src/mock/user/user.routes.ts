@@ -2,8 +2,8 @@ import { Request } from 'kakapo';
 import { environment } from '@environment';
 import { MyDatabase, MyOptions, ErrorResponse } from '../core/types';
 import { now } from '@core/helpers/moment';
-import { UserResponse } from '@core/user/user.types';
-import { User } from '@core/user/user.models';
+import { UserResponse } from '@core/entities/user/user.types';
+import { User } from '@core/entities/user/user.models';
 import { getCookie } from '../core/cookie.helper';
 
 export default class UsersRoutes {

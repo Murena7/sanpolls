@@ -1,8 +1,8 @@
 import { Factory } from '../core/types';
-import { UserStatus } from '@core/user/user.types';
+import { UserStatus } from '@core/entities/user/user.types';
 import { now } from '@core/helpers/moment';
-import { User } from '@core/user/user.models';
-import { UserRole } from '@core/user/role.models';
+import { User } from '@core/entities/user/user.models';
+import { UserRole } from '@core/entities/user/role.models';
 
 export class UserFactory implements Factory<User> {
   db = 'users';
@@ -17,7 +17,7 @@ export class UserFactory implements Factory<User> {
       password: `test-${id}`,
       status: faker.random.arrayElement(Object.values(UserStatus)),
       createdAt: now().toISOString(),
-      updatedAt: now().toISOString(),
+      updatedAt: now().toISOString()
     };
   }
 }

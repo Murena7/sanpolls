@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '@core/user/user.models';
+import { User } from '@core/entities/user/user.models';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({

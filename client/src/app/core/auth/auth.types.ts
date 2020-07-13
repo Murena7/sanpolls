@@ -1,4 +1,4 @@
-import { User } from '@core/user/user.models';
+import { User } from '@core/entities/user/user.models';
 
 export interface ILoginResponse {
   data: User;

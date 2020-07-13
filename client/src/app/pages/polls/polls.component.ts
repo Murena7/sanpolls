@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { IPoll } from '@core/polls/polls.types';
+import { IPoll } from '@core/entities/polls/polls.types';
 
 @Component({
   selector: 'san-polls',
   templateUrl: './polls.component.html',
-  styleUrls: ['./polls.component.scss'],
+  styleUrls: ['./polls.component.scss']
 })
 export class PollsComponent implements OnInit {
   pollsTableData: IPoll[] = [];
@@ -14,7 +14,7 @@ export class PollsComponent implements OnInit {
   constructor(private apiService: PollsService) {}
 
   ngOnInit(): void {
-    this.apiService.getPolls().subscribe((res) => {
+    this.apiService.getPolls().subscribe(res => {
       this.pollsTableData = res;
     });
   }
@@ -25,7 +25,7 @@ export class PollsComponent implements OnInit {
     // 2) it enables display of the loading indicator
     this.pollsTableLoader = true;
 
-    this.apiService.getPolls().subscribe((res) => {
+    this.apiService.getPolls().subscribe(res => {
       this.pollsTableData = [...this.pollsTableData, ...res];
       this.pollsTableLoader = false;
     });

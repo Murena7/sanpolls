@@ -1,8 +1,8 @@
-import { User } from '@core/user/user.models';
+import { User } from '@core/entities/user/user.models';
 
 export enum UserStatus {
   Active = 'active',
-  Inactive = 'inactive',
+  Inactive = 'inactive'
 }
 
 export interface UserResponse {

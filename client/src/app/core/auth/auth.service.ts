@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { User } from '@core/user/user.models';
+import { User } from '@core/entities/user/user.models';
 import { removeAllCookies } from '../../../mock/core/cookie.helper';
 
 @Injectable({ providedIn: 'root' })
