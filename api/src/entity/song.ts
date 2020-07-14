@@ -1,20 +1,39 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
 import { Expose } from 'class-transformer';
+import { User } from './user';
+import { PollEvent } from './poll-event';
 
 @Entity()
 export class Song extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ nullable: true })
   @Expose()
   userId: string;
 
-  @Column({ type: 'uuid' })
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: User;
+
+  @Column({ nullable: true })
   @Expose()
   eventId: string;
+
+  @OneToOne(type => PollEvent)
+  @JoinColumn()
+  event: PollEvent;
 
   @Column({ type: 'varchar' })
   @Expose()

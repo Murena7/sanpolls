@@ -1,6 +1,9 @@
+import { IUser } from '@core/entities/user/user.types';
+
 export interface ILikeDislike {
   id: string;
   userId: string;
+  user?: IUser;
   parentId: string;
   parentType: ParentType;
   isLike: boolean;

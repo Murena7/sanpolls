@@ -1,14 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { ParentType } from '../interfaces/like-dislike';
 import moment from 'moment';
+import { User } from './user';
 
 @Entity()
 export class LikeDislike extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ nullable: true })
   userId: string;
+
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: User;
 
   @Column({ type: 'uuid' })
   parentId: string;

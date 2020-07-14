@@ -1,14 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
+import { User } from './user';
+import { Comment } from './comment';
 
 @Entity()
 export class ChildComment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ nullable: true })
   commentId: string;
+
+  @OneToOne(type => Comment)
+  @JoinColumn()
+  comment: Comment;
 
   @Column({ type: 'varchar' })
   text: string;

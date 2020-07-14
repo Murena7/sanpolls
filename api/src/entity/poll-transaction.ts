@@ -1,24 +1,48 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { TransactionSource } from '../interfaces/poll-transaction';
 import moment from 'moment';
 import { Expose } from 'class-transformer';
+import { User } from './user';
+import { PollEvent } from './poll-event';
+import { Song } from './song';
 
 @Entity()
 export class PollTransaction extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ nullable: true })
   @Expose()
   userId: string;
 
-  @Column({ type: 'uuid', nullable: true })
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: User;
+
+  @Column({ nullable: true })
   @Expose()
   eventId: string;
 
-  @Column({ type: 'uuid', nullable: true })
+  @OneToOne(type => PollEvent)
+  @JoinColumn()
+  event: PollEvent;
+
+  @Column({ nullable: true })
   @Expose()
   songId: string;
+
+  @OneToOne(type => Song)
+  @JoinColumn()
+  song: Song;
 
   @Column({ type: 'int' })
   @Expose()
