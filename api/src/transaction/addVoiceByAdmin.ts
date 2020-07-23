@@ -29,9 +29,11 @@ export const AddVoiceByAdminTransaction = async (body: IAddVoiceBody) => {
       source: TransactionSource.ByAdmin,
     };
 
-    const newPollTransaction = await pollTransactionRepository
-      .create(plainToClass(PollTransaction, newPollTransactionData, { excludeExtraneousValues: true }))
-      .save();
+    const newPollTransaction = await transactionalEntityManager.save(
+      pollTransactionRepository.create(
+        plainToClass(PollTransaction, newPollTransactionData, { excludeExtraneousValues: true }),
+      ),
+    );
 
     user.voiceBalance = user.voiceBalance + body.amount;
 

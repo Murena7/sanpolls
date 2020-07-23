@@ -43,9 +43,11 @@ export const giveVoteTransaction = async (body: IGiveVoteBody, currentUser: User
       source: TransactionSource.GiveVote,
     };
 
-    await pollTransactionRepository
-      .create(plainToClass(PollTransaction, newPollTransactionData, { excludeExtraneousValues: true }))
-      .save();
+    await transactionalEntityManager.save(
+      pollTransactionRepository.create(
+        plainToClass(PollTransaction, newPollTransactionData, { excludeExtraneousValues: true }),
+      ),
+    );
 
     // Decrease balance
     user.voiceBalance = user.voiceBalance - body.voiceCount;

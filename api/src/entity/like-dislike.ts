@@ -5,8 +5,8 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ParentType } from '../interfaces/like-dislike';
 import moment from 'moment';
@@ -20,7 +20,7 @@ export class LikeDislike extends BaseEntity {
   @Column({ nullable: true })
   userId: string;
 
-  @OneToOne(type => User)
+  @ManyToOne(type => User)
   @JoinColumn()
   user: User;
 

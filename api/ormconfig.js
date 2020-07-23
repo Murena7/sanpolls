@@ -5,7 +5,7 @@ module.exports = {
   username: process.env.PGSQL_USER,
   password: process.env.PGSQL_PASS,
   database: process.env.PGSQL_DB,
-  synchronize: true,
+  synchronize: false,
   logging: false,
   maxQueryExecutionTime: 1000,
   entities: ['src/entity/**/*.ts'],

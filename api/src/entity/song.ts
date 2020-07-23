@@ -5,8 +5,8 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
@@ -23,7 +23,7 @@ export class Song extends BaseEntity {
   @Expose()
   userId: string;
 
-  @OneToOne(type => User)
+  @ManyToOne(type => User)
   @JoinColumn()
   user: User;
 
@@ -31,7 +31,7 @@ export class Song extends BaseEntity {
   @Expose()
   eventId: string;
 
-  @OneToOne(type => PollEvent)
+  @ManyToOne(type => PollEvent)
   @JoinColumn()
   event: PollEvent;
 

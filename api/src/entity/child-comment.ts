@@ -5,12 +5,11 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
-import { User } from './user';
 import { Comment } from './comment';
 
 @Entity()
@@ -21,7 +20,7 @@ export class ChildComment extends BaseEntity {
   @Column({ nullable: true })
   commentId: string;
 
-  @OneToOne(type => Comment)
+  @ManyToOne(type => Comment)
   @JoinColumn()
   comment: Comment;
 

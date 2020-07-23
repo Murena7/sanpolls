@@ -5,8 +5,8 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { TransactionSource } from '../interfaces/poll-transaction';
 import moment from 'moment';
@@ -24,7 +24,7 @@ export class PollTransaction extends BaseEntity {
   @Expose()
   userId: string;
 
-  @OneToOne(type => User)
+  @ManyToOne(type => User)
   @JoinColumn()
   user: User;
 
@@ -32,7 +32,7 @@ export class PollTransaction extends BaseEntity {
   @Expose()
   eventId: string;
 
-  @OneToOne(type => PollEvent)
+  @ManyToOne(type => PollEvent)
   @JoinColumn()
   event: PollEvent;
 
@@ -40,7 +40,7 @@ export class PollTransaction extends BaseEntity {
   @Expose()
   songId: string;
 
-  @OneToOne(type => Song)
+  @ManyToOne(type => Song)
   @JoinColumn()
   song: Song;
 

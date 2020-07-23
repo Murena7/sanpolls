@@ -5,8 +5,8 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
@@ -22,21 +22,21 @@ export class Comment extends BaseEntity {
   @Column({ nullable: true })
   userId: string;
 
-  @OneToOne(type => User)
+  @ManyToOne(type => User)
   @JoinColumn()
   user: User;
 
   @Column({ nullable: true })
   eventId: string;
 
-  @OneToOne(type => PollEvent)
+  @ManyToOne(type => PollEvent)
   @JoinColumn()
   event: PollEvent;
 
   @Column({ nullable: true })
   songId: string;
 
-  @OneToOne(type => Song)
+  @ManyToOne(type => Song)
   @JoinColumn()
   song: Song;
 
