@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpService) {}
 
   getUser(): Observable<IUser> {
-    return this.http.get<IBasicResponse>(`${environment.UI_SERVER}/auth/user`).pipe(map(data => data.data));
+    return this.http.get<IBasicResponse>(`${environment.UI_SERVER}/user/me`).pipe(map(data => data.data));
   }
 
   createNewUser(user): Observable<any> {

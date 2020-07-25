@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Добавить голоса</h1>
+<div mat-dialog-content>
+  <p>Введите количество голосов которое вы хотите добавить пользователю</p>
+  <p>{{ userData.id }}</p>
+  <p>{{ userData.email }}</p>
+  <mat-form-field>
+    <input matInput type="number" [(ngModel)]="amount" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Отменить</button>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial>Подтвердить</button>
+</div>

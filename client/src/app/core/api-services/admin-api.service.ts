@@ -4,7 +4,7 @@ import { environment } from '@environment';
 import { map } from 'rxjs/operators';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse, ResponseStatusMessage } from '@core/core.types';
-import { ICreatePollBody, IPaginationQueryParams, IUserToAdminBody } from '@core/entities/admin/admin.types';
+import { IAddVoiceBody, ICreatePollBody, IPaginationQueryParams } from '@core/entities/admin/admin.types';
 import { toQueryString } from '@core/helpers/http';
 import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
 import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
@@ -21,16 +21,22 @@ export class AdminApiService {
       .pipe(map(data => data.status));
   }
 
-  addVoice(body: IUserToAdminBody): Observable<ResponseStatusMessage> {
+  addVoice(body: IAddVoiceBody): Observable<ResponseStatusMessage> {
     return this.http
       .post<IBasicResponse>(`${environment.UI_SERVER}/admin/user/add-voice`, body)
       .pipe(map(data => data.status));
   }
 
-  getAllUsers(queryParams?: IPaginationQueryParams): Observable<IBasicResponse<IUser[]>> {
-    return this.http.get<IBasicResponse<IUser[]>>(
-      `${environment.UI_SERVER}/admin/user/all${toQueryString(queryParams)}`
-    );
+  getAllUsers(queryParams?: IPaginationQueryParams, disableLoader = false): Observable<IBasicResponse<IUser[]>> {
+    if (disableLoader) {
+      return this.http
+        .disableLoaderInterceptor()
+        .get<IBasicResponse<IUser[]>>(`${environment.UI_SERVER}/admin/user/all${toQueryString(queryParams)}`);
+    } else {
+      return this.http.get<IBasicResponse<IUser[]>>(
+        `${environment.UI_SERVER}/admin/user/all${toQueryString(queryParams)}`
+      );
+    }
   }
 
   createNewPoll(body: ICreatePollBody): Observable<IPollEvent> {

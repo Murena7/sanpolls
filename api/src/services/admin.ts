@@ -1,6 +1,6 @@
 import { Inject, Service } from 'typedi';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Raw, Repository } from 'typeorm';
 import { PollEvent } from '../entity/poll-event';
 import { Song } from '../entity/song';
 import { IBasicResponse } from '../interfaces/response-types';
@@ -13,6 +13,7 @@ import { classToPlain } from 'class-transformer';
 import { PollTransaction } from '../entity';
 import moment from 'moment';
 import { MoreThan } from 'typeorm';
+import { isDef } from '../helpers/common';
 
 @Service()
 export default class AdminService {
@@ -52,17 +53,27 @@ export default class AdminService {
     }
   }
 
-  public async getAllUsers(skip: number, take: number): Promise<IBasicResponse> {
+  public async getAllUsers(skip: number, take: number, phrase: string): Promise<IBasicResponse> {
     try {
       let data: User[];
       let count: number;
-      if (skip && take) {
+      if (isDef(skip) && isDef(take) && isDef(phrase)) {
         [data, count] = await this.userRepository.findAndCount({
+          order: { createdAt: 'ASC' },
+          where: { email: Raw(alias => `LOWER(${alias}) Like '%${phrase.toLowerCase()}%'`) },
+          take: take,
+          skip: skip,
+        });
+      } else if (isDef(skip) && isDef(take)) {
+        [data, count] = await this.userRepository.findAndCount({
+          order: { createdAt: 'ASC' },
           take: take,
           skip: skip,
         });
       } else {
-        [data, count] = await this.userRepository.findAndCount();
+        [data, count] = await this.userRepository.findAndCount({
+          order: { createdAt: 'ASC' },
+        });
       }
 
       return { data: data.map(x => classToPlain(x)), count: count };

@@ -26,3 +26,11 @@ body {
     width: 800px;
   }
 }
+
+a {
+  text-decoration: unset;
+}
+
+.error-notification {
+  background-color: darkred;
+}

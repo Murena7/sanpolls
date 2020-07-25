@@ -8,7 +8,7 @@ import { getCookie } from '../core/cookie.helper';
 export default class UsersRoutes {
   constructor({ uiRouter }: MyOptions) {
     if (!environment.production) {
-      uiRouter.get('/auth/user', (request, db) => this.findOne(request, db));
+      // uiRouter.get('/auth/user', (request, db) => this.findOne(request, db));
     }
   }
 

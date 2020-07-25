@@ -1,6 +1,6 @@
 import { EventStatus, EventType } from '@core/entities/poll-event/poll-event.types';
 
-export interface IUserToAdminBody {
+export interface IAddVoiceBody {
   userId: string;
   amount: number;
 }
@@ -9,6 +9,7 @@ export interface IPaginationQueryParams {
   take: number;
   skip: number;
   id?: string;
+  phrase?: string;
 }
 
 export interface ICreatePollBody {

@@ -28,16 +28,17 @@ export function appInit(initService: InitAppService) {
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: appInit,
       multi: true,
-      deps: [InitAppService],
+      deps: [InitAppService]
     },
+    { provide: 'windowObject', useValue: window }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

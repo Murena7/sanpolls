@@ -20,6 +20,7 @@ export default (app: Router) => {
       query: Joi.object({
         skip: Joi.number(),
         take: Joi.number(),
+        phrase: Joi.string(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +28,11 @@ export default (app: Router) => {
       logger.debug('Calling /admin/user/all endpoint');
       try {
         const devToolsServiceInstance = Container.get(AdminService);
-        const result: IBasicResponse = await devToolsServiceInstance.getAllUsers(+req.query.skip, +req.query.take);
+        const result: IBasicResponse = await devToolsServiceInstance.getAllUsers(
+          +req.query.skip,
+          +req.query.take,
+          req.query.phrase,
+        );
 
         return res.status(200).json(result);
       } catch (e) {
@@ -68,7 +73,9 @@ export default (app: Router) => {
         userId: Joi.string()
           .uuid()
           .required(),
-        amount: Joi.number().required(),
+        amount: Joi.number()
+          .integer()
+          .required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -148,9 +155,9 @@ export default (app: Router) => {
   );
   ///
   ////Statistics
-  route.get('/user/statistic/total', async (req: Request, res: Response, next: NextFunction) => {
+  route.get('/statistic/total', async (req: Request, res: Response, next: NextFunction) => {
     const logger: Logger = Container.get('logger');
-    logger.debug('Calling /user/statistic/total endpoint');
+    logger.debug('Calling /statistic/total endpoint');
     try {
       const devToolsServiceInstance = Container.get(AdminService);
       const result: IBasicResponse = await devToolsServiceInstance.getStatisticTotal();

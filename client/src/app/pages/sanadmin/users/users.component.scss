@@ -26,4 +26,23 @@
 .action-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  button {
+    margin-bottom: 15px;
+    margin-left: 10px;
+  }
+}
+
+::ng-deep .setting-column {
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
