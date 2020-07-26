@@ -39,12 +39,22 @@ export default class SongService {
 
   public async songById(id: string): Promise<IBasicResponse> {
     try {
-      const result = await this.songRepository.findOne({ id: id });
+      const result = await this.songRepository
+        .createQueryBuilder('song')
+        .leftJoin('song.user', 'user')
+        .addSelect('user.username')
+        .whereInIds(id)
+        .getOne();
+
       if (!result) {
         throw new Error('Song not found');
       }
 
-      return { data: result };
+      const position = await this.songRepository.query(
+        `SELECT position FROM (SELECT *, row_number() over( order by "voiceCount" DESC ) as position FROM song WHERE "eventId" = '${result.eventId}' ) song WHERE "id" = '${result.id}';`,
+      );
+
+      return { data: { ...result, ratingPosition: +position[0].position } };
     } catch (e) {
       this.logger.error(e);
       throw e;

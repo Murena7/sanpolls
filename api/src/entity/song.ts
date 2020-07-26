@@ -57,6 +57,8 @@ export class Song extends BaseEntity {
 
   selfLike?: LikeDislike;
 
+  ratingPosition: number;
+
   @Column({ type: 'varchar', default: '' })
   @Expose()
   additionalTextInfo: string;

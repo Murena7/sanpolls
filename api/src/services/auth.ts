@@ -8,6 +8,7 @@ import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDi
 import events from '../subscribers/events';
 import { getRepository, Repository } from 'typeorm';
 import { User } from '../entity/user';
+import lodash from 'lodash';
 
 @Service()
 export default class AuthService {
@@ -56,6 +57,7 @@ export default class AuthService {
           salt: salt.toString('hex'),
           password: hashedPassword,
           role: Role.User,
+          username: `user${lodash.random(1000000, 9999999)}`,
         })
         .save();
 
@@ -84,7 +86,13 @@ export default class AuthService {
   }
 
   public async SignIn(email: string, password: string, cb: Function) {
-    const userRecord = await this.userRepository.findOne({ email });
+    const userRecord = await this.userRepository
+      .createQueryBuilder('user')
+      .where({ email: email })
+      .addSelect('user.password')
+      .addSelect('user.salt')
+      .getOne();
+
     if (!userRecord) {
       return cb(null, false);
     }

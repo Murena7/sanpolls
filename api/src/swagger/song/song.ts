@@ -19,17 +19,21 @@ export const getSongById = {
         'application/json': {
           example: {
             data: {
-              id: 'f188b768-ebc7-463c-b964-2b82b5a59995',
-              userId: 'da25ca78-e2ae-4b3d-bff0-2668747d8f89',
-              eventId: '54e62bfb-b6af-49a1-85c6-d8f0a59ba3f9',
+              id: 'f325af9d-9a58-40af-8e80-bd9e1ac348e3',
+              userId: '5f655f24-1015-42bf-b56f-00c660b563bd',
+              eventId: '42532007-fe14-4a29-8658-83a633e6e775',
               songSinger: 'Сплин',
               songName: 'Привет Андрей',
               coverSinger: 'Путин',
-              voiceCount: 1,
+              voiceCount: 300,
               additionalTextInfo: 'Многие думают',
               youtubeVideoId: null,
-              createdAt: '2020-07-08T10:33:17.120Z',
-              updatedAt: '2020-07-08T10:33:17.120Z',
+              createdAt: '2020-07-26T17:01:29.108Z',
+              updatedAt: '2020-07-26T17:01:29.108Z',
+              user: {
+                username: 'user5081611',
+              },
+              ratingPosition: 2,
             },
           },
         },

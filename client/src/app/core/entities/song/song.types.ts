@@ -8,6 +8,7 @@ export interface ISong {
   user?: IUser;
   eventId: string;
   event?: IPollEvent;
+  ratingPosition?: number;
   songSinger: string;
   songName: string;
   coverSinger: string;
