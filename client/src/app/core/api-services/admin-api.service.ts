@@ -45,10 +45,16 @@ export class AdminApiService {
       .pipe(map(data => data.data));
   }
 
-  getAllPolls(queryParams?: IPaginationQueryParams): Observable<IBasicResponse<IPollEvent[]>> {
-    return this.http.get<IBasicResponse<IPollEvent[]>>(
-      `${environment.UI_SERVER}/admin/user/all${toQueryString(queryParams)}`
-    );
+  getAllPolls(queryParams?: IPaginationQueryParams, disableLoader = false): Observable<IBasicResponse<IPollEvent[]>> {
+    if (disableLoader) {
+      return this.http
+        .disableLoaderInterceptor()
+        .get<IBasicResponse<IPollEvent[]>>(`${environment.UI_SERVER}/admin/poll/all${toQueryString(queryParams)}`);
+    } else {
+      return this.http.get<IBasicResponse<IPollEvent[]>>(
+        `${environment.UI_SERVER}/admin/poll/all${toQueryString(queryParams)}`
+      );
+    }
   }
 
   getAllTransactions(

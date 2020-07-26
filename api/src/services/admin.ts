@@ -87,7 +87,7 @@ export default class AdminService {
     try {
       let data: PollEvent[];
       let count: number;
-      if (skip && take) {
+      if (isDef(skip) && isDef(take)) {
         [data, count] = await this.pollEventRepository.findAndCount({
           take: take,
           skip: skip,

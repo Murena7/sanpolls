@@ -17,7 +17,7 @@ export class TransactionsComponent implements OnInit {
   readonly resultLimit = 20;
   isLoading = false;
   isNoMoreResult = false;
-  @ViewChild('transactionTable') userTable: ElementRef;
+  @ViewChild('transactionTable') transactionTable: ElementRef;
 
   transactionDataRows: IPollTransaction[] = [];
   totalElements: number;
@@ -52,7 +52,7 @@ export class TransactionsComponent implements OnInit {
   onDetailToggle(event) {}
 
   onScroll(offsetY: number) {
-    const viewHeight = this.userTable.nativeElement.getBoundingClientRect().height - this.headerHeight;
+    const viewHeight = this.transactionTable.nativeElement.getBoundingClientRect().height - this.headerHeight;
     if (
       !this.isLoading &&
       !this.isNoMoreResult &&
