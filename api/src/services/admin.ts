@@ -53,14 +53,14 @@ export default class AdminService {
     }
   }
 
-  public async getAllUsers(skip: number, take: number, phrase: string): Promise<IBasicResponse> {
+  public async getAllUsers(skip: number, take: number, filter: string): Promise<IBasicResponse> {
     try {
       let data: User[];
       let count: number;
-      if (isDef(skip) && isDef(take) && isDef(phrase)) {
+      if (isDef(skip) && isDef(take) && isDef(filter)) {
         [data, count] = await this.userRepository.findAndCount({
           order: { createdAt: 'ASC' },
-          where: { email: Raw(alias => `LOWER(${alias}) Like '%${phrase.toLowerCase()}%'`) },
+          where: { email: Raw(alias => `LOWER(${alias}) Like '%${filter.toLowerCase()}%'`) },
           take: take,
           skip: skip,
         });
@@ -103,17 +103,65 @@ export default class AdminService {
     }
   }
 
-  public async getAllTransactions(skip: number, take: number): Promise<IBasicResponse> {
+  public async getAllTransactions(skip: number, take: number, filter: string): Promise<IBasicResponse> {
     try {
       let data: PollTransaction[];
       let count: number;
-      if (skip && take) {
-        [data, count] = await this.pollTransactionRepository.findAndCount({
-          take: take,
-          skip: skip,
-        });
+
+      if (isDef(skip) && isDef(take) && isDef(filter)) {
+        count = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.email')
+          .where('user.email like :email', { email: '%' + filter + '%' })
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .getCount();
+
+        data = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.id')
+          .addSelect('user.email')
+          .addSelect('user.username')
+          .where('user.email like :email', { email: '%' + filter + '%' })
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .skip(skip)
+          .take(take)
+          .getMany();
+      } else if (isDef(skip) && isDef(take)) {
+        count = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.email')
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .getCount();
+
+        data = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.id')
+          .addSelect('user.email')
+          .addSelect('user.username')
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .skip(skip)
+          .take(take)
+          .getMany();
       } else {
-        [data, count] = await this.pollTransactionRepository.findAndCount();
+        count = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.email')
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .getCount();
+
+        data = await this.pollTransactionRepository
+          .createQueryBuilder('poll_transaction')
+          .leftJoin('poll_transaction.user', 'user')
+          .addSelect('user.id')
+          .addSelect('user.email')
+          .addSelect('user.username')
+          .orderBy('poll_transaction.createdAt', 'DESC')
+          .getMany();
       }
 
       return { data: data.map(x => classToPlain(x)), count: count };

@@ -1,21 +1,109 @@
 <div class="container">
   <div class="table-container">
-    <input
-      type="text"
-      style="padding: 8px; margin: 15px auto; width: 30%;"
-      placeholder="Фильтр по email пользователя"
-      (keyup)="updateFilter($event)"
-    />
-    <ngx-datatable
-      class="material"
-      [columns]="columns"
-      [columnMode]="ColumnMode.force"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      rowHeight="auto"
-      [limit]="10"
-      [rows]="usersData"
-    >
-    </ngx-datatable>
+    <div class="action-container">
+      <div class="form-container">
+        <mat-form-field appearance="fill" (keyup.enter)="updateFilter()">
+          <mat-label>Поиск по email</mat-label>
+          <input matInput [(ngModel)]="filter" />
+        </mat-form-field>
+        <button mat-mini-fab color="primary" (click)="updateFilter()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+      <button [disabled]="true" mat-fab [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item matTooltip="Подсказка">
+          <span>Изменить</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div #transactionTable>
+      <ngx-datatable
+        class="material expandable"
+        [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 255"
+        [columnMode]="ColumnMode.force"
+        [rowHeight]="rowHeight"
+        [headerHeight]="headerHeight"
+        [footerHeight]="50"
+        [rows]="transactionDataRows"
+        [scrollbarV]="true"
+        [loadingIndicator]="isLoading"
+        (scroll)="onScroll($event.offsetY)"
+      >
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="60" #myDetailRow (toggle)="onDetailToggle($event)">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left: 35px;">
+              <div>id: {{ row.id }}</div>
+              <div>username: {{ row.user.username }}</div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+        >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0)"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="toggleExpandRow(row)"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Index" [width]="80">
+          <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{ rowIndex + 1 }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Email">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <strong>{{ row.user.email }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Amount">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <strong>{{ row.amount }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Type" prop="source">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            <strong>{{ value }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="CreatedAt">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <strong>{{ row.createdAt | date: 'dd/MM/yy HH:MM' }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column cellClass="setting-column">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button color="primary" mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>settings</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button [disabled]="true" mat-menu-item matTooltip="Изменить данные пользователя">
+                <span>Изменить</span>
+              </button>
+            </mat-menu>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-footer>
+          <ng-template ngx-datatable-footer-template>
+            <div class="page-count">{{ totalElements }} total</div>
+          </ng-template>
+        </ngx-datatable-footer>
+      </ngx-datatable>
+    </div>
   </div>
 </div>

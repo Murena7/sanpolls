@@ -9,7 +9,7 @@ export interface IPaginationQueryParams {
   take: number;
   skip: number;
   id?: string;
-  phrase?: string;
+  filter?: string;
 }
 
 export interface ICreatePollBody {

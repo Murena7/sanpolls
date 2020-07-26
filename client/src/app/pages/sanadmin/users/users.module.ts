@@ -5,10 +5,11 @@ import { UsersComponent } from '@pages/sanadmin/users/users.component';
 import { SharedModule } from '@shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MaterialModule } from '@shared/material/material.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AddVoiceComponent, UsersComponent],
-  imports: [CommonModule, SharedModule, NgxDatatableModule, MaterialModule],
+  imports: [CommonModule, SharedModule, NgxDatatableModule, MaterialModule, RouterModule],
   entryComponents: [AddVoiceComponent]
 })
 export class UsersModule {}

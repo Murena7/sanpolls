@@ -179,6 +179,14 @@ export const getAllUsers = {
       },
       description: 'result skip',
     },
+    {
+      in: 'query',
+      name: 'filter',
+      schema: {
+        type: 'string',
+      },
+      description: 'filter by email',
+    },
   ],
   responses: {
     '200': {

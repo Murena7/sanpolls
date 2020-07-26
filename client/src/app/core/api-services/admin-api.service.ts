@@ -51,10 +51,21 @@ export class AdminApiService {
     );
   }
 
-  getAllTransactions(queryParams?: IPaginationQueryParams): Observable<IBasicResponse<IPollTransaction[]>> {
-    return this.http.get<IBasicResponse<IPollTransaction[]>>(
-      `${environment.UI_SERVER}/admin/transaction/all${toQueryString(queryParams)}`
-    );
+  getAllTransactions(
+    queryParams?: IPaginationQueryParams,
+    disableLoader = false
+  ): Observable<IBasicResponse<IPollTransaction[]>> {
+    if (disableLoader) {
+      return this.http
+        .disableLoaderInterceptor()
+        .get<IBasicResponse<IPollTransaction[]>>(
+          `${environment.UI_SERVER}/admin/transaction/all${toQueryString(queryParams)}`
+        );
+    } else {
+      return this.http.get<IBasicResponse<IPollTransaction[]>>(
+        `${environment.UI_SERVER}/admin/transaction/all${toQueryString(queryParams)}`
+      );
+    }
   }
 
   getStatisticTotal(): Observable<IStatisticTotal> {

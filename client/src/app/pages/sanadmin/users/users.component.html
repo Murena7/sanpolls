@@ -4,7 +4,7 @@
       <div class="form-container">
         <mat-form-field appearance="fill" (keyup.enter)="updateFilter()">
           <mat-label>Поиск по email</mat-label>
-          <input matInput [(ngModel)]="phrase" />
+          <input matInput [(ngModel)]="filter" />
         </mat-form-field>
         <button mat-mini-fab color="primary" (click)="updateFilter()">
           <mat-icon>search</mat-icon>
@@ -97,6 +97,14 @@
               <button (click)="addVoice(row)" mat-menu-item matTooltip="Добавить голоса пользователю">
                 <span>Добавить Голоса</span>
               </button>
+              <a
+                mat-menu-item
+                [routerLink]="['../transactions']"
+                [queryParams]="{ filter: row.email }"
+                matTooltip="Отобразить все транзакции пользователя"
+              >
+                <span>Транзакции</span>
+              </a>
               <button [disabled]="true" mat-menu-item matTooltip="Изменить данные пользователя">
                 <span>Изменить</span>
               </button>

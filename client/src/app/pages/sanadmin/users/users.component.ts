@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit {
   usersDataRows: IUser[] = [];
   totalElements: number;
   ColumnMode = ColumnMode;
-  phrase = '';
+  filter = '';
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
   constructor(
@@ -88,7 +88,7 @@ export class UsersComponent implements OnInit {
         {
           take,
           skip,
-          phrase: this.phrase === '' ? undefined : this.phrase
+          filter: this.filter === '' ? undefined : this.filter
         },
         disableLoader
       )

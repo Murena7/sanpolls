@@ -20,7 +20,7 @@ export default (app: Router) => {
       query: Joi.object({
         skip: Joi.number(),
         take: Joi.number(),
-        phrase: Joi.string(),
+        filter: Joi.string(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -31,7 +31,7 @@ export default (app: Router) => {
         const result: IBasicResponse = await devToolsServiceInstance.getAllUsers(
           +req.query.skip,
           +req.query.take,
-          req.query.phrase,
+          req.query.filter,
         );
 
         return res.status(200).json(result);
@@ -176,6 +176,7 @@ export default (app: Router) => {
       query: Joi.object({
         skip: Joi.number(),
         take: Joi.number(),
+        filter: Joi.string(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -186,6 +187,7 @@ export default (app: Router) => {
         const result: IBasicResponse = await devToolsServiceInstance.getAllTransactions(
           +req.query.skip,
           +req.query.take,
+          req.query.filter,
         );
 
         return res.status(200).json(result);
