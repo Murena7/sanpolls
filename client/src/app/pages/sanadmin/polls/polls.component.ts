@@ -1,19 +1,20 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { AdminApiService } from '@core/api-services/admin-api.service';
-import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
+import { EventStatus, IPollEvent } from '@core/entities/poll-event/poll-event.types';
 import { WindowSizeService } from '@core/api-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
+import { WarnNotificationService } from '@core/common-services/warn-notification.service';
 
 @Component({
   templateUrl: './polls.component.html',
   styleUrls: ['./polls.component.scss']
 })
-export class PollsComponent implements OnInit {
+export class PollsComponent implements OnInit, OnDestroy {
   readonly headerHeight = 50;
   readonly rowHeight = 50;
-  readonly resultLimit = 20;
+  readonly resultLimit = 100;
   isLoading = false;
   isNoMoreResult = false;
   @ViewChild('pollsTable') pollTable: ElementRef;
@@ -28,11 +29,16 @@ export class PollsComponent implements OnInit {
     private adminApiService: AdminApiService,
     public windowSizeService: WindowSizeService,
     public dialog: MatDialog,
-    public snackbarNotificationService: SnackbarNotificationService
+    public snackbarNotificationService: SnackbarNotificationService,
+    public warnNotificationService: WarnNotificationService
   ) {}
 
   ngOnInit(): void {
     this.loadPollsData();
+  }
+
+  ngOnDestroy(): void {
+    this.warnNotificationService.hide();
   }
 
   updateFilter() {
@@ -58,7 +64,17 @@ export class PollsComponent implements OnInit {
     this.loadPollsData(limit, this.pollDataRows.length, true, true);
   }
 
-  private loadPollsData(take = 20, skip = 0, disableLoader = false, appendData = false) {
+  private checkActivePollCount(data: IPollEvent[]) {
+    const activePolls = data.filter(poll => poll.status === EventStatus.Active);
+    if (activePolls.length > 1) {
+      return this.warnNotificationService.show(
+        'Больше одного Polls со статусом Active! (допускается только 1 активный)'
+      );
+    }
+    return this.warnNotificationService.hide();
+  }
+
+  private loadPollsData(take = 100, skip = 0, disableLoader = false, appendData = false) {
     this.adminApiService
       .getAllPolls(
         {
@@ -83,6 +99,8 @@ export class PollsComponent implements OnInit {
         } else {
           this.isNoMoreResult = false;
         }
+
+        this.checkActivePollCount(this.pollDataRows);
       });
   }
 }

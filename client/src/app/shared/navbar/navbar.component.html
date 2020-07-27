@@ -11,7 +11,8 @@
   <nav>
     <span *ngIf="userData" mat-button>Мои голоса: 1</span>
     <button *ngIf="userData" mat-button [matMenuTriggerFor]="afterMenu">
-      <i class="material-icons md-light">face </i> Мой профиль
+      <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i> Мой
+      профиль
     </button>
     <mat-menu #afterMenu="matMenu">
       <button mat-menu-item routerLink="/profile">Мой профиль</button>

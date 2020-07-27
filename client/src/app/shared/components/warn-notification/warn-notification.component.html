@@ -1,0 +1,3 @@
+<div class="container" *ngIf="warnNotificationService.warnDisplayed | async">
+  <h1>{{ warnNotificationService.warnMessage | async }}</h1>
+</div>
