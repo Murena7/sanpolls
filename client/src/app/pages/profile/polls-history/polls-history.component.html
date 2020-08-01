@@ -1,1 +1,53 @@
-<p>polls-history works!</p>
+<mat-card class="polls-history-card">
+  <mat-card-title class="polls-history-title">История голосований</mat-card-title>
+  <mat-card-content class="mat-card-content">
+    <form class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Выбрать голосование</mat-label>
+        <mat-select [(value)]="selectedPoll">
+          <mat-option [value]="option.songName" *ngFor="let option of polls">{{ option.coverSinger }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div *ngIf="selectedPoll">
+      <p>Вы выбрали: {{ selectedPoll }}</p>
+      <p>
+        <ngx-datatable
+          [style.height.vh]="60"
+          class="material custom-table"
+          [rows]="polls"
+          [columnMode]="'flex'"
+          [headerHeight]="40"
+          [scrollbarV]="false"
+          [footerHeight]="35"
+          [rowHeight]="50"
+          [sorts]="[{ prop: 'votesCount', dir: 'desc' }]"
+        >
+          <ngx-datatable-column name="Место" prop="text" [flexGrow]="1">
+            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              <span class="word-item">{{ rowIndex + 1 }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="2">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="word-item">{{ row.coverSinger }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Песня (Автор)" prop="contextText" [flexGrow]="3">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="word-item">{{ row.songName }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="word-item">{{ row.voiceCount }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

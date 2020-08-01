@@ -22,8 +22,6 @@ export interface IUser {
 export interface IUserRegistrationBody {
   email: string;
   password: string;
-  role: UserRole;
-  status: UserStatus;
 }
 
 export interface UserResponse {

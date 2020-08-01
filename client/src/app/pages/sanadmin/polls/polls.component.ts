@@ -17,13 +17,13 @@ export class PollsComponent implements OnInit, OnDestroy {
   readonly resultLimit = 100;
   isLoading = false;
   isNoMoreResult = false;
-  @ViewChild('pollsTable') pollTable: ElementRef;
+  @ViewChild('pollsTable', { static: true }) pollTable: ElementRef;
 
   pollDataRows: IPollEvent[] = [];
   totalElements: number;
   ColumnMode = ColumnMode;
   filter = '';
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
 
   constructor(
     private adminApiService: AdminApiService,

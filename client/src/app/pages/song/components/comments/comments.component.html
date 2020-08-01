@@ -1,0 +1,46 @@
+<h3 class="comments-title">Комментарии:</h3>
+<form class="form" [formGroup]="commentsForm" (ngSubmit)="submit()">
+  <mat-form-field class="full-width">
+    <mat-label>Оставьте комментарий</mat-label>
+    <input matInput type="text" formControlName="commentControl" />
+  </mat-form-field>
+
+  <mat-card-actions *ngIf="!commentsForm.get('commentControl').invalid">
+    <button mat-stroked-button type="button" (click)="cancel()">
+      Отмена
+    </button>
+    <button mat-stroked-button color="primary" type="submit" [disabled]="commentsForm.get('commentControl').invalid">
+      Отправить
+    </button>
+  </mat-card-actions>
+</form>
+<ul>
+  <li *ngFor="let comment of comments">
+    <div class="comments-header">
+      <h3 class="user-name">{{ comment.userName }}</h3>
+      <small>{{ comment.date | date: 'short' }}</small>
+    </div>
+    <p class="comment-content">{{ comment.text }}</p>
+    <div class="comments-footer">
+      <san-like></san-like>
+      <button mat-flat-button (click)="openReplyText()">Ответить</button>
+    </div>
+    <div *ngIf="openReply">
+      <form class="form" [formGroup]="replyForm" (ngSubmit)="replySubmit()">
+        <mat-form-field class="full-width">
+          <mat-label>Написать ответ</mat-label>
+          <input matInput type="text" formControlName="replyControl" />
+        </mat-form-field>
+        <mat-card-actions *ngIf="!replyForm.get('replyControl').invalid">
+          <button mat-stroked-button type="button" (click)="cancelReply()">
+            Отмена
+          </button>
+          <button mat-raised-button type="replySubmit" [disabled]="replyForm.get('replyControl').invalid">
+            Отправить
+          </button>
+        </mat-card-actions>
+      </form>
+    </div>
+    <san-child-comments [childComments]="childComments" [panelOpenState]="panelOpenState"></san-child-comments>
+  </li>
+</ul>

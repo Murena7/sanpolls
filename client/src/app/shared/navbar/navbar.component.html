@@ -9,13 +9,27 @@
   </nav>
 
   <nav>
-    <span *ngIf="userData" mat-button>Мои голоса: 1</span>
-    <button *ngIf="userData" mat-button [matMenuTriggerFor]="afterMenu">
-      <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i> Мой
-      профиль
+    <span *ngIf="userData && userData.status" class="voices">
+      Мои голоса:
+      <div
+        class="ripple-container"
+        matRipple
+        [matRippleCentered]="centered"
+        [matRippleDisabled]="disabled"
+        [matRippleUnbounded]="unbounded"
+      >
+        {{ userData.voiceBalance }}
+      </div>
+    </span>
+    <button *ngIf="userData && userData.status" mat-button [matMenuTriggerFor]="afterMenu">
+      <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i>
+      Мой профиль
+      <i class="material-icons">
+        expand_more
+      </i>
     </button>
     <mat-menu #afterMenu="matMenu">
-      <button mat-menu-item routerLink="/profile">Мой профиль</button>
+      <button mat-menu-item routerLink="/profile">Профиль пользователя</button>
       <button mat-menu-item routerLink="/profile/history">Моя история</button>
       <button mat-menu-item routerLink="/profile/polls-history">История голосований</button>
       <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>

@@ -19,11 +19,11 @@ const routes: Routes = [
         data: {
           roles: ['admin']
         },
-        loadChildren: () => import('@pages/sanadmin/sanadmin.module').then(m => m.SanAdminModule)
+        loadChildren: () => import('@pages/sanadmin/sanadmin.module').then(m => m.SanAdminModule),
       },
       { path: '**', component: NotFoundComponent }
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({

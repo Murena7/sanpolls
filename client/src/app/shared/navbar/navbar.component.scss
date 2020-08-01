@@ -16,11 +16,32 @@
   padding: 8px 16px;
   background: #3f51b5;
   justify-content: space-between;
+
+  .md-light {
+    margin-right: 10px;
+  }
+
+  .voices {
+    margin-right: 10px;
+  }
 }
 
 .logo-mini {
   height: 40px;
   vertical-align: middle;
+}
+
+.ripple-container {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  background-color: #e9467e;
+  border-radius: 5px;
+  line-height: 25px;
+  vertical-align: middle;
+  padding-right: 7px;
+  padding-left: 5px;
+  margin-left: 5px;
 }
 
 .admin-icon {

@@ -40,8 +40,8 @@ export class ErrorResponse extends Response {
             code: 422,
             title: message,
             detail: message
-          }
-        ]
+          },
+        ],
       },
       {}
     );

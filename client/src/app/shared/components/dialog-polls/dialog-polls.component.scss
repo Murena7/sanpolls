@@ -4,21 +4,21 @@
   justify-content: space-around;
   align-items: center;
   min-height: 300px;
-  min-width: 350px;
-}
-
-.mat-dialog-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  min-width: 400px;
 }
 
 mat-form-field {
   text-align: center;
+  height: 70px;
+  min-width: 200px;
 }
 
-.minus,
-.plus {
-  margin: 0 2rem;
-  font-size: 24px;
+mat-dialog-actions {
+  padding: 15px 0;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  align-self: self-start;
 }

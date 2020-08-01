@@ -21,3 +21,9 @@ export enum EventType {
   Timer = 'timer',
   Infinite = 'infinite'
 }
+
+export interface IGetPollsQueryParams {
+  id?: string;
+  take?: number;
+  skip?: number;
+}

@@ -17,13 +17,13 @@ export class TransactionsComponent implements OnInit {
   readonly resultLimit = 20;
   isLoading = false;
   isNoMoreResult = false;
-  @ViewChild('transactionTable') transactionTable: ElementRef;
+  @ViewChild('transactionTable', { static: true }) transactionTable: ElementRef;
 
   transactionDataRows: IPollTransaction[] = [];
   totalElements: number;
   ColumnMode = ColumnMode;
   filter = '';
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
 
   constructor(
     private adminApiService: AdminApiService,

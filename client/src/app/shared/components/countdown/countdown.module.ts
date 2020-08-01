@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CountdownModule } from 'ngx-countdown';
 import { CountdownComponent } from '@components/countdown/countdown.component';
+import { NgxSimpleCountdownModule } from '@shared/directives/countdown/ngx-simple-countdown.module';
 
 @NgModule({
   declarations: [CountdownComponent],
-  imports: [CommonModule, CountdownModule],
+  imports: [CommonModule, NgxSimpleCountdownModule],
   exports: [CountdownComponent],
 })
-export class MyCountdownModule {}
+export class CountdownModule {}

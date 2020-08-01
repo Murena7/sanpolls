@@ -1,10 +1,21 @@
 <mat-drawer-container class="profile-container">
   <mat-drawer mode="side" opened>
     <mat-button-toggle-group class="profile-nav">
-      <mat-button-toggle class="button-toggle" routerLink="/profile">Профиль</mat-button-toggle>
-      <mat-button-toggle class="button-toggle" routerLink="history">Моя история</mat-button-toggle>
-      <mat-button-toggle class="button-toggle" routerLink="polls-history">История голосований</mat-button-toggle>
-      <mat-button-toggle class="button-toggle" routerLink="password">Изменить пароль</mat-button-toggle>
+      <mat-button-toggle
+        routerLinkActive="mat-button-toggle-checked"
+        [routerLink]="['/profile']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Профиль пользователя</mat-button-toggle
+      >
+      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'history']"
+        >Моя история</mat-button-toggle
+      >
+      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'polls-history']"
+        >История голосований</mat-button-toggle
+      >
+      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'password']"
+        >Изменить пароль</mat-button-toggle
+      >
     </mat-button-toggle-group>
   </mat-drawer>
   <mat-drawer-content>

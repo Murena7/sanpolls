@@ -1,21 +1,26 @@
 <div class="container">
-  <small>Имя пользователя: {{ data.name }}</small>
-  <h1 mat-dialog-title>Отдать голос за: {{ data.song }}</h1>
-  <div mat-dialog-content>
-    <span class="material-icons minus">
-      keyboard_arrow_left
-    </span>
-    <mat-form-field>
-      <mat-label>Колличество голосов:</mat-label>
-      <input matInput placeholder="1" value="1" />
-    </mat-form-field>
-    <span class="material-icons plus">
-      keyboard_arrow_right
-    </span>
+  <div class="user-data">
+    <small>Пользователь: {{ currentUser.username }}</small>
+    <small>Колличество доступных голосов: {{ data.userData.voiceBalance }}</small>
   </div>
 
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close="false">Отмена</button>
-    <button mat-raised-button color="accent" mat-dialog-close="true">Проголосовать</button>
-  </div>
+  <h3 mat-dialog-title>Отдать голос за песню:</h3>
+  <h2>{{ currentSong.songSinger }} - {{ currentSong.songName }}</h2>
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Колличество голосов:</mat-label>
+        <input matInput min="1" formControlName="inputNumber" [max]="currentUser.voiceBalance" type="number" [value]="currentUser.voiceBalance" />
+        <mat-error>
+          <p *ngIf="form.get('inputNumber').errors">Колличество Ваших голосов: {{ currentUser.voiceBalance }}.</p>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close="false" (click)="cancelBtn()">Отмена</button>
+      <button mat-raised-button color="accent" type="submit" mat-dialog-close="true" [disabled]="this.form.invalid">
+        Проголосовать
+      </button>
+    </div>
+  </form>
 </div>

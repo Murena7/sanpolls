@@ -14,14 +14,16 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     MatButtonModule,
-    MatSnackBarModule,
     MatDialogModule,
     MatFormFieldModule,
     MatCardModule,
@@ -35,7 +37,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonToggleModule,
     MatIconModule,
     MatTooltipModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatRippleModule,
   ],
   exports: [
     MatButtonModule,
@@ -52,7 +58,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonToggleModule,
     MatIconModule,
     MatTooltipModule,
-    MatListModule
-  ]
+    MatListModule,
+    MatIconModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatRippleModule,
+  ],
 })
 export class MaterialModule {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
 import { ISong } from '@core/entities/song/song.types';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'san-home',
@@ -12,9 +13,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private apiService: PollsService) {}
 
-  ngOnInit(): void {
-    this.apiService.getPolls().subscribe(res => {
-      this.polls = res;
-    });
+  ngOnInit() {
+    this.apiService
+      .getActivePoll()
+      .pipe(
+        switchMap(activeEvent => {
+          return this.apiService.getPolls({ id: activeEvent.id });
+        })
+      )
+      .subscribe(res => (this.polls = res.data));
   }
 }

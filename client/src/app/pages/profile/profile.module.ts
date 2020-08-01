@@ -8,9 +8,10 @@ import { HistoryComponent } from '@pages/profile/history/history.component';
 import { PollsHistoryComponent } from '@pages/profile/polls-history/polls-history.component';
 import { MyProfileComponent } from '@pages/profile/my-profile/my-profile.component';
 import { PasswordComponent } from './password/password.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [ProfileComponent, HistoryComponent, PollsHistoryComponent, MyProfileComponent, PasswordComponent],
-  imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule],
+  imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, NgxDatatableModule]
 })
 export class ProfileModule {}
