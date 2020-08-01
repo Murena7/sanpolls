@@ -5,5 +5,5 @@
       <li *ngFor="let h of historyData">{{ h.title }}</li>
     </ol>
   </div>
-  <button mat-raised-button color="primary">История</button>
+  <button mat-raised-button color="primary" [routerLink]="['/profile', 'polls-history']">История</button>
 </div>

@@ -5,6 +5,7 @@ import { AuthService } from '@core/auth/auth.service';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
 import { IUser } from '@core/entities/user/user.types';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class AuthApiService {
           return user;
         })
       );
+  }
+
+  createNewUser(user): Observable<any> {
+    return this.http.post<IBasicResponse>(`${environment.UI_SERVER}/auth/sign-up`, user);
   }
 }

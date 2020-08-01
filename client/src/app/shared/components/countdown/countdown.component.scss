@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Geostar&display=swap');
-
-.countdown-number {
+.countdown {
+  display: flex;
+  justify-content: center;
   text-align: center;
-  font-size: 35px;
-  font-family: 'Geostar', cursive;
-  color: #3f51b5;
 }

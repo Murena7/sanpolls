@@ -19,22 +19,22 @@ const routes: Routes = [
         loadChildren: () =>
           import('@pages/login/components/email-confirmation/email-confirmation.module').then(
             m => m.EmailConfirmationModule
-          )
+          ),
       },
       {
         path: 'forgotpassword',
         loadChildren: () =>
-          import('@pages/login/components/forgotpassword/forgotpassword.module').then(m => m.ForgotpasswordModule)
+          import('@pages/login/components/forgotpassword/forgotpassword.module').then(m => m.ForgotpasswordModule),
       },
-      { path: 'poll/:id', loadChildren: () => import('@pages/poll/poll.module').then(m => m.PollModule) },
+      { path: 'song/:id', loadChildren: () => import('@pages/song/song.module').then(m => m.SongModule) },
       {
         path: 'profile',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@pages/profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('@pages/profile/profile.module').then(m => m.ProfileModule),
       },
       { path: '**', component: NotFoundComponent }
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({

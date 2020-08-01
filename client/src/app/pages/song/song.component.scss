@@ -1,11 +1,25 @@
+:host {
+  display: flex;
+  align-self: center;
+}
+
+.mat-card {
+  border-radius: unset;
+  padding: 25px;
+}
+
 .poll-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 40px;
+  margin-bottom: 40px;
   min-width: 500px;
   max-width: 800px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  border-bottom: none;
 }
+
 .card-header {
   display: flex;
   flex-direction: row;
@@ -24,17 +38,41 @@
     0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   background-color: #3f51b5;
   color: #ffffff;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
+
 .card-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  min-height: 350px;
-  margin-top: 3rem;
+  min-height: 500px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
+
 .polls-count {
-  padding-left: 0.5rem;
-  font-size: 1.5rem;
+  padding-left: 20px;
+  font-size: 23px;
   font-style: italic;
+}
+
+.additional-info {
+  margin: 25px auto;
+}
+
+.poll-likes {
+  display: flex;
+  align-self: flex-end;
+  margin-bottom: 30px;
+}
+
+.comments {
+  display: flex;
+  align-self: flex-start;
+}
+
+.vote-btn {
+  margin-bottom: 30px;
 }

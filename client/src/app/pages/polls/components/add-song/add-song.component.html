@@ -1,27 +1,47 @@
-<div class="add-song">
-  <h3 class="add-song-voices">Мои голоса: 10</h3>
-  <form class="add-song-form" [formGroup]="form" (ngSubmit)="submit()">
+<div class="add-song" *ngIf="userData && userData.status; else showButton">
+  <h3 class="add-song-voices">Мои голоса: {{ userData.voiceBalance }}</h3>
+  <form class="add-song-form" #formDirective="ngForm" [formGroup]="form" (ngSubmit)="submit(formDirective)">
     <h2>Добавить свою песню:</h2>
+
     <mat-form-field class="add-song-form-full-width">
-      <mat-label>Кто должен исполнить песню</mat-label>
-      <input matInput placeholder="Путин" value="" formControlName="author" />
+      <mat-label>Исполнитель</mat-label>
+      <input matInput placeholder="Rammstein" value="" formControlName="songSinger" />
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width">
-      <mat-label>Песня (Автор)</mat-label>
-      <input matInput placeholder="Rammstein - Mutter" value="" formControlName="song" />
+      <mat-label>Песня</mat-label>
+      <input matInput placeholder="Mutter" value="" formControlName="songName" />
+    </mat-form-field>
+
+    <mat-form-field class="add-song-form-full-width">
+      <mat-label>Кто должен исполнить песню</mat-label>
+      <input matInput placeholder="Путин" value="" formControlName="coverSinger" />
+    </mat-form-field>
+
+    <mat-form-field class="add-song-form-full-width">
+      <mat-label>YouTube Video ID</mat-label>
+      <input matInput placeholder="OoPLvQ0Padw" value="" formControlName="youtubeVideoId" />
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width">
       <mat-label>Комментарий</mat-label>
-      <textarea matInput placeholder="Тут должен быть комментарий ..." formControlName="comment"></textarea>
+      <textarea matInput placeholder="Тут должен быть комментарий ..." formControlName="additionalTextInfo"></textarea>
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width" appearance="fill">
       <mat-label>Отдать свой голос за новую песню</mat-label>
-      <input matInput placeholder="1" value="1" formControlName="votes" />
+
+      <input matInput min="1" formControlName="voiceCount" [max]="userData.voiceBalance" type="number" />
+      <mat-error>
+        <p *ngIf="form.get('voiceCount').errors">Колличество Ваших голосов: {{ userData.voiceBalance }}.</p>
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Добавить</button>
   </form>
 </div>
+<ng-template #showButton>
+  <p>
+    <button mat-raised-button color="primary" routerLink="/login">Добавить песню</button>
+  </p>
+</ng-template>

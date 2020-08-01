@@ -14,6 +14,10 @@ export class NavbarComponent implements OnInit {
   userStatus = UserStatus;
   role = UserRole;
 
+  centered = false;
+  disabled = false;
+  unbounded = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {

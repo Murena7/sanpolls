@@ -1,0 +1,22 @@
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Показать ответы
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ul>
+      <li *ngFor="let comment of childComments">
+        <div class="comments-header">
+          <h3 class="user-name">{{ comment.userName }}</h3>
+          <small class="comments-date">{{ comment.date | date: 'short' }}</small>
+        </div>
+        <p class="comment-content">{{ comment.text }}</p>
+        <div class="comments-footer">
+          <san-like></san-like>
+        </div>
+      </li>
+    </ul>
+  </mat-expansion-panel>
+</mat-accordion>

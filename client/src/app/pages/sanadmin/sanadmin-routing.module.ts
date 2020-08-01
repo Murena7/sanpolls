@@ -36,9 +36,9 @@ const routes: Routes = [
       {
         path: 'polls',
         component: PollsComponent
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({

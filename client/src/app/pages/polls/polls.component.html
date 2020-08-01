@@ -1,11 +1,14 @@
 <div class="left">
   <div class="countdown">
-    <san-countdown></san-countdown>
+    <san-countdown [endDate]="activePollEndDate"></san-countdown>
   </div>
   <san-polls-table
     [rows]="pollsTableData"
-    [isLoading]="pollsTableLoader"
+    [isLoading]="isTableLoading"
+    [currentUser]="currentUser"
+    [isNoMoreResult]="isNoMoreTableResult"
     (pagination)="pollsTablePagination($event)"
+    (vote)="openGiveVoiceDialog($event)"
   ></san-polls-table>
 </div>
 <mat-divider [vertical]="true"></mat-divider>
@@ -15,6 +18,6 @@
   </div>
   <mat-divider></mat-divider>
   <div class="add-song-block">
-    <san-add-song></san-add-song>
+    <san-add-song [activePollID]="activePollID" [userData]="currentUser" (addSong)="addSong($event)"></san-add-song>
   </div>
 </div>

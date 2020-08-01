@@ -5,7 +5,7 @@ import { environment } from '@environment';
 export default class PollRoutes {
   constructor({ uiRouter }: MyOptions) {
     if (!environment.production) {
-      uiRouter.get('/poll/:id', (request, db) => this.findById(request, db));
+      // uiRouter.get('/song/:id', (request, db) => this.findById(request, db));
     }
   }
 

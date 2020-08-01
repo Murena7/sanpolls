@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  align-self: flex-end;
+}
+.likes {
+  button {
+    .thumb_up_alt {
+      color: #8b8e8b;
+    }
+    &:active .thumb_up_alt {
+      color: #3f51b5;
+    }
+    .thumb_down_alt {
+      color: #8b8e8b;
+    }
+    &:active .thumb_down_alt {
+      color: crimson;
+    }
+  }
+}

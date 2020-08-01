@@ -8,8 +8,8 @@ export default class AuthRoutes {
   constructor({ uiRouter }: MyOptions) {
     if (!environment.production) {
       // uiRouter.post('/auth/login', (request, db) => this.login(request, db));
-      // uiRouter.post('/auth/logout', () => this.logout());
-      uiRouter.post('/auth/sign-up', () => this.signUp());
+      uiRouter.post('/auth/logout', () => this.logout());
+      // uiRouter.post('/auth/sign-up', () => this.signUp());
       uiRouter.post('/auth/reconfirm-email', () => this.reconfirmEmail());
       uiRouter.post('/auth/password-reset', (request, db) => this.passwordReset(request, db));
     }

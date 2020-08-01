@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddVoiceComponent } from '@pages/sanadmin/users/modals/add-voice/add-voice.component';
 import { IAddVoiceModalResult } from '@pages/sanadmin/users/modals/add-voice/add-voice.types';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
+import { UserService } from '@core/api-services/user.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './users.component.html',
@@ -18,19 +20,20 @@ export class UsersComponent implements OnInit {
   readonly resultLimit = 20;
   isLoading = false;
   isNoMoreResult = false;
-  @ViewChild('userTable') userTable: ElementRef;
+  @ViewChild('userTable', { static: true }) userTable: ElementRef;
 
   usersDataRows: IUser[] = [];
   totalElements: number;
   ColumnMode = ColumnMode;
   filter = '';
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
 
   constructor(
     private adminApiService: AdminApiService,
     public windowSizeService: WindowSizeService,
     public dialog: MatDialog,
-    public snackbarNotificationService: SnackbarNotificationService
+    public snackbarNotificationService: SnackbarNotificationService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +53,7 @@ export class UsersComponent implements OnInit {
             userId: result.user.id,
             amount: result.amount
           })
+          .pipe(switchMap(res => this.userService.refreshUserData()))
           .subscribe(res => {
             const index = this.usersDataRows.findIndex(user => user.id === result.user.id);
             this.usersDataRows[index].voiceBalance += result.amount;

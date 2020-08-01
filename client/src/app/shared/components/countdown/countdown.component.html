@@ -1,2 +1,23 @@
-<h1>До окончания голосования за песню для следующего видео осталось:</h1>
-<countdown class="countdown-number" [config]="timeLeft"></countdown>
+<div class="container" *ngIf="dateToNumber">
+  <h1>До окончания голосования осталось:</h1>
+  <div
+    class="countdown"
+    simpleCountdown
+    [dateTo]="dateToNumber"
+    [endMessage]="endMessage"
+    [language]="'ru'"
+    [styles]="
+    '
+        font-size: 28px;
+        text-align: center;
+        color: #FFF;
+        background-color: #3F51B5;
+        padding: 18px 13px;
+        font-weight: bold;
+        min-width: 40px;
+        margin: 0 1px;
+      '
+  "
+  >
+  </div>
+</div>
