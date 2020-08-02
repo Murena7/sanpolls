@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     this.authApiService.login(user).subscribe(
       () => {
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/polls']);
         this.submitted = false;
       },
       () => {

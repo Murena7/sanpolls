@@ -97,6 +97,30 @@ export default (app: Router) => {
   );
   ///////
   /////// POLL //////////
+  route.put(
+    '/poll/switch-status/:pollId',
+    celebrate({
+      params: Joi.object({
+        pollId: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /admin/poll/create endpoint');
+      try {
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.switchPollStatus(req.params.pollId);
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
   route.post(
     '/poll/create',
     celebrate({
@@ -120,8 +144,8 @@ export default (app: Router) => {
       const logger: Logger = Container.get('logger');
       logger.debug('Calling /admin/poll/create endpoint');
       try {
-        const pollServiceInstance = Container.get(PollService);
-        const result: IBasicResponse = await pollServiceInstance.createPoll(req.body);
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.createPoll(req.body);
 
         return res.status(200).json(result);
       } catch (e) {

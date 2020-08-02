@@ -23,9 +23,9 @@ export class AddSongComponent implements OnInit {
         songSinger: new FormControl('', [Validators.required]),
         songName: new FormControl('', [Validators.required]),
         coverSinger: new FormControl('', [Validators.required]),
-        youtubeVideoId: new FormControl('', [Validators.required]),
-        additionalTextInfo: new FormControl('', [Validators.required]),
-        voiceCount: new FormControl('1', [
+        youtubeVideoId: new FormControl(''),
+        additionalTextInfo: new FormControl(''),
+        voiceCount: new FormControl(1, [
           Validators.required,
           Validators.min(1),
           Validators.max(this.userData.voiceBalance)
@@ -46,13 +46,13 @@ export class AddSongComponent implements OnInit {
       coverSinger: this.form.value.coverSinger,
       youtubeVideoId: this.form.value.youtubeVideoId,
       additionalTextInfo: this.form.value.additionalTextInfo,
-      voiceCount: +this.form.value.voiceCount
+      voiceCount: this.form.value.voiceCount
     };
 
     this.addSong.emit(song);
     this.form.reset();
     formDirective.resetForm();
 
-    this.form.patchValue({ voiceCount: '1' });
+    this.form.patchValue({ voiceCount: 1 });
   }
 }

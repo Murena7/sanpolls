@@ -54,8 +54,12 @@ export default (app: Router) => {
         voiceCount: Joi.number()
           .min(1)
           .required(),
-        additionalTextInfo: Joi.string().max(500),
-        youtubeVideoId: Joi.string().max(50),
+        additionalTextInfo: Joi.string()
+          .allow('')
+          .max(500),
+        youtubeVideoId: Joi.string()
+          .allow('')
+          .max(50),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {

@@ -22,7 +22,7 @@ export class DialogPollsComponent implements OnInit {
       this.currentUser = this.data.userData;
       this.currentSong = this.data.songData;
       this.form = new FormGroup({
-        inputNumber: new FormControl(this.currentUser.voiceBalance, [
+        inputNumber: new FormControl(1, [
           Validators.required,
           Validators.min(1),
           Validators.max(this.currentUser.voiceBalance)

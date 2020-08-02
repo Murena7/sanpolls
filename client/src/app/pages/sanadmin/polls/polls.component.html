@@ -89,9 +89,22 @@
             <button color="primary" mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>settings</mat-icon>
             </button>
-            <mat-menu #menu="matMenu">
-              <button [disabled]="true" mat-menu-item matTooltip="Изменить">
-                <span>Изменить</span>
+            <mat-menu #menu="matMenu" [ngSwitch]="row.status">
+              <button
+                *ngSwitchCase="eventStatus.Inactive"
+                mat-menu-item
+                matTooltip="Активировать"
+                (click)="switchPollStatus(row)"
+              >
+                <span>Активировать</span>
+              </button>
+              <button
+                *ngSwitchCase="eventStatus.Active"
+                mat-menu-item
+                matTooltip="Деактивировать"
+                (click)="switchPollStatus(row)"
+              >
+                <span>Деактивировать</span>
               </button>
             </mat-menu>
           </ng-template>

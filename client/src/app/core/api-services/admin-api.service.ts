@@ -79,4 +79,8 @@ export class AdminApiService {
       .get<IBasicResponse<IStatisticTotal>>(`${environment.UI_SERVER}/admin/statistic/total`)
       .pipe(map(data => data.data));
   }
+
+  switchPollStatus(pollId: string): Observable<IBasicResponse<IPollEvent>> {
+    return this.http.put<IBasicResponse<IPollEvent>>(`${environment.UI_SERVER}/admin/poll/switch-status/${pollId}`, {});
+  }
 }

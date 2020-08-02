@@ -42,20 +42,6 @@ export default class PollService {
     }
   }
 
-  public async createPoll(body: ICreatePollBody): Promise<IBasicResponse> {
-    try {
-      const newPollEventInstance = this.pollEventRepository.create(
-        plainToClass(PollEvent, body, { excludeExtraneousValues: true }),
-      );
-      const data = await newPollEventInstance.save();
-
-      return { data: data };
-    } catch (e) {
-      this.logger.error(e);
-      throw e;
-    }
-  }
-
   public async activePoll(): Promise<IBasicResponse> {
     try {
       const activeEvent = await this.pollEventRepository.findOne({ status: EventStatus.Active });

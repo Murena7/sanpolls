@@ -8,6 +8,7 @@ import {
   getStatisticTotal,
   postAddVoice,
   postPollCreate,
+  putSwitchPollEventStatus,
   putUserToAdmin,
 } from './admin/admin';
 import { getSongById, postAddSong } from './song/song';
@@ -91,6 +92,9 @@ export const swaggerDocument = {
     },
     '/admin/statistic/total': {
       get: getStatisticTotal,
+    },
+    '/admin/poll/switch-status/{eventId}': {
+      put: putSwitchPollEventStatus,
     },
     ///// SONG
     '/song/by-id/{id}': {

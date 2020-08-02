@@ -1,6 +1,6 @@
 import { Inject, Service } from 'typedi';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
-import { getRepository, Raw, Repository } from 'typeorm';
+import { getRepository, MoreThan, Raw, Repository } from 'typeorm';
 import { PollEvent } from '../entity/poll-event';
 import { Song } from '../entity/song';
 import { IBasicResponse } from '../interfaces/response-types';
@@ -9,11 +9,11 @@ import { ResponseStatusMessage } from '../interfaces/response';
 import { Role } from '../interfaces/user';
 import { IAddVoiceBody, IStatisticTotal } from '../interfaces/admin';
 import { AddVoiceByAdminTransaction } from '../transaction/addVoiceByAdmin';
-import { classToPlain } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { PollTransaction } from '../entity';
 import moment from 'moment';
-import { MoreThan } from 'typeorm';
 import { isDef } from '../helpers/common';
+import { EventStatus, ICreatePollBody } from '../interfaces/poll-event';
 
 @Service()
 export default class AdminService {
@@ -89,11 +89,12 @@ export default class AdminService {
       let count: number;
       if (isDef(skip) && isDef(take)) {
         [data, count] = await this.pollEventRepository.findAndCount({
+          order: { createdAt: 'DESC' },
           take: take,
           skip: skip,
         });
       } else {
-        [data, count] = await this.pollEventRepository.findAndCount();
+        [data, count] = await this.pollEventRepository.findAndCount({ order: { createdAt: 'DESC' } });
       }
 
       return { data: data.map(x => classToPlain(x)), count: count };
@@ -209,6 +210,44 @@ export default class AdminService {
       return {
         data: result,
       };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async createPoll(body: ICreatePollBody): Promise<IBasicResponse> {
+    try {
+      const newPollEventInstance = this.pollEventRepository.create(
+        plainToClass(PollEvent, body, { excludeExtraneousValues: true }),
+      );
+      const data = await newPollEventInstance.save();
+
+      return { data: data };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async switchPollStatus(pollId: string) {
+    try {
+      const pollEvent = await this.pollEventRepository.findOneOrFail({ id: pollId });
+
+      switch (pollEvent.status) {
+        case EventStatus.Active:
+          pollEvent.status = EventStatus.Inactive;
+          break;
+        case EventStatus.Inactive:
+          pollEvent.status = EventStatus.Active;
+          break;
+        default:
+          throw new Error('Wrong status');
+      }
+
+      await pollEvent.save();
+
+      return { status: ResponseStatusMessage.Success, data: pollEvent };
     } catch (e) {
       this.logger.error(e);
       throw e;

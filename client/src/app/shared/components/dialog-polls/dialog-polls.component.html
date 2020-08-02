@@ -10,7 +10,7 @@
     <div mat-dialog-content>
       <mat-form-field>
         <mat-label>Колличество голосов:</mat-label>
-        <input matInput min="1" formControlName="inputNumber" [max]="currentUser.voiceBalance" type="number" [value]="currentUser.voiceBalance" />
+        <input matInput min="1" formControlName="inputNumber" [max]="currentUser.voiceBalance" type="number" />
         <mat-error>
           <p *ngIf="form.get('inputNumber').errors">Колличество Ваших голосов: {{ currentUser.voiceBalance }}.</p>
         </mat-error>

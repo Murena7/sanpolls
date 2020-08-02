@@ -25,6 +25,8 @@ export class PollsComponent implements OnInit, OnDestroy {
   filter = '';
   @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
 
+  eventStatus = EventStatus;
+
   constructor(
     private adminApiService: AdminApiService,
     public windowSizeService: WindowSizeService,
@@ -68,8 +70,11 @@ export class PollsComponent implements OnInit, OnDestroy {
     const activePolls = data.filter(poll => poll.status === EventStatus.Active);
     if (activePolls.length > 1) {
       return this.warnNotificationService.show(
-        'Больше одного Polls со статусом Active! (допускается только 1 активный)'
+        'Больше одного Polls со статусом Active ! (допускается только 1 активный)'
       );
+    }
+    if (activePolls.length < 1) {
+      return this.warnNotificationService.show('Нету ни одного активного Poll !');
     }
     return this.warnNotificationService.hide();
   }
@@ -102,5 +107,13 @@ export class PollsComponent implements OnInit, OnDestroy {
 
         this.checkActivePollCount(this.pollDataRows);
       });
+  }
+
+  switchPollStatus(row: IPollEvent) {
+    this.adminApiService.switchPollStatus(row.id).subscribe(res => {
+      row.status = res.data.status;
+      this.snackbarNotificationService.successfully('Статус изменен');
+      this.checkActivePollCount(this.pollDataRows);
+    });
   }
 }
