@@ -2,7 +2,6 @@
   width: 10px;
 }
 .poll-link:hover {
-  cursor: pointer;
   outline: none;
 }
 
@@ -12,4 +11,8 @@
 
 ::ng-deep .highlight-song {
   background-color: #b3e5fc;
+}
+
+::ng-deep .row-cursor:hover {
+  cursor: pointer;
 }

@@ -10,34 +10,35 @@
     [scrollbarV]="true"
     [rowClass]="selectedRowClass.bind(this)"
     (scroll)="onScroll($event.offsetY)"
+    (activate)="rowClick($event)"
   >
     <ngx-datatable-column name="Место" prop="text" [flexGrow]="0.7">
       <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/song', row.id]">{{ rowIndex + 1 }}</span>
+        <span class="poll-link">{{ rowIndex + 1 }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="1.5">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/song', row.id]">{{ row.songSinger }}</span>
+        <span class="poll-link">{{ row.songSinger }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="3">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/song', row.id]">{{ row.songName }}</span>
+        <span class="poll-link">{{ row.songName }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="1.5">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/song', row.id]">{{ row.coverSinger }}</span>
+        <span class="poll-link">{{ row.coverSinger }}</span>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.7">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="poll-link" [routerLink]="['/song', row.id]">{{ row.voiceCount }}</span>
+        <span class="poll-link">{{ row.voiceCount }}</span>
       </ng-template>
     </ngx-datatable-column>
 

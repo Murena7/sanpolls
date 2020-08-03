@@ -3,11 +3,12 @@ import { ISong } from '@core/entities/song/song.types';
 import { IUser } from '@core/entities/user/user.types';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { WindowSizeService } from '@core/api-services/window-size.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'san-polls-table',
   templateUrl: './polls-table.component.html',
-  styleUrls: ['./polls-table.component.scss']
+  styleUrls: ['./polls-table.component.scss'],
 })
 export class PollsTableComponent implements OnInit {
   @Input() rows: ISong[] = [];
@@ -23,7 +24,7 @@ export class PollsTableComponent implements OnInit {
 
   @ViewChild('pollsTable', { static: true }) table: ElementRef;
 
-  constructor(public windowSizeService: WindowSizeService) {}
+  constructor(public windowSizeService: WindowSizeService, private router: Router) {}
 
   ngOnInit() {
     this.onScroll(0);
@@ -38,7 +39,7 @@ export class PollsTableComponent implements OnInit {
         take: limit,
         skip: this.rows.length,
         disableLoader: true,
-        appendData: true
+        appendData: true,
       });
     }
   }
@@ -48,8 +49,21 @@ export class PollsTableComponent implements OnInit {
   }
 
   selectedRowClass(row: ISong) {
-    if (this.currentUser) {
-      return row.userId === this.currentUser.id ? 'highlight-song' : '';
+    if (this.currentUser && row.userId === this.currentUser.id) {
+      return {
+        'highlight-song': true,
+        'row-cursor': true,
+      };
+    } else {
+      return {
+        'row-cursor': true,
+      };
+    }
+  }
+
+  rowClick(event: any) {
+    if (event.type === 'click' && event.column.name !== 'Проголосовать') {
+      this.router.navigate(['/song', event.row.id]);
     }
   }
 }
