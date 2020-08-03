@@ -25,6 +25,7 @@
     "@swimlane/ngx-datatable": "^17.0.0",
     "kakapo": "git+https://github.com/alltouch/Kakapo.js.git#974a84e1b9dc27cf8fb08da8bb6ca8238b3164d4",
     "moment-timezone": "^0.5.31",
+    "ng-pick-datetime": "^7.0.0",
     "ngx-ui-loader": "^9.1.1",
     "qs": "^6.9.4",
     "rxjs": "~6.5.4",

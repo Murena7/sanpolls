@@ -3,7 +3,7 @@ import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDi
 import { getRepository, Repository } from 'typeorm';
 import { PollEvent } from '../entity/poll-event';
 import { Song } from '../entity/song';
-import { EventStatus, ICreatePollBody, IGetPollListBody } from '../interfaces/poll-event';
+import { EventStatus, IGetPollListBody } from '../interfaces/poll-event';
 import { IBasicResponse } from '../interfaces/response-types';
 import { plainToClass } from 'class-transformer';
 

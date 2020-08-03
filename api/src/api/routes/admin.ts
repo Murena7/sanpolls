@@ -6,7 +6,6 @@ import { IBasicResponse } from '../../interfaces/response-types';
 import { celebrate, Joi } from 'celebrate';
 import AdminService from '../../services/admin';
 import { Role } from '../../interfaces/user';
-import PollService from '../../services/poll';
 
 const route = Router();
 
@@ -108,10 +107,49 @@ export default (app: Router) => {
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get('logger');
-      logger.debug('Calling /admin/poll/create endpoint');
+      logger.debug('Calling /admin/poll/switch-status endpoint');
       try {
         const devToolsServiceInstance = Container.get(AdminService);
         const result: IBasicResponse = await devToolsServiceInstance.switchPollStatus(req.params.pollId);
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/poll/edit/:pollId',
+    celebrate({
+      body: Joi.object({
+        name: Joi.string()
+          .max(200)
+          .required(),
+        message: Joi.string()
+          .max(500)
+          .required(),
+        endMessage: Joi.string()
+          .max(500)
+          .required(),
+        startDate: Joi.date().required(),
+        endDate: Joi.date().required(),
+        status: Joi.string().required(),
+        type: Joi.string().required(),
+      }),
+      params: Joi.object({
+        pollId: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /admin/poll/edit endpoint');
+      try {
+        const devToolsServiceInstance = Container.get(AdminService);
+        const result: IBasicResponse = await devToolsServiceInstance.editPoll(req.body, req.params.pollId);
 
         return res.status(200).json(result);
       } catch (e) {

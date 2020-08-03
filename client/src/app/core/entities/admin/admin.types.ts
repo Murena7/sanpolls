@@ -16,8 +16,8 @@ export interface ICreatePollBody {
   name: string;
   message: string;
   endMessage: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   status: EventStatus;
   type: EventType;
 }

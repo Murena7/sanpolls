@@ -230,6 +230,26 @@ export default class AdminService {
     }
   }
 
+  public async editPoll(body: ICreatePollBody, id: string): Promise<IBasicResponse> {
+    try {
+      await this.pollEventRepository
+        .createQueryBuilder()
+        .update(PollEvent)
+        .set({ ...body })
+        .where('id = :id', { id: id })
+        .execute();
+
+      const editPoll = await this.pollEventRepository.findOne({
+        where: { id: id },
+      });
+
+      return { data: editPoll };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
   public async switchPollStatus(pollId: string) {
     try {
       const pollEvent = await this.pollEventRepository.findOneOrFail({ id: pollId });

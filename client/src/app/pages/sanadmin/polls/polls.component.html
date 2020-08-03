@@ -10,12 +10,12 @@
           <mat-icon>search</mat-icon>
         </button>
       </div>
-      <button [disabled]="true" mat-fab [matMenuTriggerFor]="menu">
+      <button mat-fab [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item matTooltip="Подсказка">
-          <span>Изменить</span>
+        <button (click)="openCreatePollDialog()" mat-menu-item matTooltip="Создать новое голосование">
+          <span>Создать</span>
         </button>
       </mat-menu>
     </div>
@@ -105,6 +105,9 @@
                 (click)="switchPollStatus(row)"
               >
                 <span>Деактивировать</span>
+              </button>
+              <button mat-menu-item matTooltip="Изменить" (click)="openEditPollDialog(row)">
+                <span>Изменить</span>
               </button>
             </mat-menu>
           </ng-template>

@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRippleModule } from '@angular/material/core';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatSnackBarModule,
     MatExpansionModule,
     MatRippleModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   exports: [
     MatButtonModule,
@@ -64,6 +67,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatSnackBarModule,
     MatExpansionModule,
     MatRippleModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
 })
 export class MaterialModule {}

@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>
+  <ng-container *ngIf="isEdit; else isNoEdit">
+    Редактирование Голосования
+  </ng-container>
+  <ng-template #isNoEdit>
+    Создать Новое Голосование
+  </ng-template>
+</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content>
+    <div class="input-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Название (name)</mat-label>
+        <input matInput formControlName="name" placeholder="Глосование 1" type="text" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Сообщение (message)</mat-label>
+        <textarea matInput formControlName="message" placeholder="Проголосуй сейчас за новую песню"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Конечное Сообщение (endMessage)</mat-label>
+        <textarea matInput formControlName="endMessage" placeholder="Голосование завершено"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Дата начала (startDate)</mat-label>
+        <input matInput autocomplete="false" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="startDate" />
+        <span [owlDateTimeTrigger]="dt1" matSuffix><mat-icon aria-hidden="false">event</mat-icon></span>
+        <owl-date-time #dt1></owl-date-time>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Дата окончания (endDate)</mat-label>
+        <input matInput autocomplete="false" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" formControlName="endDate" />
+        <span [owlDateTimeTrigger]="dt2" matSuffix><mat-icon aria-hidden="false">event</mat-icon></span>
+        <owl-date-time #dt2></owl-date-time>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Выберите (status)</mat-label>
+        <mat-select formControlName="status">
+          <mat-option [value]="eventStatus.Active">Active</mat-option>
+          <mat-option [value]="eventStatus.Inactive">Inactive</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Выберите (type)</mat-label>
+        <mat-select formControlName="type">
+          <mat-option [value]="eventType.Timer">Timer</mat-option>
+          <mat-option [value]="eventType.Infinite">Infinite</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Отменить</button>
+    <button mat-button type="submit" color="primary" [disabled]="form.invalid">Подтвердить</button>
+  </mat-dialog-actions>
+</form>

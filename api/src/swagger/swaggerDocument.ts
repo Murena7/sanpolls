@@ -8,6 +8,7 @@ import {
   getStatisticTotal,
   postAddVoice,
   postPollCreate,
+  postPollEdit,
   putSwitchPollEventStatus,
   putUserToAdmin,
 } from './admin/admin';
@@ -83,6 +84,9 @@ export const swaggerDocument = {
     },
     '/admin/poll/create': {
       post: postPollCreate,
+    },
+    '/admin/poll/edit/{pollId}': {
+      post: postPollEdit,
     },
     '/admin/poll/all': {
       get: getAllPolls,

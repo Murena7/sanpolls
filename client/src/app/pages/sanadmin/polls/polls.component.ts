@@ -6,10 +6,13 @@ import { WindowSizeService } from '@core/api-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { WarnNotificationService } from '@core/common-services/warn-notification.service';
+import { CreateEditComponent } from './modals/create-edit/create-edit.component';
+import { ICreateEditModalData } from './polls.types';
+import { ICreatePollBody } from '../../../core/entities/admin/admin.types';
 
 @Component({
   templateUrl: './polls.component.html',
-  styleUrls: ['./polls.component.scss']
+  styleUrls: ['./polls.component.scss'],
 })
 export class PollsComponent implements OnInit, OnDestroy {
   readonly headerHeight = 50;
@@ -67,7 +70,7 @@ export class PollsComponent implements OnInit, OnDestroy {
   }
 
   private checkActivePollCount(data: IPollEvent[]) {
-    const activePolls = data.filter(poll => poll.status === EventStatus.Active);
+    const activePolls = data.filter((poll) => poll.status === EventStatus.Active);
     if (activePolls.length > 1) {
       return this.warnNotificationService.show(
         'Больше одного Polls со статусом Active ! (допускается только 1 активный)'
@@ -85,11 +88,11 @@ export class PollsComponent implements OnInit, OnDestroy {
         {
           take,
           skip,
-          filter: this.filter === '' ? undefined : this.filter
+          filter: this.filter === '' ? undefined : this.filter,
         },
         disableLoader
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         if (appendData) {
           this.pollDataRows = [...this.pollDataRows, ...res.data];
         } else {
@@ -110,10 +113,55 @@ export class PollsComponent implements OnInit, OnDestroy {
   }
 
   switchPollStatus(row: IPollEvent) {
-    this.adminApiService.switchPollStatus(row.id).subscribe(res => {
+    this.adminApiService.switchPollStatus(row.id).subscribe((res) => {
       row.status = res.data.status;
       this.snackbarNotificationService.successfully('Статус изменен');
       this.checkActivePollCount(this.pollDataRows);
+    });
+  }
+
+  openCreatePollDialog() {
+    const dialogRef = this.dialog.open(CreateEditComponent, {
+      minWidth: '500px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const data: ICreatePollBody = result;
+        this.adminApiService.createNewPoll(data).subscribe(
+          (res) => {
+            this.snackbarNotificationService.successfully('Новое голосование создано');
+            this.loadPollsData();
+          },
+          (error) => {
+            this.snackbarNotificationService.error('Ошибка - голосование не создано');
+          }
+        );
+      }
+    });
+  }
+
+  openEditPollDialog(row: IPollEvent) {
+    const modalData: ICreateEditModalData = {
+      isEdit: true,
+      data: row,
+    };
+    const dialogRef = this.dialog.open(CreateEditComponent, {
+      minWidth: '500px',
+      data: modalData,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const data: ICreatePollBody = result;
+        this.adminApiService.editPoll(data, row.id).subscribe(
+          (res) => {
+            this.snackbarNotificationService.successfully('Изменения сохранены');
+            this.loadPollsData();
+          },
+          (error) => {
+            this.snackbarNotificationService.error('Изменения не сохранены');
+          }
+        );
+      }
     });
   }
 }
