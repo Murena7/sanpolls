@@ -9,6 +9,9 @@ import events from '../subscribers/events';
 import { getRepository, Repository } from 'typeorm';
 import { User } from '../entity/user';
 import lodash from 'lodash';
+import { Profile } from 'passport-facebook';
+import { Profile as ProfileGoogle } from 'passport-google-oauth';
+import generatePassword from 'generate-password';
 
 @Service()
 export default class AuthService {
@@ -85,33 +88,96 @@ export default class AuthService {
     }
   }
 
-  public async SignIn(email: string, password: string, cb: Function) {
-    const userRecord = await this.userRepository
-      .createQueryBuilder('user')
-      .where({ email: email })
-      .addSelect('user.password')
-      .addSelect('user.salt')
-      .getOne();
+  public async loginOrSignUpSocial(profile: Profile | ProfileGoogle) {
+    try {
+      if (!profile.emails) {
+        throw new Error('Facebook or Google No Email');
+      }
 
-    if (!userRecord) {
-      return cb(null, false);
-    }
+      const userEmail = profile.emails[0].value;
 
-    this.logger.silly('Checking password');
-    const validPassword = await argon2.verify(userRecord.password, password);
-    if (validPassword) {
-      this.logger.silly('Password is valid!');
+      const userExist = await this.userRepository.findOne({ email: userEmail });
+      if (userExist) {
+        Reflect.deleteProperty(userExist, 'password');
+        Reflect.deleteProperty(userExist, 'salt');
+        return userExist;
+      }
+
+      const salt = randomBytes(32);
+
+      this.logger.silly('Hashing password');
+      const hashedPassword = await argon2.hash(
+        generatePassword.generate({
+          length: 12,
+          numbers: true,
+          symbols: true,
+          lowercase: true,
+          uppercase: true,
+        }),
+        { salt },
+      );
+
+      this.logger.silly('Creating user db record');
+      const userRecord = await this.userRepository
+        .create({
+          email: userEmail,
+          salt: salt.toString('hex'),
+          password: hashedPassword,
+          role: Role.User,
+          username: `user${lodash.random(1000000, 9999999)}`,
+        })
+        .save();
+
+      if (!userRecord) {
+        throw new Error('User cannot be created');
+      }
+      this.logger.silly('Sending welcome email');
+      // await this.mailer.SendWelcomeEmail(userRecord);
+
+      this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
+
       const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
+      return user;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
 
-      if (user.emailConfirmed === false) {
-        return cb(new Error("Email didn't confirm"));
+  public async SignIn(email: string, password: string, cb: Function) {
+    try {
+      const userRecord = await this.userRepository
+        .createQueryBuilder('user')
+        .where({ email: email })
+        .addSelect('user.password')
+        .addSelect('user.salt')
+        .getOne();
+
+      if (!userRecord) {
+        return cb(null, false);
       }
 
-      return cb(null, user);
-    } else {
-      return cb(null, false);
+      this.logger.silly('Checking password');
+      const validPassword = await argon2.verify(userRecord.password, password);
+      if (validPassword) {
+        this.logger.silly('Password is valid!');
+        const user = userRecord;
+        Reflect.deleteProperty(user, 'password');
+        Reflect.deleteProperty(user, 'salt');
+
+        if (user.emailConfirmed === false) {
+          return cb(new Error("Email didn't confirm"));
+        }
+
+        return cb(null, user);
+      } else {
+        return cb(null, false);
+      }
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 }

@@ -17,7 +17,10 @@ export default {
    * Your favorite port
    */
   port: parseInt(process.env.PORT, 10),
-
+  /**
+   * Server Api URL
+   */
+  serverApiUrl: process.env.SERVER_API_URL,
   /**
    * PosgreSQL
    */
@@ -48,6 +51,19 @@ export default {
     dbCollection: process.env.AGENDA_DB_COLLECTION,
     pooltime: process.env.AGENDA_POOL_TIME,
     concurrency: parseInt(process.env.AGENDA_CONCURRENCY, 10),
+  },
+
+  /**
+   * Facebook Auth
+   */
+  facebook: {
+    appId: process.env.FACEBOOK_APP_ID,
+    secret: process.env.FACEBOOK_APP_SECRET,
+  },
+
+  google: {
+    appId: process.env.GOOGLE_APP_ID,
+    secret: process.env.GOOGLE_APP_SECRET,
   },
 
   /**

@@ -8,7 +8,7 @@ import { IUser } from '@core/entities/user/user.types';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthApiService {
   constructor(private http: HttpService, private authService: AuthService) {}
@@ -18,7 +18,7 @@ export class AuthApiService {
       .skipErrorHandler()
       .post<IBasicResponse>(`${environment.UI_SERVER}/auth/login`, userData)
       .pipe(
-        map(data => data.data),
+        map((data) => data.data),
         map((user: IUser) => {
           // login successful if there's a jwt token in the response
           if (user) {

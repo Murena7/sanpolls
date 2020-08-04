@@ -2,6 +2,21 @@
   <mat-tab-group class="stretched-tabs">
     <mat-tab class="mat-tab" label="Войти">
       <mat-card-content class="mat-card-content">
+        <div class="button-container">
+          <a class="fb-button" mat-stroked-button href="/api/auth/facebook">
+            <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
+            Вход с Facebook</a
+          >
+        </div>
+        <div class="button-container">
+          <a class="google-button" mat-stroked-button href="/api/auth/google">
+            <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
+            Вход с Google</a
+          >
+        </div>
+        <div class="login-form-or">
+          <span>или</span>
+        </div>
         <form class="login-form" [formGroup]="formLog" (ngSubmit)="submitLogin()">
           <mat-form-field class="full-width form-field">
             <input matInput placeholder="Email" type="email" id="email" required formControlName="email" />
@@ -14,17 +29,37 @@
           <span class="forgot-password-link">
             <small routerLink="/forgotpassword">Не можете войти?</small>
           </span>
-
-          <mat-card-actions>
-            <button mat-raised-button type="submit" color="primary" [disabled]="formLog.invalid || submitted">
+          <div>
+            <button
+              class="registration-button"
+              mat-raised-button
+              type="submit"
+              color="primary"
+              [disabled]="formLog.invalid || submitted"
+            >
               Войти
             </button>
-          </mat-card-actions>
+          </div>
         </form>
       </mat-card-content>
     </mat-tab>
     <mat-tab class="mat-tab" label="Регистрация">
       <mat-card-content>
+        <div class="button-container">
+          <a class="fb-button" mat-stroked-button href="/api/auth/facebook">
+            <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
+            Регистрация с Facebook</a
+          >
+        </div>
+        <div class="button-container">
+          <a class="google-button" mat-stroked-button href="/api/auth/google">
+            <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
+            Регистрация с Google</a
+          >
+        </div>
+        <div class="login-form-or">
+          <span>или</span>
+        </div>
         <form class="login-form" [formGroup]="formReg" (ngSubmit)="submitRegister()">
           <mat-form-field class="full-width form-field">
             <input matInput placeholder="Email" type="email" id="regEmail" required formControlName="email" />
@@ -37,7 +72,7 @@
           <mat-checkbox formControlName="checkbox" class="checkbox-field">
             <small>* Я соглашаюсь с правилами использования сервиса.</small>
           </mat-checkbox>
-          <mat-card-actions>
+          <div>
             <button
               class="registration-button"
               mat-raised-button
@@ -47,7 +82,7 @@
             >
               Зарегистрироваться
             </button>
-          </mat-card-actions>
+          </div>
         </form>
       </mat-card-content>
     </mat-tab>

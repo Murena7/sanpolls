@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IUserRegistrationBody, UserStatus } from '@core/entities/user/user.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
+import { UserService } from '../../core/api-services/user.service';
+import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 export const Errors = {
   email: {
@@ -30,9 +32,25 @@ export class LoginComponent implements OnInit {
   submitted = false;
   public errors = Errors;
 
-  constructor(private authApiService: AuthApiService, private router: Router) {}
+  /*
+   Font Awesome
+   */
+  faFacebook = faFacebook;
+  faGoogle = faGoogle;
+
+  constructor(
+    private authApiService: AuthApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
+    this.socialCallbackIntercept();
+    this.initForms();
+  }
+
+  initForms() {
     this.formLog = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
@@ -67,6 +85,16 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+  socialCallbackIntercept() {
+    if (this.route.snapshot.queryParams?.callback) {
+      localStorage.setItem('isAuthorized', '1');
+      this.userService.refreshUserData().subscribe((res) => {
+        this.router.navigate(['/polls']);
+        this.submitted = false;
+      });
+    }
   }
 
   submitRegister() {

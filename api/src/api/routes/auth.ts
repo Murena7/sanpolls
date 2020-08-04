@@ -43,6 +43,19 @@ export default (app: Router) => {
     },
   );
 
+  route.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+  route.get('/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
+
+  route.get(
+    '/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/login?callback=fb', failureRedirect: '/login' }),
+  );
+
+  route.get(
+    '/google/callback',
+    passport.authenticate('google', { successRedirect: '/login?callback=google', failureRedirect: '/login' }),
+  );
+
   route.post(
     '/login',
     celebrate({
