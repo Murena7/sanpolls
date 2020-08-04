@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IUserRegistrationBody, UserStatus } from '@core/entities/user/user.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
 import { UserService } from '../../core/api-services/user.service';
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookSquare, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 export const Errors = {
   email: {
@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
   /*
    Font Awesome
    */
-  faFacebook = faFacebook;
-  faGoogle = faGoogle;
+  faFacebook = faFacebookSquare;
+  faGoogle = faGooglePlusG;
 
   constructor(
     private authApiService: AuthApiService,
