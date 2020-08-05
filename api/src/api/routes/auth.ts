@@ -71,7 +71,7 @@ export default (app: Router) => {
     passport.authenticate('local', { failWithError: true }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get('logger');
-      logger.debug('Calling login endpoint with body: %o', req.body);
+      logger.debug('Calling login endpoint');
       try {
         const user = req.user;
         const apiResponse: IBasicResponse = { data: user };

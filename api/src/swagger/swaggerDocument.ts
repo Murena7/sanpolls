@@ -1,6 +1,6 @@
 import { login, logout, signUp } from './auth/auth';
-import { getMe } from './user/user';
-import { getActivePoll, getRatingList } from './poll/poll';
+import { getMe, getUserSongHistory, postUserPasswordChange, postUserProfileUpdate } from './user/user';
+import { getActivePoll, getAllPollsArchived, getRatingList } from './poll/poll';
 import {
   getAllPolls,
   getAllTransactions,
@@ -65,12 +65,24 @@ export const swaggerDocument = {
     '/user/me': {
       get: getMe,
     },
+    '/user/profile/update': {
+      post: postUserProfileUpdate,
+    },
+    '/user/password/change': {
+      post: postUserPasswordChange,
+    },
+    '/user/song/history': {
+      get: getUserSongHistory,
+    },
     //// POLL Routes
     '/poll/active': {
       get: getActivePoll,
     },
     '/poll/rating-list': {
       get: getRatingList,
+    },
+    '/poll/all-archived': {
+      get: getAllPollsArchived,
     },
     ///// ADMIN
     '/admin/user/{userId}/user-to-admin': {

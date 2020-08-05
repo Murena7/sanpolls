@@ -1,0 +1,92 @@
+import { Inject, Service } from 'typedi';
+import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
+import { getRepository, Repository } from 'typeorm';
+import { PollEvent } from '../entity/poll-event';
+import { Song } from '../entity/song';
+import { IBasicResponse } from '../interfaces/response-types';
+import { User } from '../entity/user';
+import { IChangePassword, IUpdateProfile, IUserSongHistoryBody } from '../interfaces/user';
+import { ResponseStatusMessage } from '../interfaces/response';
+import argon2 from 'argon2';
+import { randomBytes } from 'crypto';
+
+@Service()
+export default class UserService {
+  pollEventRepository: Repository<PollEvent>;
+  songRepository: Repository<Song>;
+  userRepository: Repository<User>;
+
+  constructor(@Inject('logger') private logger, @EventDispatcher() private eventDispatcher: EventDispatcherInterface) {
+    this.pollEventRepository = getRepository(PollEvent);
+    this.songRepository = getRepository(Song);
+    this.userRepository = getRepository(User);
+  }
+
+  public async updateProfile(body: IUpdateProfile, currentUser: User): Promise<IBasicResponse> {
+    try {
+      await this.userRepository
+        .createQueryBuilder()
+        .update(User)
+        .set({ ...body })
+        .where('id = :id', { id: currentUser.id })
+        .execute();
+
+      const editedUser = await this.userRepository.findOne({
+        where: { id: currentUser.id },
+      });
+
+      return { data: editedUser };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async changePassword(body: IChangePassword, currentUser: User): Promise<IBasicResponse> {
+    try {
+      const userWithPassword = await this.userRepository
+        .createQueryBuilder('user')
+        .where('user.id = :id', { id: currentUser.id })
+        .addSelect('user.password')
+        .addSelect('user.salt')
+        .getOne();
+
+      this.logger.silly('Checking password');
+      const validPassword = await argon2.verify(userWithPassword.password, body.oldPassword);
+      if (!validPassword) {
+        throw new Error('Wrong Password');
+      }
+
+      this.logger.silly('Hashing New password');
+      const newSalt = randomBytes(32);
+      userWithPassword.password = await argon2.hash(body.newPassword, { salt: newSalt });
+      userWithPassword.salt = newSalt.toString('hex');
+
+      await userWithPassword.save();
+
+      return { status: ResponseStatusMessage.Success };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async userSongHistory(body: IUserSongHistoryBody, currentUser: User): Promise<IBasicResponse> {
+    try {
+      const take: number = +body.take || 2000;
+      const skip: number = +body.skip || 0;
+
+      const [result, total] = await this.songRepository.findAndCount({
+        where: { userId: currentUser.id },
+        order: { createdAt: 'DESC' },
+        take: take,
+        skip: skip,
+      });
+
+      return { data: result, count: total };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+}
