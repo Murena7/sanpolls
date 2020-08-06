@@ -9,7 +9,7 @@
 }
 
 .navbar-header {
-  height: 56px;
+  min-height: 56px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -23,6 +23,12 @@
 
   .voices {
     margin-right: 10px;
+  }
+  .nav-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
@@ -46,4 +52,11 @@
 
 .admin-icon {
   color: #18ffff;
+}
+
+@media only screen and (max-width: 799px) {
+  .navbar-header {
+    justify-content: center;
+    padding: 5px 10px;
+  }
 }
