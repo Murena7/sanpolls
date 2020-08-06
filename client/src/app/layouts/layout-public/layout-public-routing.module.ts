@@ -13,6 +13,7 @@ const routes: Routes = [
       { path: 'polls', loadChildren: () => import('@pages/polls/polls.module').then(m => m.PollsModule) },
       { path: 'about', loadChildren: () => import('@pages/about/about.module').then(m => m.AboutModule) },
       { path: 'contacts', loadChildren: () => import('@pages/contacts/contacts.module').then(m => m.ContactsModule) },
+      { path: 'faqpage', loadChildren: () => import('@pages/faqpage/faqpage.module').then(m => m.FaqpageModule) },
       { path: 'login', loadChildren: () => import('@pages/login/login.module').then(m => m.LoginModule) },
       {
         path: 'emailcheck',
