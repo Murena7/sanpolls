@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
         const errorMessage = error?.error?.errors?.message;
         this.submitted = false;
         if (errorMessage === 'Unauthorized') {
-          this.formLog.get('email').setErrors({ incorrect: true });
+          this.formLog.get('password').setErrors({ incorrect: true });
         }
       }
     );

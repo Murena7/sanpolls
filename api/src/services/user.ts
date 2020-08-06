@@ -76,12 +76,15 @@ export default class UserService {
       const take: number = +body.take || 2000;
       const skip: number = +body.skip || 0;
 
-      const [result, total] = await this.songRepository.findAndCount({
-        where: { userId: currentUser.id },
-        order: { createdAt: 'DESC' },
-        take: take,
-        skip: skip,
-      });
+      const [result, total] = await this.songRepository
+        .createQueryBuilder('song')
+        .leftJoin('song.event', 'event')
+        .addSelect('event.name')
+        .where('song.userId = :userId', { userId: currentUser.id })
+        .orderBy('song.createdAt', 'DESC')
+        .skip(skip)
+        .take(take)
+        .getManyAndCount();
 
       return { data: result, count: total };
     } catch (e) {

@@ -1,43 +1,65 @@
 <div class="container">
   <div class="my-history-title">Моя история</div>
-  <h3 class="subtitle-text">Список моих песен</h3>
+  <h3 class="subtitle-text">Список добавленых песен</h3>
   <ngx-datatable
-    [style.height.vh]="60"
-    class="material custom-table"
+    class="material expandable table-style"
+    [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 305"
     [rows]="songs"
-    [columnMode]="'flex'"
-    [headerHeight]="40"
-    [scrollbarV]="false"
-    [footerHeight]="50"
-    [rowHeight]="50"
-    [sorts]="[{ prop: 'votesCount', dir: 'desc' }]"
-    ><ngx-datatable-column name="Место" prop="text" [flexGrow]="1">
-      <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-        <span class="word-item">{{ rowIndex + 1 }}</span>
+    [columnMode]="ColumnMode.force"
+    [rowHeight]="rowHeight"
+    [headerHeight]="headerHeight"
+    [scrollbarV]="true"
+    [footerHeight]="35"
+    ><!-- Row Detail Template -->
+    <ngx-datatable-row-detail [rowHeight]="60" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div style="padding-left: 35px;">
+          <div>Название голосования: {{ row.event.name }}</div>
+        </div>
+      </ng-template>
+    </ngx-datatable-row-detail>
+    <!-- Column Templates -->
+    <ngx-datatable-column
+      [width]="50"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="false"
+    >
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+        <a
+          href="javascript:void(0)"
+          [class.datatable-icon-right]="!expanded"
+          [class.datatable-icon-down]="expanded"
+          title="Expand/Collapse Row"
+          (click)="toggleExpandRow(row)"
+        >
+        </a>
       </ng-template>
     </ngx-datatable-column>
-
-    <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="2">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="word-item">{{ row.songSinger }}</span>
+    <ngx-datatable-column name="№" [width]="40">
+      <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+        <strong>{{ rowIndex + 1 }}</strong>
       </ng-template>
     </ngx-datatable-column>
-
-    <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="3">
+    <ngx-datatable-column name="Исполнитель">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="word-item">{{ row.songName }}</span>
+        <strong>{{ row.songSinger }}</strong>
       </ng-template>
     </ngx-datatable-column>
-
-    <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="2">
+    <ngx-datatable-column name="Песня">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="word-item">{{ row.coverSinger }}</span>
+        <strong>{{ row.songName }}</strong>
       </ng-template>
     </ngx-datatable-column>
-
-    <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="1">
+    <ngx-datatable-column name="Поет">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <span class="word-item">{{ row.voiceCount }}</span>
+        <strong>{{ row.coverSinger }}</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Голоса">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <strong>{{ row.voiceCount }}</strong>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

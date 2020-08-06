@@ -27,3 +27,12 @@ export interface IUserRegistrationBody {
 export interface UserResponse {
   data: IUser;
 }
+
+export interface IUpdateProfileBody {
+  username: string;
+}
+
+export interface IChangePasswordBody {
+  newPassword: string;
+  oldPassword: string;
+}
