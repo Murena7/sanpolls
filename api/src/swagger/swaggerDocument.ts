@@ -12,7 +12,7 @@ import {
   putSwitchPollEventStatus,
   putUserToAdmin,
 } from './admin/admin';
-import { getSongById, postAddSong } from './song/song';
+import { getSongById, postAddSong, postSongLike } from './song/song';
 import { postGiveVote } from './vote/vote';
 
 export const swaggerDocument = {
@@ -118,6 +118,9 @@ export const swaggerDocument = {
     },
     '/song/add': {
       post: postAddSong,
+    },
+    '/song/like/{songId}': {
+      post: postSongLike,
     },
     ///// VOTE
     '/vote/give': {
