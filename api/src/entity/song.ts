@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Expose } from 'class-transformer';
 import { User } from './user';
 import { PollEvent } from './poll-event';
+import { OneToMany } from 'typeorm/index';
 
 @Entity()
 export class Song extends BaseEntity {
@@ -51,12 +52,21 @@ export class Song extends BaseEntity {
   @Expose()
   voiceCount: number;
 
-  like: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.songLike,
+  )
+  like: LikeDislike[];
 
-  dislike: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.songDislike,
+  )
+  dislike: LikeDislike[];
 
+  likeCount: number;
+  dislikeCount: number;
   selfLike?: LikeDislike;
-
   ratingPosition: number;
 
   @Column({ type: 'varchar', default: '' })

@@ -11,11 +11,13 @@ import { SnackbarNotificationService } from '@core/common-services/snackbar-noti
 import { IUser } from '@core/entities/user/user.types';
 import { Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
+import { SongService } from '../../core/api-services/song.service';
+import { VoteService } from '../../core/api-services/vote.service';
 
 @Component({
   selector: 'san-polls',
   templateUrl: './polls.component.html',
-  styleUrls: ['./polls.component.scss']
+  styleUrls: ['./polls.component.scss'],
 })
 export class PollsComponent implements OnInit, OnDestroy {
   pollsTableData: ISong[] = [];
@@ -34,24 +36,26 @@ export class PollsComponent implements OnInit, OnDestroy {
     private pollService: PollsService,
     private router: Router,
     private userService: UserService,
-    private snackbarNotificationService: SnackbarNotificationService
+    private snackbarNotificationService: SnackbarNotificationService,
+    private songService: SongService,
+    private voteService: VoteService
   ) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.currentUser.subscribe(user => {
+    this.userSubscription = this.authService.currentUser.subscribe((user) => {
       this.currentUser = user;
     });
 
     this.pollService
       .getActivePoll()
       .pipe(
-        switchMap(activeEvent => {
+        switchMap((activeEvent) => {
           this.activePollEndDate = activeEvent.endDate;
           this.activePollID = activeEvent.id;
           return this.pollService.getPolls({ id: activeEvent.id });
         })
       )
-      .subscribe(res => (this.pollsTableData = res.data));
+      .subscribe((res) => (this.pollsTableData = res.data));
   }
 
   ngOnDestroy(): void {
@@ -66,11 +70,11 @@ export class PollsComponent implements OnInit, OnDestroy {
         {
           id: params.id,
           take: params.take,
-          skip: params.skip
+          skip: params.skip,
         },
         params.disableLoader
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         if (params.appendData) {
           this.pollsTableData = [...this.pollsTableData, ...res.data];
         } else {
@@ -93,18 +97,18 @@ export class PollsComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(DialogPollsComponent, {
         data: {
           songData: song,
-          userData: this.currentUser
-        }
+          userData: this.currentUser,
+        },
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.pollService
+          this.voteService
             .giveVote(result)
             .pipe(
-              switchMap(res => this.userService.refreshUserData()),
+              switchMap((res) => this.userService.refreshUserData()),
               switchMap(() => this.pollService.getPolls({ id: this.activePollID }))
             )
-            .subscribe(res => {
+            .subscribe((res) => {
               this.pollsTableData = res.data;
               this.snackbarNotificationService.successfully('Вы успешно проголосовали');
             });
@@ -116,13 +120,13 @@ export class PollsComponent implements OnInit, OnDestroy {
   }
 
   addSong(song: ICreateSong) {
-    this.pollService
+    this.songService
       .createSong(song)
       .pipe(
-        switchMap(res => this.userService.refreshUserData()),
+        switchMap((res) => this.userService.refreshUserData()),
         switchMap(() => this.pollService.getPolls({ id: this.activePollID }))
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         this.pollsTableData = res.data;
         this.snackbarNotificationService.successfully('Вы успешно добавили песню');
       });

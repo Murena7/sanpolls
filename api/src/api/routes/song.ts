@@ -24,7 +24,40 @@ export default (app: Router) => {
       logger.debug('Calling /song/by-id endpoint');
       try {
         const songServiceInstance = Container.get(SongService);
-        const result: IBasicResponse = await songServiceInstance.songById(req.params.id);
+        const result: IBasicResponse = await songServiceInstance.songById(req.params.id, req.user as User);
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/like/:songId',
+    middlewares.checkAuth(),
+    celebrate({
+      params: Joi.object({
+        songId: Joi.string().uuid(),
+      }),
+      body: Joi.object({
+        likeId: Joi.string().uuid(),
+        likeStatus: Joi.number()
+          .min(0)
+          .max(2),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /song/like endpoint');
+      try {
+        const songServiceInstance = Container.get(SongService);
+        const result: IBasicResponse = await songServiceInstance.songLike(
+          req.params.songId,
+          req.body,
+          req.user as User,
+        );
 
         return res.status(200).json(result);
       } catch (e) {

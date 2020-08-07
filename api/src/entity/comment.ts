@@ -13,6 +13,7 @@ import moment from 'moment';
 import { User } from './user';
 import { PollEvent } from './poll-event';
 import { Song } from './song';
+import { OneToMany } from 'typeorm/index';
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -43,10 +44,22 @@ export class Comment extends BaseEntity {
   @Column({ type: 'varchar' })
   text: string;
 
-  like: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.commentLike,
+  )
+  @JoinColumn()
+  like: LikeDislike[];
 
-  dislike: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.commentDislike,
+  )
+  @JoinColumn()
+  dislike: LikeDislike[];
 
+  likeCount: number;
+  dislikeCount: number;
   selfLike?: LikeDislike;
 
   @Column({ type: 'int', default: 0 })

@@ -32,6 +32,11 @@ export class AuthApiService {
       );
   }
 
+  logout() {
+    this.authService.logout();
+    return this.http.post<IBasicResponse>(`${environment.UI_SERVER}/auth/logout`, {});
+  }
+
   createNewUser(user): Observable<any> {
     return this.http.post<IBasicResponse>(`${environment.UI_SERVER}/auth/sign-up`, user);
   }

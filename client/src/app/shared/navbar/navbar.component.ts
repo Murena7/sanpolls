@@ -3,11 +3,12 @@ import { AuthService } from '@core/auth/auth.service';
 import { IUser, UserStatus } from '@core/entities/user/user.types';
 import { Router } from '@angular/router';
 import { UserRole } from '@core/entities/user/role.types';
+import { AuthApiService } from '@core/api-services/auth-api.service';
 
 @Component({
   selector: 'san-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
   userData: IUser;
@@ -18,16 +19,17 @@ export class NavbarComponent implements OnInit {
   disabled = false;
   unbounded = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private authApiService: AuthApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
+    this.authService.currentUser.subscribe((user) => {
       this.userData = user;
     });
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authApiService.logout().subscribe((res) => {
+      this.router.navigate(['/login']);
+    });
   }
 }

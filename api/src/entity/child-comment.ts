@@ -11,6 +11,7 @@ import {
 import { LikeDislike } from './like-dislike';
 import moment from 'moment';
 import { Comment } from './comment';
+import { OneToMany } from 'typeorm/index';
 
 @Entity()
 export class ChildComment extends BaseEntity {
@@ -27,10 +28,22 @@ export class ChildComment extends BaseEntity {
   @Column({ type: 'varchar' })
   text: string;
 
-  like: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.childCommentLike,
+  )
+  @JoinColumn()
+  like: LikeDislike[];
 
-  dislike: number;
+  @OneToMany(
+    type => LikeDislike,
+    likeDislike => likeDislike.childCommentDislike,
+  )
+  @JoinColumn()
+  dislike: LikeDislike[];
 
+  likeCount: number;
+  dislikeCount: number;
   selfLike?: LikeDislike;
 
   @Column({ type: 'timestamp' })

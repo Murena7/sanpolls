@@ -1,10 +1,24 @@
 <div class="container">
   <div class="likes">
-    <button mat-flat-button (click)="likePoll()">
-      <span class="material-icons thumb_up_alt" color="accent">thumb_up_alt</span> {{ like }}
+    <button
+      mat-button
+      class="basic-thumb"
+      (click)="setLike()"
+      [disabled]="!isAuth"
+      [class.pressed-like]="likeStatus === likeEnumStatus.like"
+    >
+      <mat-icon [class.thumb_up_alt]="isAuth">thumb_up_alt</mat-icon>
+      {{ like }}
     </button>
-    <button mat-flat-button (click)="dislikePoll()">
-      <span class="material-icons thumb_down_alt">thumb_down_alt</span> {{ dislike }}
+    <button
+      mat-button
+      class="basic-thumb"
+      (click)="setDislike()"
+      [disabled]="!isAuth"
+      [class.pressed-dislike]="likeStatus === likeEnumStatus.dislike"
+    >
+      <mat-icon [class.thumb_down_alt]="isAuth">thumb_down_alt</mat-icon>
+      {{ dislike }}
     </button>
   </div>
 </div>

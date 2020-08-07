@@ -3,10 +3,14 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '@core/auth/auth.service';
+import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthService) {}
+  constructor(
+    private authenticationService: AuthService,
+    private snackBarNotificationService: SnackbarNotificationService
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -17,7 +21,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           location.reload(true);
         }
 
-        // const error = err.error.errors.message || err.error.message || err.statusText;
+        const error = err.error.errors.message || err.error.message || err.statusText;
+        this.snackBarNotificationService.error(`Ошибка ${error}`);
         return throwError(err);
       })
     );

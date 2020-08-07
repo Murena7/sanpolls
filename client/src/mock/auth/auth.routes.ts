@@ -8,10 +8,10 @@ export default class AuthRoutes {
   constructor({ uiRouter }: MyOptions) {
     if (!environment.production) {
       // uiRouter.post('/auth/login', (request, db) => this.login(request, db));
-      uiRouter.post('/auth/logout', () => this.logout());
+      // uiRouter.post('/auth/logout', () => this.logout());
       // uiRouter.post('/auth/sign-up', () => this.signUp());
-      uiRouter.post('/auth/reconfirm-email', () => this.reconfirmEmail());
-      uiRouter.post('/auth/password-reset', (request, db) => this.passwordReset(request, db));
+      // uiRouter.post('/auth/reconfirm-email', () => this.reconfirmEmail());
+      // uiRouter.post('/auth/password-reset', (request, db) => this.passwordReset(request, db));
     }
   }
 
@@ -19,21 +19,21 @@ export default class AuthRoutes {
     const body = JSON.parse(request.body);
     const user = db.findOne('users', {
       email: body.email,
-      password: body.password
+      password: body.password,
     });
 
     if (user) {
       deleteCookie('connect.sid');
       deleteCookie('user.id');
       setCookie('connect.sid', 's%3ATW_zAy3vwzv36d0Z45hUTjnaFOB8DlvT.gUeaXPfqSPFH9GyRzG2oXea82jGxmEUKAQtRRwHQAXI', {
-        'max-age': 3600
+        'max-age': 3600,
       });
       setCookie('user.id', user.data.id, { 'max-age': 3600 });
     }
 
     return user
       ? {
-          data: user.data
+          data: user.data,
         }
       : new ErrorResponse('Credentials are invalid');
   }
@@ -44,13 +44,13 @@ export default class AuthRoutes {
 
   signUp(): {} {
     return {
-      success: 'OK'
+      success: 'OK',
     };
   }
 
   reconfirmEmail(): {} {
     return {
-      success: 'OK'
+      success: 'OK',
     };
   }
 
@@ -58,7 +58,7 @@ export default class AuthRoutes {
     const body = JSON.parse(request.body);
 
     const user = db.findOne('users', {
-      email: body.email
+      email: body.email,
     });
 
     return user

@@ -26,23 +26,11 @@ export class PollsService {
     }
   }
 
-  getSongById(id): Observable<ISong> {
-    return this.http.get<IBasicResponse>(`${apiUrl}/song/by-id/${id}`).pipe(map((data) => data.data));
-  }
-
-  createSong(song: ICreateSong): Observable<ISong> {
-    return this.http.post<IBasicResponse<ISong>>(`${apiUrl}/song/add`, song).pipe(map((data) => data.data));
-  }
-
-  getActivePoll(): Observable<IPollEvent> {
-    return this.http.get<IBasicResponse<IPollEvent>>(`${apiUrl}/poll/active`).pipe(map((data) => data.data));
-  }
-
   getAllArchivedPoll(): Observable<IBasicResponse<IPollEvent[]>> {
     return this.http.get<IBasicResponse<IPollEvent[]>>(`${apiUrl}/poll/all-archived`);
   }
 
-  giveVote(body): Observable<any> {
-    return this.http.post<IBasicResponse<any>>(`${apiUrl}/vote/give`, body).pipe(map((data) => data.data));
+  getActivePoll(): Observable<IPollEvent> {
+    return this.http.get<IBasicResponse<IPollEvent>>(`${apiUrl}/poll/active`).pipe(map((data) => data.data));
   }
 }

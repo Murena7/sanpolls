@@ -1,3 +1,5 @@
+import { LikeStatus } from './like-dislike';
+
 export interface IAddSongBody {
   eventId: string;
   songSinger: string;
@@ -6,4 +8,9 @@ export interface IAddSongBody {
   voiceCount: number;
   additionalTextInfo: string;
   youtubeVideoId: string;
+}
+
+export interface ISongLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
 }

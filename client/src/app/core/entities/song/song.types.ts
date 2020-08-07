@@ -1,4 +1,4 @@
-import { ILikeDislike } from '@core/entities/like-dislike/like-dislike.types';
+import { ILikeDislike, LikeStatus } from '@core/entities/like-dislike/like-dislike.types';
 import { IUser } from '@core/entities/user/user.types';
 import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
 
@@ -13,8 +13,8 @@ export interface ISong {
   songName: string;
   coverSinger: string;
   voiceCount: number;
-  like: number;
-  dislike: number;
+  likeCount: number;
+  dislikeCount: number;
   selfLike?: ILikeDislike;
   additionalTextInfo: string;
   youtubeVideoId: string;
@@ -35,4 +35,9 @@ export interface ICreateSong {
   youtubeVideoId: string;
   additionalTextInfo: string;
   voiceCount: number;
+}
+
+export interface ISongLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
 }

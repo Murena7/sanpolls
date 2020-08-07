@@ -3,3 +3,9 @@ export enum ParentType {
   Comment = 'comment',
   ChildComment = 'child-comment',
 }
+
+export enum LikeStatus {
+  unset,
+  like,
+  dislike,
+}

@@ -11,6 +11,9 @@ import {
 import { ParentType } from '../interfaces/like-dislike';
 import moment from 'moment';
 import { User } from './user';
+import { Song } from './song';
+import { Comment } from './comment';
+import { ChildComment } from './child-comment';
 
 @Entity()
 export class LikeDislike extends BaseEntity {
@@ -32,6 +35,44 @@ export class LikeDislike extends BaseEntity {
     enum: ParentType,
   })
   parentType: ParentType;
+
+  @ManyToOne(
+    type => Song,
+    song => song.like,
+  )
+  @JoinColumn()
+  songLike: Song;
+
+  @ManyToOne(
+    type => Song,
+    song => song.dislike,
+  )
+  @JoinColumn()
+  songDislike: Song;
+
+  @ManyToOne(
+    type => Comment,
+    comment => comment.like,
+  )
+  commentLike: Comment;
+
+  @ManyToOne(
+    type => Comment,
+    comment => comment.dislike,
+  )
+  commentDislike: Comment;
+
+  @ManyToOne(
+    type => ChildComment,
+    childComment => childComment.like,
+  )
+  childCommentLike: ChildComment;
+
+  @ManyToOne(
+    type => ChildComment,
+    childComment => childComment.dislike,
+  )
+  childCommentDislike: ChildComment;
 
   @Column({ type: 'boolean' })
   isLike: boolean;

@@ -35,7 +35,13 @@
     </div>
     <button mat-raised-button color="accent" class="vote-btn" (click)="openDialog()">Проголосовать</button>
     <div class="poll-likes">
-      <san-like></san-like>
+      <san-like
+        [like]="currentSong.likeCount"
+        [dislike]="currentSong.dislikeCount"
+        [selfLike]="currentSong.selfLike"
+        [isAuth]="!!currentUser"
+        (likeEvent)="likeEvent($event)"
+      ></san-like>
     </div>
     <div class="comments">
       <mat-divider class="comments-divider"></mat-divider>
