@@ -13,10 +13,146 @@ export default (app: Router) => {
   app.use('/song', route);
 
   route.get(
-    '/by-id/:id',
+    '/:id/comments',
+    celebrate({
+      query: Joi.object({
+        skip: Joi.number(),
+        take: Joi.number(),
+      }),
+      params: Joi.object({
+        id: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /song/comments/bySongId endpoint');
+      try {
+        const songServiceInstance = Container.get(SongService);
+
+        const result: IBasicResponse = await songServiceInstance.getSongComments({
+          skip: req.query.skip,
+          take: req.query.take,
+          id: req.params.id,
+        });
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/:id/comments/add',
+    middlewares.checkAuth(),
+    celebrate({
+      body: Joi.object({
+        commentText: Joi.string().required(),
+      }),
+      params: Joi.object({
+        id: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /song/comments/add endpoint');
+      try {
+        const songServiceInstance = Container.get(SongService);
+
+        const result: IBasicResponse = await songServiceInstance.addSongComment(req.user as User, req.params.id, {
+          commentText: req.body.commentText,
+        });
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/:songId/comments/:commentId/edit',
+    middlewares.checkAuth(),
+    celebrate({
+      body: Joi.object({
+        commentText: Joi.string().required(),
+      }),
+      params: Joi.object({
+        songId: Joi.string()
+          .uuid()
+          .required(),
+        commentId: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /song/comments/edit endpoint');
+      try {
+        const songServiceInstance = Container.get(SongService);
+
+        const result: IBasicResponse = await songServiceInstance.editSongComment(
+          req.user as User,
+          req.params.commentId,
+          {
+            commentText: req.body.commentText,
+          },
+        );
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.delete(
+    '/:songId/comments/:commentId/delete',
+    middlewares.checkAuth(),
     celebrate({
       params: Joi.object({
-        id: Joi.string().uuid(),
+        songId: Joi.string()
+          .uuid()
+          .required(),
+        commentId: Joi.string()
+          .uuid()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /song/comments/delete endpoint');
+      try {
+        const songServiceInstance = Container.get(SongService);
+
+        const result: IBasicResponse = await songServiceInstance.deleteSongComment(
+          req.user as User,
+          req.params.commentId,
+        );
+
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.get(
+    '/:id',
+    celebrate({
+      params: Joi.object({
+        id: Joi.string()
+          .uuid()
+          .required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
@@ -35,11 +171,13 @@ export default (app: Router) => {
   );
 
   route.post(
-    '/like/:songId',
+    '/:songId/like',
     middlewares.checkAuth(),
     celebrate({
       params: Joi.object({
-        songId: Joi.string().uuid(),
+        songId: Joi.string()
+          .uuid()
+          .required(),
       }),
       body: Joi.object({
         likeId: Joi.string().uuid(),

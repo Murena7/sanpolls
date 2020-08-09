@@ -45,7 +45,11 @@
     </div>
     <div class="comments">
       <mat-divider class="comments-divider"></mat-divider>
-      <san-comments></san-comments>
+      <san-comments
+        [comments]="comments"
+        [isAuth]="!!currentUser"
+        (addComment)="addCommentEvent($event)"
+      ></san-comments>
     </div>
   </mat-card-content>
 </mat-card>

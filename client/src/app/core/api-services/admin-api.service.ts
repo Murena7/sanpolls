@@ -47,7 +47,7 @@ export class AdminApiService {
 
   editPoll(body: ICreatePollBody, pollId): Observable<IPollEvent> {
     return this.http
-      .post<IBasicResponse<IPollEvent>>(`${environment.UI_SERVER}/admin/poll/edit/${pollId}`, body)
+      .post<IBasicResponse<IPollEvent>>(`${environment.UI_SERVER}/admin/poll/${pollId}/edit`, body)
       .pipe(map((data) => data.data));
   }
 
@@ -87,6 +87,6 @@ export class AdminApiService {
   }
 
   switchPollStatus(pollId: string): Observable<IBasicResponse<IPollEvent>> {
-    return this.http.put<IBasicResponse<IPollEvent>>(`${environment.UI_SERVER}/admin/poll/switch-status/${pollId}`, {});
+    return this.http.put<IBasicResponse<IPollEvent>>(`${environment.UI_SERVER}/admin/poll/${pollId}/switch-status`, {});
   }
 }

@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRippleModule } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [],
@@ -45,6 +46,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     MatRippleModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    TextFieldModule,
   ],
   exports: [
     MatButtonModule,
@@ -69,6 +71,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     MatRippleModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    TextFieldModule,
   ],
 })
 export class MaterialModule {}

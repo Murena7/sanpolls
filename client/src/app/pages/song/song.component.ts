@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.component';
 import { switchMap } from 'rxjs/operators';
@@ -12,16 +12,21 @@ import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
+import { IAddEditCommentBody, IComment } from '../../core/entities/comment/comment';
+import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
   selector: 'san-poll',
   templateUrl: './song.component.html',
   styleUrls: ['./song.component.scss'],
 })
-export class SongComponent implements OnInit {
+export class SongComponent implements OnInit, OnDestroy {
   currentSong: ISong;
   currentUser: IUser;
   songId: string;
+  comments: IComment[];
+
+  userSub: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -36,11 +41,23 @@ export class SongComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUserValue;
-    this.songId = this.route.snapshot.paramMap.get('id');
-    this.songService.getSongById(this.songId).subscribe((song) => {
-      this.currentSong = song;
+    this.userSub = this.authService.currentUser.subscribe((user) => {
+      this.currentUser = user;
     });
+
+    this.songId = this.route.snapshot.paramMap.get('id');
+
+    forkJoin({
+      currentSong: this.songService.getSongById(this.songId),
+      comments: this.songService.getCommentsBySongId(this.songId),
+    }).subscribe((res) => {
+      this.currentSong = res.currentSong;
+      this.comments = res.comments;
+    });
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 
   openDialog() {
@@ -79,6 +96,17 @@ export class SongComponent implements OnInit {
       .subscribe((song) => {
         this.currentSong.selfLike = song?.selfLike;
         this.showLikeChangeMessage(event);
+      });
+  }
+
+  addCommentEvent(event: IAddEditCommentBody) {
+    this.songService
+      .addCommentBySongId(this.songId, {
+        commentText: event.commentText,
+      })
+      .subscribe((res) => {
+        this.comments.unshift(res);
+        this.snackbarNotificationService.successfully('Комментарий успешно добавлен');
       });
   }
 

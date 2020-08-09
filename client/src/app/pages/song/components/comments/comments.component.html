@@ -1,24 +1,31 @@
 <h3 class="comments-title">Комментарии:</h3>
-<form class="form" [formGroup]="commentsForm" (ngSubmit)="submit()">
+<form class="form" [formGroup]="commentsForm" #formDirective="ngForm" (ngSubmit)="submit(formDirective)">
   <mat-form-field class="full-width">
     <mat-label>Оставьте комментарий</mat-label>
-    <input matInput type="text" formControlName="commentControl" />
+    <textarea
+      (focus)="textAreaFocus = true"
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5"
+      formControlName="commentText"
+    ></textarea>
   </mat-form-field>
 
-  <mat-card-actions *ngIf="!commentsForm.get('commentControl').invalid">
-    <button mat-stroked-button type="button" (click)="cancel()">
+  <div class="actions" *ngIf="textAreaFocus">
+    <button mat-stroked-button type="button" (click)="cancel(formDirective)">
       Отмена
     </button>
-    <button mat-stroked-button color="primary" type="submit" [disabled]="commentsForm.get('commentControl').invalid">
+    <button mat-stroked-button color="primary" type="submit" [disabled]="commentsForm.get('commentText').invalid">
       Отправить
     </button>
-  </mat-card-actions>
+  </div>
 </form>
 <ul>
   <li *ngFor="let comment of comments">
     <div class="comments-header">
-      <h3 class="user-name">{{ comment.userName }}</h3>
-      <small>{{ comment.date | date: 'short' }}</small>
+      <h3 class="user-name">{{ comment.user.username }}</h3>
+      <small>{{ comment.createdAt | date: 'dd/MM/yy HH:MM' }}</small>
     </div>
     <p class="comment-content">{{ comment.text }}</p>
     <div class="comments-footer">
@@ -35,12 +42,12 @@
           <button mat-stroked-button type="button" (click)="cancelReply()">
             Отмена
           </button>
-          <button mat-raised-button type="replySubmit" [disabled]="replyForm.get('replyControl').invalid">
+          <button mat-raised-button type="submit" [disabled]="replyForm.get('replyControl').invalid">
             Отправить
           </button>
         </mat-card-actions>
       </form>
     </div>
-    <san-child-comments [childComments]="childComments" [panelOpenState]="panelOpenState"></san-child-comments>
+    <!--    <san-child-comments [childComments]="childComments" [panelOpenState]="panelOpenState"></san-child-comments>-->
   </li>
 </ul>

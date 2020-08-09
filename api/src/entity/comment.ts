@@ -61,8 +61,6 @@ export class Comment extends BaseEntity {
   likeCount: number;
   dislikeCount: number;
   selfLike?: LikeDislike;
-
-  @Column({ type: 'int', default: 0 })
   replyCount: number;
 
   @Column({ type: 'timestamp' })

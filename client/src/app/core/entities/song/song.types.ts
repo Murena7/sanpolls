@@ -41,3 +41,8 @@ export interface ISongLikeBody {
   likeId?: string;
   likeStatus: LikeStatus;
 }
+
+export interface IGetCommentBySongIdParams {
+  take: number;
+  skip: number;
+}

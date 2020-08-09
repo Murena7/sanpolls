@@ -1,14 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
-export interface IComment {
-  id: number;
-  userName: string;
-  text: string;
-  like: number;
-  dislike: number;
-  date: Date;
-}
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { IAddEditCommentBody, IComment } from '../../../../core/entities/comment/comment';
 
 @Component({
   selector: 'san-comments',
@@ -16,52 +8,54 @@ export interface IComment {
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent implements OnInit {
+  textAreaFocus = false;
+  @Input() comments: IComment[];
+  @Input() isAuth: boolean;
+  @Output() addComment = new EventEmitter<IAddEditCommentBody>();
+
   commentsForm: FormGroup;
   replyForm: FormGroup;
   openReply = false;
   panelOpenState = false;
 
-  childComments: IComment[] = [
-    { id: 1, userName: 'John', text: 'This is cool song bro!', like: 777, dislike: 0, date: new Date() },
-    { id: 2, userName: 'Smith', text: 'This is the best song ever!', like: 3213, dislike: 0, date: new Date() },
-  ];
-
-  comments: IComment[] = [
-    { id: 1, userName: 'John', text: 'This is cool song bro!', like: 777, dislike: 0, date: new Date() },
-    { id: 2, userName: 'Smith', text: 'This is the best song ever!', like: 3213, dislike: 0, date: new Date() },
-  ];
-
-  constructor() {}
+  constructor() {
+    this.initForm();
+  }
 
   ngOnInit(): void {
+    if (!this.isAuth) {
+      this.commentsForm.get('commentText').disable();
+    }
+  }
+
+  initForm() {
     this.commentsForm = new FormGroup({
-      commentControl: new FormControl(null, [Validators.required, Validators.minLength(1)]),
+      commentText: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
+
     this.replyForm = new FormGroup({
-      replyControl: new FormControl(null, [Validators.required, Validators.minLength(1)]),
+      replyControl: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
   }
 
-  submit() {
+  submit(formDirective: FormGroupDirective) {
     if (this.commentsForm.invalid) {
       return;
     }
 
-    const comment: IComment = {
-      id: 5,
-      userName: 'Ivan',
-      text: this.commentsForm.value.commentControl,
-      like: 1000,
-      dislike: 5,
-      date: new Date(),
-    };
-    this.comments.unshift(comment);
-    this.resetForm(this.commentsForm);
+    this.addComment.emit({
+      commentText: this.commentsForm.value.commentText,
+    });
+
+    this.commentsForm.reset();
+    formDirective.resetForm();
+    this.textAreaFocus = false;
   }
 
-  cancel() {
+  cancel(formDirective: FormGroupDirective) {
     this.commentsForm.reset();
-    this.resetForm(this.commentsForm);
+    formDirective.resetForm();
+    this.textAreaFocus = false;
   }
 
   cancelReply() {
@@ -86,15 +80,15 @@ export class CommentsComponent implements OnInit {
       return;
     }
 
-    const childComment: IComment = {
-      id: 5,
-      userName: 'Ivan',
-      text: this.replyForm.value.replyControl,
-      like: 1000,
-      dislike: 5,
-      date: new Date(),
-    };
-    this.childComments.unshift(childComment);
+    // const childComment: IComment = {
+    //   id: 5,
+    //   userName: 'Ivan',
+    //   text: this.replyForm.value.replyControl,
+    //   like: 1000,
+    //   dislike: 5,
+    //   date: new Date(),
+    // };
+    // this.childComments.unshift(childComment);
     this.resetForm(this.replyForm);
     this.openReplyText();
   }

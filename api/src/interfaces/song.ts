@@ -14,3 +14,13 @@ export interface ISongLikeBody {
   likeId?: string;
   likeStatus: LikeStatus;
 }
+
+export interface IGetComments {
+  skip?: string;
+  take?: string;
+  id: string;
+}
+
+export interface IAddEditCommentBody {
+  commentText: string;
+}

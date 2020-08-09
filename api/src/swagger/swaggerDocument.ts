@@ -1,19 +1,9 @@
-import { login, logout, signUp } from './auth/auth';
-import { getMe, getUserSongHistory, postUserPasswordChange, postUserProfileUpdate } from './user/user';
-import { getActivePoll, getAllPollsArchived, getRatingList } from './poll/poll';
-import {
-  getAllPolls,
-  getAllTransactions,
-  getAllUsers,
-  getStatisticTotal,
-  postAddVoice,
-  postPollCreate,
-  postPollEdit,
-  putSwitchPollEventStatus,
-  putUserToAdmin,
-} from './admin/admin';
-import { getSongById, postAddSong, postSongLike } from './song/song';
-import { postGiveVote } from './vote/vote';
+import { authRoutes } from './routes/auth';
+import { userRoutes } from './routes/user';
+import { pollRoutes } from './routes/poll';
+import { adminRoutes } from './routes/admin';
+import { songRoutes } from './routes/song';
+import { voteRoutes } from './routes/vote';
 
 export const swaggerDocument = {
   openapi: '3.0.1',
@@ -51,80 +41,11 @@ export const swaggerDocument = {
   // },
   // security: [{ cookieAuth: ['admin'] }],
   paths: {
-    //// AUTH Routes
-    '/auth/sign-up': {
-      post: signUp,
-    },
-    '/auth/login': {
-      post: login,
-    },
-    '/auth/logout': {
-      post: logout,
-    },
-    //// USER Routes
-    '/user/me': {
-      get: getMe,
-    },
-    '/user/profile/update': {
-      post: postUserProfileUpdate,
-    },
-    '/user/password/change': {
-      post: postUserPasswordChange,
-    },
-    '/user/song/history': {
-      get: getUserSongHistory,
-    },
-    //// POLL Routes
-    '/poll/active': {
-      get: getActivePoll,
-    },
-    '/poll/rating-list': {
-      get: getRatingList,
-    },
-    '/poll/all-archived': {
-      get: getAllPollsArchived,
-    },
-    ///// ADMIN
-    '/admin/user/{userId}/user-to-admin': {
-      put: putUserToAdmin,
-    },
-    '/admin/user/add-voice': {
-      post: postAddVoice,
-    },
-    '/admin/user/all': {
-      get: getAllUsers,
-    },
-    '/admin/poll/create': {
-      post: postPollCreate,
-    },
-    '/admin/poll/edit/{pollId}': {
-      post: postPollEdit,
-    },
-    '/admin/poll/all': {
-      get: getAllPolls,
-    },
-    '/admin/transaction/all': {
-      get: getAllTransactions,
-    },
-    '/admin/statistic/total': {
-      get: getStatisticTotal,
-    },
-    '/admin/poll/switch-status/{eventId}': {
-      put: putSwitchPollEventStatus,
-    },
-    ///// SONG
-    '/song/by-id/{id}': {
-      get: getSongById,
-    },
-    '/song/add': {
-      post: postAddSong,
-    },
-    '/song/like/{songId}': {
-      post: postSongLike,
-    },
-    ///// VOTE
-    '/vote/give': {
-      post: postGiveVote,
-    },
+    ...authRoutes,
+    ...userRoutes,
+    ...pollRoutes,
+    ...adminRoutes,
+    ...songRoutes,
+    ...voteRoutes,
   },
 };

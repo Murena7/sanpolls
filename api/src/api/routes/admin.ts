@@ -97,7 +97,7 @@ export default (app: Router) => {
   ///////
   /////// POLL //////////
   route.put(
-    '/poll/switch-status/:pollId',
+    '/poll/:pollId/switch-status',
     celebrate({
       params: Joi.object({
         pollId: Joi.string()
@@ -121,7 +121,7 @@ export default (app: Router) => {
   );
 
   route.post(
-    '/poll/edit/:pollId',
+    '/poll/:pollId/edit',
     celebrate({
       body: Joi.object({
         name: Joi.string()

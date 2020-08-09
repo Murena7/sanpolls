@@ -12,10 +12,14 @@ export interface IComment {
   songId: string;
   song?: ISong;
   text: string;
-  like: number;
-  dislike: number;
+  likeCount: number;
+  dislikeCount: number;
   selfLike?: ILikeDislike;
   replyCount: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IAddEditCommentBody {
+  commentText: string;
 }

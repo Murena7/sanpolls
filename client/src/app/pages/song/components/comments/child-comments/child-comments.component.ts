@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IComment } from '@pages/song/components/comments/comments.component';
+import { IComment } from '../../../../../core/entities/comment/comment';
 
 @Component({
   selector: 'san-child-comments',
