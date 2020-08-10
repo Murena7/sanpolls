@@ -7,7 +7,7 @@ import { IUser } from '@core/entities/user/user.types';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InitAppService {
   constructor(private authService: AuthService, private userService: UserService, private router: Router) {}
@@ -21,11 +21,7 @@ export class InitAppService {
             this.authService.setUser(user);
           })
         )
-        .toPromise()
-        .catch(() => {
-          this.authService.logout();
-          this.router.navigate(['/login']);
-        });
+        .toPromise();
     }
 
     return of().toPromise();
