@@ -2,6 +2,14 @@
   <div class="countdown">
     <san-countdown [endDate]="activePollEndDate"></san-countdown>
   </div>
+  <div satPopoverAnchor #anchor=satPopoverAnchor (click)="anchor.popover.toggle()">
+    <span class="material-icons info">info</span>
+  </div>
+  <sat-popover [anchor]="anchor" hasBackdrop verticalAlign="center" horizontalAlign="center">
+    <p class="popover-text">Ваши песни выделены цветом:
+      <span class="song-color"></span>
+    </p>
+  </sat-popover>
   <san-polls-table
     [rows]="pollsTableData"
     [isLoading]="isTableLoading"
