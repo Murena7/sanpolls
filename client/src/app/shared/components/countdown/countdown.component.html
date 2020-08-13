@@ -1,4 +1,4 @@
-<div class="container" *ngIf="dateToNumber">
+<div class="container" *ngIf="activePollType === 'timer'; else pollEventName">
   <h1>До окончания голосования осталось:</h1>
   <div
     class="countdown"
@@ -21,3 +21,6 @@
   >
   </div>
 </div>
+<ng-template #pollEventName>
+  <h1>{{activePollName}}</h1>
+</ng-template>
