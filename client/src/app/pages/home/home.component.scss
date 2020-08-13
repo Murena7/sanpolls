@@ -38,13 +38,16 @@
 .text-container {
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  max-width: 1000px;
+  width: 100%;
   padding-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
 
   .text-wrapper-left {
     align-self: flex-start;
     height: 80px;
-    width: 900px;
+    max-width: 900px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -53,7 +56,7 @@
   .text-wrapper-right {
     align-self: flex-end;
     height: 80px;
-    width: 900px;
+    max-width: 900px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -96,7 +99,8 @@
 
 .short-table {
   height: 100%;
-  width: 1000px;
+  max-width: 1000px;
+  width: 100%;
   button {
     width: 100%;
   }
@@ -110,4 +114,45 @@
 
 .mat-raised-button {
   border-radius: 0 0 4px 4px;
+}
+
+
+@media only screen and (max-width: 816px) {
+  .text-container .text-1, .text-container .text-2 {
+    font-size: 20px;
+    padding: 15px;
+    min-width: 625px;
+  }
+  .countdown-container .countdown-text {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (max-width: 644px) {
+  .text-container .text-1, .text-container .text-2 {
+    font-size: 16px;
+    padding: 12px;
+    min-width: 503px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+
+  .countdown-container .countdown-text {
+    font-size: 20px;
+  }
+
+}
+
+@media only screen and (max-width: 520px) {
+  .text-container .text-1, .text-container .text-2 {
+    font-size: 13px;
+    padding: 12px;
+    min-width: 100%;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+  .countdown-container .countdown-text {
+    font-size: 15px;
+  }
+
 }
