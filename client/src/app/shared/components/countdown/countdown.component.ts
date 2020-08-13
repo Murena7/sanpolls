@@ -7,6 +7,8 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 })
 export class CountdownComponent implements OnInit, OnChanges {
   @Input() endDate: string;
+  @Input() activePollType: string;
+  @Input() activePollName: string;
   endMessage = 'Голосование завершилось';
   dateToNumber: number;
 

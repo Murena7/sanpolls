@@ -26,6 +26,8 @@ export class PollsComponent implements OnInit, OnDestroy {
   isNoMoreTableResult = false;
 
   activePollEndDate: string;
+  activePollType: string;
+  activePollName: string;
   activePollID: string;
   currentUser: IUser;
   userSubscription: Subscription;
@@ -52,6 +54,8 @@ export class PollsComponent implements OnInit, OnDestroy {
         switchMap((activeEvent) => {
           this.activePollEndDate = activeEvent.endDate;
           this.activePollID = activeEvent.id;
+          this.activePollType = activeEvent.type;
+          this.activePollName = activeEvent.name;
           return this.pollService.getPolls({ id: activeEvent.id });
         })
       )

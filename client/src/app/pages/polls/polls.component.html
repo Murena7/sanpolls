@@ -1,6 +1,10 @@
 <div class="left">
   <div class="countdown">
-    <san-countdown [endDate]="activePollEndDate"></san-countdown>
+    <san-countdown
+      [endDate]="activePollEndDate"
+      [activePollName]="activePollName"
+      [activePollType]="activePollType"
+    ></san-countdown>
   </div>
   <san-polls-table
     [rows]="pollsTableData"
