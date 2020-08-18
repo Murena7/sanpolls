@@ -24,6 +24,7 @@
   .voices {
     margin-right: 10px;
   }
+
   .nav-menu {
     display: flex;
     flex-direction: row;
@@ -50,13 +51,38 @@
   margin-left: 5px;
 }
 
+.nav-mat-icon {
+  display: none;
+}
+
 .admin-icon {
   color: #18ffff;
+}
+
+.left-menu {
+  display: flex;
 }
 
 @media only screen and (max-width: 799px) {
   .navbar-header {
     justify-content: center;
     padding: 5px 10px;
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .left-menu {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .left-menu .nav-menu, .voices {
+    display: none;
+  }
+
+  .nav-mat-icon {
+    display: block;
   }
 }

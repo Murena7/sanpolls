@@ -1,12 +1,25 @@
 <nav class="navbar-header">
-  <nav>
-    <a mat-button routerLink="/">
-      <img src="assets/logo/logo-text.png" alt="SanSan" class="logo-mini" />
+  <nav class="left-menu">
+    <a class="nav-logo" mat-button routerLink="/">
+      <img src="assets/logo/logo-text.png" alt="SanSan" class="logo-mini"/>
     </a>
-    <a mat-button routerLink="/polls">Голосование</a>
-    <a mat-button routerLink="/about">О Нас</a>
-    <a mat-button routerLink="/contacts">Контакты</a>
-    <a mat-button routerLink="/faqpage">FAQ</a>
+    <div class="nav-menu">
+      <a mat-button routerLink="/polls">Голосование</a>
+      <a mat-button routerLink="/about">О Нас</a>
+      <a mat-button routerLink="/contacts">Контакты</a>
+      <a mat-button routerLink="/faqpage">FAQ</a>
+    </div>
+    <div class="nav-mat-icon">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item routerLink="/polls">Голосование</a>
+        <a mat-menu-item routerLink="/about">О Нас</a>
+        <a mat-menu-item routerLink="/contacts">Контакты</a>
+        <a mat-menu-item routerLink="/faqpage">FAQ</a>
+      </mat-menu>
+    </div>
   </nav>
 
   <nav>
