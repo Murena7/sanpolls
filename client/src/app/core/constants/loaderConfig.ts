@@ -1,7 +1,7 @@
 import { NgxUiLoaderConfig } from 'ngx-ui-loader';
 
 export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  blur: 0,
+  blur: 5,
   delay: 0,
   fastFadeOut: true,
   fgsColor: '#3f51b5',
@@ -14,7 +14,7 @@ export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   logoUrl: '',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
-  overlayColor: 'rgba(63,81,181,0.35)',
+  overlayColor: 'rgba(63,81,181,0.15)',
   pbColor: '#e9467e',
   pbDirection: 'ltr',
   pbThickness: 3,
