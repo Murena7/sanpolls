@@ -38,41 +38,25 @@ export class LikeDislike extends BaseEntity {
 
   @ManyToOne(
     type => Song,
-    song => song.like,
+    song => song.likeDislike,
+    { onDelete: 'CASCADE' },
   )
   @JoinColumn()
-  songLike: Song;
-
-  @ManyToOne(
-    type => Song,
-    song => song.dislike,
-  )
-  @JoinColumn()
-  songDislike: Song;
+  songLikeDislike: Song;
 
   @ManyToOne(
     type => Comment,
-    comment => comment.like,
+    comment => comment.likeDislike,
+    { onDelete: 'CASCADE' },
   )
-  commentLike: Comment;
-
-  @ManyToOne(
-    type => Comment,
-    comment => comment.dislike,
-  )
-  commentDislike: Comment;
+  commentLikeDislike: Comment;
 
   @ManyToOne(
     type => ChildComment,
-    childComment => childComment.like,
+    childComment => childComment.likeDislike,
+    { onDelete: 'CASCADE' },
   )
-  childCommentLike: ChildComment;
-
-  @ManyToOne(
-    type => ChildComment,
-    childComment => childComment.dislike,
-  )
-  childCommentDislike: ChildComment;
+  childCommentLikeDislike: ChildComment;
 
   @Column({ type: 'boolean' })
   isLike: boolean;

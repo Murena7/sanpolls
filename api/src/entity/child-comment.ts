@@ -12,6 +12,7 @@ import { LikeDislike } from './like-dislike';
 import moment from 'moment';
 import { Comment } from './comment';
 import { OneToMany } from 'typeorm/index';
+import { User } from './user';
 
 @Entity()
 export class ChildComment extends BaseEntity {
@@ -19,9 +20,20 @@ export class ChildComment extends BaseEntity {
   id: string;
 
   @Column({ nullable: true })
+  userId: string;
+
+  @ManyToOne(type => User)
+  @JoinColumn()
+  user: User;
+
+  @Column({ nullable: true })
   commentId: string;
 
-  @ManyToOne(type => Comment)
+  @ManyToOne(
+    type => Comment,
+    comment => comment.childComments,
+    { onDelete: 'CASCADE' },
+  )
   @JoinColumn()
   comment: Comment;
 
@@ -30,17 +42,10 @@ export class ChildComment extends BaseEntity {
 
   @OneToMany(
     type => LikeDislike,
-    likeDislike => likeDislike.childCommentLike,
+    likeDislike => likeDislike.childCommentLikeDislike,
   )
   @JoinColumn()
-  like: LikeDislike[];
-
-  @OneToMany(
-    type => LikeDislike,
-    likeDislike => likeDislike.childCommentDislike,
-  )
-  @JoinColumn()
-  dislike: LikeDislike[];
+  likeDislike: LikeDislike[];
 
   likeCount: number;
   dislikeCount: number;

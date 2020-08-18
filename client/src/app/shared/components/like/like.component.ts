@@ -11,6 +11,7 @@ export class LikeComponent implements OnInit {
   @Input() dislike: number;
   @Input() selfLike: ILikeDislike;
   @Input() isAuth: boolean;
+  @Input() isSmall = false;
   @Output() likeEvent = new EventEmitter<LikeStatus>();
 
   likeEnumStatus = LikeStatus;

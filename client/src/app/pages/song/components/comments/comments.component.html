@@ -1,53 +1,43 @@
 <h3 class="comments-title">Комментарии:</h3>
-<form class="form" [formGroup]="commentsForm" #formDirective="ngForm" (ngSubmit)="submit(formDirective)">
-  <mat-form-field class="full-width">
-    <mat-label>Оставьте комментарий</mat-label>
-    <textarea
-      (focus)="textAreaFocus = true"
-      matInput
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="5"
-      formControlName="commentText"
-    ></textarea>
-  </mat-form-field>
-
-  <div class="actions" *ngIf="textAreaFocus">
-    <button mat-stroked-button type="button" (click)="cancel(formDirective)">
-      Отмена
-    </button>
-    <button mat-stroked-button color="primary" type="submit" [disabled]="commentsForm.get('commentText').invalid">
-      Отправить
-    </button>
-  </div>
-</form>
+<san-textarea-form [isAuth]="!!currentUser" (addComment)="addComment.emit($event)"></san-textarea-form>
 <ul>
-  <li *ngFor="let comment of comments">
-    <div class="comments-header">
-      <h3 class="user-name">{{ comment.user.username }}</h3>
-      <small>{{ comment.createdAt | date: 'dd/MM/yy HH:MM' }}</small>
+  <li *ngFor="let comment of comments; let i = index">
+    <san-comment
+      [currentUser]="currentUser"
+      (addReplyComment)="callAddReplyComment($event, comment.id, i)"
+      [comment]="comment"
+      (likeEvent)="callLikeComment($event, i)"
+      (editComment)="this.editComment.emit($event)"
+      (deleteComment)="this.callDeleteComment($event)"
+    ></san-comment>
+    <div *ngIf="comment.childCommentsCount > 0 || comment?.childComments?.length > 0">
+      <button
+        mat-button
+        *ngIf="!comment?.childLoaderFlag && !comment?.childComments"
+        (click)="
+          this.callLoadChildComments({
+            commentId: comment.id,
+            index: i
+          })
+        "
+      >
+        Ответы ({{ comment.childCommentsCount }})
+      </button>
+      <mat-progress-bar *ngIf="comment?.childLoaderFlag" mode="indeterminate"></mat-progress-bar>
+      <ng-container *ngIf="comment?.childComments?.length > 0">
+        <ul>
+          <li *ngFor="let childComment of comment?.childComments; let childI = index" class="comment-container">
+            <san-comment
+              [currentUser]="currentUser"
+              (addReplyComment)="callAddReplyComment($event, comment.id, i)"
+              [comment]="childComment"
+              (likeEvent)="callLikeChildComment($event, i, childI)"
+              (editComment)="editChildComment.emit($event)"
+              (deleteComment)="callDeleteChildComment($event, i, childI)"
+            ></san-comment>
+          </li>
+        </ul>
+      </ng-container>
     </div>
-    <p class="comment-content">{{ comment.text }}</p>
-    <div class="comments-footer">
-      <san-like></san-like>
-      <button mat-flat-button (click)="openReplyText()">Ответить</button>
-    </div>
-    <div *ngIf="openReply">
-      <form class="form" [formGroup]="replyForm" (ngSubmit)="replySubmit()">
-        <mat-form-field class="full-width">
-          <mat-label>Написать ответ</mat-label>
-          <input matInput type="text" formControlName="replyControl" />
-        </mat-form-field>
-        <mat-card-actions *ngIf="!replyForm.get('replyControl').invalid">
-          <button mat-stroked-button type="button" (click)="cancelReply()">
-            Отмена
-          </button>
-          <button mat-raised-button type="submit" [disabled]="replyForm.get('replyControl').invalid">
-            Отправить
-          </button>
-        </mat-card-actions>
-      </form>
-    </div>
-    <!--    <san-child-comments [childComments]="childComments" [panelOpenState]="panelOpenState"></san-child-comments>-->
   </li>
 </ul>

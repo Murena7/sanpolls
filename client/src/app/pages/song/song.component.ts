@@ -1,10 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.component';
+import { DialogPollsComponent } from '@components/../../shared/modals/dialog-polls/dialog-polls.component';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PollsService } from '@core/api-services/polls.service';
-import { IGiveVoiceBody, ISong, ISongLikeBody } from '@core/entities/song/song.types';
+import {
+  IChildCommentLikeBody,
+  IChildCommentReqLikeBody,
+  ICommentLikeBody,
+  ICommentReqLikeBody,
+  IGiveVoiceBody,
+  ISong,
+  ISongLikeBody,
+} from '@core/entities/song/song.types';
 import { LikeStatus } from '@core/entities/like-dislike/like-dislike.types';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { IUser } from '@core/entities/user/user.types';
@@ -12,7 +20,15 @@ import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
-import { IAddEditCommentBody, IComment } from '../../core/entities/comment/comment';
+import {
+  IAddChildCommentBody,
+  IAddCommentReqBody,
+  IComment,
+  IDeleteCommentBody,
+  IEditCommentBody,
+  IEditCommentReqBody,
+  ILoadChildComment,
+} from '../../core/entities/comment/comment';
 import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
@@ -37,7 +53,8 @@ export class SongComponent implements OnInit, OnDestroy {
     private snackbarNotificationService: SnackbarNotificationService,
     private authService: AuthService,
     private songService: SongService,
-    private voteService: VoteService
+    private voteService: VoteService,
+    private detection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -99,13 +116,87 @@ export class SongComponent implements OnInit, OnDestroy {
       });
   }
 
-  addCommentEvent(event: IAddEditCommentBody) {
+  likeCommentEvent(event: ICommentLikeBody) {
+    const reqBody: ICommentReqLikeBody = {
+      likeId: this.comments[event.index]?.selfLike?.id,
+      likeStatus: event.likeStatus,
+    };
+    this.songService.commentLike(this.comments[event.index].id, reqBody).subscribe((comment) => {
+      this.comments[event.index].selfLike = comment.data.selfLike;
+      this.showLikeChangeMessage(event.likeStatus);
+    });
+  }
+
+  likeChildCommentEvent(event: IChildCommentLikeBody) {
+    const reqBody: IChildCommentReqLikeBody = {
+      likeId: this.comments[event.index]?.childComments[event.childIndex]?.selfLike?.id,
+      likeStatus: event.likeStatus,
+    };
+    this.songService
+      .childCommentLike(this.comments[event.index].childComments[event.childIndex].id, reqBody)
+      .subscribe((comment) => {
+        this.comments[event.index].childComments[event.childIndex].selfLike = comment.data.selfLike;
+        this.showLikeChangeMessage(event.likeStatus);
+      });
+  }
+
+  addCommentEvent(event: IAddCommentReqBody) {
     this.songService
       .addCommentBySongId(this.songId, {
         commentText: event.commentText,
       })
       .subscribe((res) => {
         this.comments.unshift(res);
+        this.snackbarNotificationService.successfully('Комментарий успешно добавлен');
+      });
+  }
+
+  loadChildCommentsEvent(event: ILoadChildComment) {
+    this.songService.getChildCommentsByCommentId(event.commentId, true).subscribe(
+      (res) => {
+        this.comments[event.index].childComments = res;
+        this.comments[event.index].childLoaderFlag = false;
+      },
+      (error) => {
+        this.comments[event.index].childLoaderFlag = false;
+      }
+    );
+  }
+
+  editCommentEvent(event: IEditCommentBody) {
+    this.songService.editCommentByCommentId(event.commentId, { commentText: event.commentText }).subscribe((res) => {
+      this.snackbarNotificationService.successfully('Комментарий успешно изменен');
+    });
+  }
+
+  deleteCommentEvent(event: IDeleteCommentBody) {
+    this.songService.deleteCommentByCommentId(event.commentId).subscribe((res) => {
+      this.snackbarNotificationService.successfully('Комментарий успешно удален');
+    });
+  }
+
+  editChildCommentEvent(event: IEditCommentBody) {
+    this.songService
+      .editChildCommentByChildCommentId(event.commentId, { commentText: event.commentText })
+      .subscribe((res) => {
+        this.snackbarNotificationService.successfully('Комментарий успешно изменен');
+      });
+  }
+
+  deleteChildCommentEvent(event: IDeleteCommentBody) {
+    this.songService.deleteChildCommentByChildCommentId(event.commentId).subscribe((res) => {
+      this.snackbarNotificationService.successfully('Комментарий успешно удален');
+    });
+  }
+
+  addReplyCommentEvent(event: IAddChildCommentBody) {
+    this.songService
+      .addChildCommentByCommentId(event.commentId, {
+        commentText: event.commentText,
+      })
+      .subscribe((res) => {
+        this.comments[event.index].childComments = res;
+
         this.snackbarNotificationService.successfully('Комментарий успешно добавлен');
       });
   }

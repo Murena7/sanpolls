@@ -61,20 +61,12 @@ export const likeSongTransaction = async (songId: string, body: ISongLikeBody, c
           await transactionalEntityManager.remove(likeDislike);
           break;
         case LikeStatus.dislike:
-          await transactionalEntityManager.remove(likeDislike);
-          await transactionalEntityManager
-            .getRepository(Song)
-            .createQueryBuilder('song')
-            .relation(Song, 'dislike')
-            .of(song)
-            .add(await createLikeDislikeEntity(body.likeStatus));
-          break;
         case LikeStatus.like:
           await transactionalEntityManager.remove(likeDislike);
           await transactionalEntityManager
             .getRepository(Song)
             .createQueryBuilder('song')
-            .relation(Song, 'like')
+            .relation(Song, 'likeDislike')
             .of(song)
             .add(await createLikeDislikeEntity(body.likeStatus));
           break;
@@ -100,18 +92,11 @@ export const likeSongTransaction = async (songId: string, body: ISongLikeBody, c
           throw new Error('Wrong like status no id');
           break;
         case LikeStatus.dislike:
-          await transactionalEntityManager
-            .getRepository(Song)
-            .createQueryBuilder('song')
-            .relation(Song, 'dislike')
-            .of(song)
-            .add(await createLikeDislikeEntity(body.likeStatus));
-          break;
         case LikeStatus.like:
           await transactionalEntityManager
             .getRepository(Song)
             .createQueryBuilder('song')
-            .relation(Song, 'like')
+            .relation(Song, 'likeDislike')
             .of(song)
             .add(await createLikeDislikeEntity(body.likeStatus));
           break;

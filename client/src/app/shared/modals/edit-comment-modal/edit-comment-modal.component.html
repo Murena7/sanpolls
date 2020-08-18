@@ -1,0 +1,28 @@
+<h3 mat-dialog-title>Изменить комментарий</h3>
+<form class="form" [formGroup]="editCommentForm" #formDirective="ngForm" (ngSubmit)="submit()">
+  <div mat-dialog-content>
+    <mat-form-field class="text-form-field" appearance="fill">
+      <mat-label>Комментарий</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="15"
+        formControlName="text"
+        #textAreaComment="matInput"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button type="button" (click)="cancel()">Отменить</button>
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="editCommentForm.get('text').invalid"
+      color="primary"
+      cdkFocusInitial
+    >
+      Подтвердить
+    </button>
+  </div>
+</form>

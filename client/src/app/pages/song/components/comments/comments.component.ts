@@ -1,6 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { IAddEditCommentBody, IComment } from '../../../../core/entities/comment/comment';
+import {
+  IAddChildCommentBody,
+  IAddCommentReqBody,
+  IComment,
+  IDeleteCommentBody,
+  IEditCommentBody,
+  ILoadChildComment,
+  ITextAreaEmitBody,
+} from '../../../../core/entities/comment/comment';
+import { LikeStatus } from '../../../../core/entities/like-dislike/like-dislike.types';
+import { IUser } from '../../../../core/entities/user/user.types';
+import { IChildCommentLikeBody, ICommentLikeBody } from '../../../../core/entities/song/song.types';
 
 @Component({
   selector: 'san-comments',
@@ -8,88 +18,54 @@ import { IAddEditCommentBody, IComment } from '../../../../core/entities/comment
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent implements OnInit {
-  textAreaFocus = false;
   @Input() comments: IComment[];
-  @Input() isAuth: boolean;
-  @Output() addComment = new EventEmitter<IAddEditCommentBody>();
+  @Input() currentUser: IUser;
+  @Output() addComment = new EventEmitter<IAddCommentReqBody>();
+  @Output() addReplyComment = new EventEmitter<IAddChildCommentBody>();
+  @Output() likeComment = new EventEmitter<ICommentLikeBody>();
+  @Output() likeChildComment = new EventEmitter<IChildCommentLikeBody>();
+  @Output() editComment = new EventEmitter<IEditCommentBody>();
+  @Output() deleteComment = new EventEmitter<IDeleteCommentBody>();
+  @Output() editChildComment = new EventEmitter<IEditCommentBody>();
+  @Output() deleteChildComment = new EventEmitter<IDeleteCommentBody>();
+  @Output() loadChildComments = new EventEmitter<ILoadChildComment>();
 
-  commentsForm: FormGroup;
-  replyForm: FormGroup;
-  openReply = false;
-  panelOpenState = false;
+  constructor() {}
 
-  constructor() {
-    this.initForm();
+  ngOnInit(): void {}
+
+  callDeleteComment(event: IDeleteCommentBody) {
+    const elementIndex = this.comments.findIndex((element) => element.id === event.commentId);
+    this.comments.splice(elementIndex, 1);
+    this.deleteComment.emit(event);
   }
 
-  ngOnInit(): void {
-    if (!this.isAuth) {
-      this.commentsForm.get('commentText').disable();
-    }
+  callDeleteChildComment(event: IDeleteCommentBody, index: number, childIndex: number) {
+    this.comments[index].childComments.splice(childIndex, 1);
+    this.deleteChildComment.emit(event);
   }
 
-  initForm() {
-    this.commentsForm = new FormGroup({
-      commentText: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    });
-
-    this.replyForm = new FormGroup({
-      replyControl: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    });
+  callLoadChildComments(event: ILoadChildComment) {
+    this.comments[event.index].childLoaderFlag = true;
+    this.loadChildComments.emit(event);
   }
 
-  submit(formDirective: FormGroupDirective) {
-    if (this.commentsForm.invalid) {
-      return;
-    }
-
-    this.addComment.emit({
-      commentText: this.commentsForm.value.commentText,
-    });
-
-    this.commentsForm.reset();
-    formDirective.resetForm();
-    this.textAreaFocus = false;
+  callAddReplyComment(event: ITextAreaEmitBody, commentId: string, index: number) {
+    this.addReplyComment.emit({ commentId, commentText: event.commentText, index });
   }
 
-  cancel(formDirective: FormGroupDirective) {
-    this.commentsForm.reset();
-    formDirective.resetForm();
-    this.textAreaFocus = false;
-  }
-
-  cancelReply() {
-    this.replyForm.reset();
-    this.resetForm(this.replyForm);
-    this.openReplyText();
-  }
-
-  resetForm(form: FormGroup) {
-    form.reset();
-    Object.keys(form.controls).forEach((key) => {
-      form.get(key).setErrors(null);
+  callLikeComment(event: LikeStatus, index: number) {
+    this.likeComment.emit({
+      likeStatus: event,
+      index,
     });
   }
 
-  openReplyText() {
-    this.openReply = !this.openReply;
-  }
-
-  replySubmit() {
-    if (this.replyForm.invalid) {
-      return;
-    }
-
-    // const childComment: IComment = {
-    //   id: 5,
-    //   userName: 'Ivan',
-    //   text: this.replyForm.value.replyControl,
-    //   like: 1000,
-    //   dislike: 5,
-    //   date: new Date(),
-    // };
-    // this.childComments.unshift(childComment);
-    this.resetForm(this.replyForm);
-    this.openReplyText();
+  callLikeChildComment(event: LikeStatus, index: number, childIndex: number) {
+    this.likeChildComment.emit({
+      likeStatus: event,
+      childIndex,
+      index,
+    });
   }
 }

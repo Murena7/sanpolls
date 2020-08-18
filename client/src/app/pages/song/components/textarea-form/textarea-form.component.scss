@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: 15px;
+    button {
+      margin-left: 10px;
+    }
+  }
+}

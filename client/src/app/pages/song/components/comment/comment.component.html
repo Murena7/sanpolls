@@ -1,0 +1,33 @@
+<div class="actions-menu" *ngIf="currentUser && currentUser?.id === comment?.userId">
+  <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="callEditComment()">
+      <span>Изменить</span>
+    </button>
+    <button mat-menu-item (click)="callDeleteComment()">
+      <span>Удалить</span>
+    </button>
+  </mat-menu>
+</div>
+<san-comment-body [comment]="comment"></san-comment-body>
+<div class="comments-footer">
+  <san-like
+    [like]="comment.likeCount"
+    [dislike]="comment.dislikeCount"
+    [selfLike]="comment.selfLike"
+    [isAuth]="!!currentUser"
+    (likeEvent)="callLikeEvent($event)"
+    [isSmall]="true"
+  ></san-like>
+  <button mat-button class="isSmall" [disabled]="!currentUser" (click)="openReplyText()">Ответить</button>
+</div>
+<div *ngIf="openReply">
+  <san-textarea-form
+    [autoFocus]="true"
+    [isAuth]="!!currentUser"
+    (addComment)="callAddReplyComment($event)"
+    (cancelButton)="openReplyText()"
+  ></san-textarea-form>
+</div>

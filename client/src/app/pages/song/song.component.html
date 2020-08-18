@@ -47,8 +47,16 @@
       <mat-divider class="comments-divider"></mat-divider>
       <san-comments
         [comments]="comments"
-        [isAuth]="!!currentUser"
+        [currentUser]="currentUser"
         (addComment)="addCommentEvent($event)"
+        (addReplyComment)="addReplyCommentEvent($event)"
+        (likeComment)="likeCommentEvent($event)"
+        (likeChildComment)="likeChildCommentEvent($event)"
+        (editComment)="editCommentEvent($event)"
+        (deleteComment)="deleteCommentEvent($event)"
+        (loadChildComments)="loadChildCommentsEvent($event)"
+        (editChildComment)="editChildCommentEvent($event)"
+        (deleteChildComment)="deleteChildCommentEvent($event)"
       ></san-comments>
     </div>
   </mat-card-content>

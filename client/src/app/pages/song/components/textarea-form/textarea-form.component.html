@@ -1,0 +1,23 @@
+<form class="form" [formGroup]="commentForm" #formDirective="ngForm" (ngSubmit)="submit(formDirective)">
+  <mat-form-field>
+    <mat-label>{{ matLabel }}</mat-label>
+    <textarea
+      (focus)="textAreaFocus = true"
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="7"
+      formControlName="commentText"
+      #textAreaComment="matInput"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="actions" *ngIf="textAreaFocus">
+    <button mat-stroked-button type="button" (click)="cancel(formDirective)">
+      Отмена
+    </button>
+    <button mat-stroked-button color="primary" type="submit" [disabled]="commentForm.get('commentText').invalid">
+      Отправить
+    </button>
+  </div>
+</form>
