@@ -14,6 +14,7 @@ import { User } from './user';
 import { PollEvent } from './poll-event';
 import { Song } from './song';
 import { OneToMany } from 'typeorm/index';
+import { ChildComment } from './child-comment';
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -45,23 +46,23 @@ export class Comment extends BaseEntity {
   text: string;
 
   @OneToMany(
-    type => LikeDislike,
-    likeDislike => likeDislike.commentLike,
+    type => ChildComment,
+    childComment => childComment.comment,
   )
-  @JoinColumn()
-  like: LikeDislike[];
+  childComments: ChildComment[];
+
+  childCommentsCount: number;
 
   @OneToMany(
     type => LikeDislike,
-    likeDislike => likeDislike.commentDislike,
+    likeDislike => likeDislike.commentLikeDislike,
   )
   @JoinColumn()
-  dislike: LikeDislike[];
+  likeDislike: LikeDislike[];
 
   likeCount: number;
   dislikeCount: number;
   selfLike?: LikeDislike;
-  replyCount: number;
 
   @Column({ type: 'timestamp' })
   createdAt: string;

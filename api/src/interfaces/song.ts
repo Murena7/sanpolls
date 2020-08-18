@@ -15,10 +15,26 @@ export interface ISongLikeBody {
   likeStatus: LikeStatus;
 }
 
+export interface ICommentLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
+}
+
+export interface IChildCommentLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
+}
+
 export interface IGetComments {
   skip?: string;
   take?: string;
   id: string;
+}
+
+export interface IGetChildComments {
+  skip?: string;
+  take?: string;
+  commentId: string;
 }
 
 export interface IAddEditCommentBody {

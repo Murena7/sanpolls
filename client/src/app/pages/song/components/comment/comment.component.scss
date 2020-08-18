@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-footer {
+  display: flex;
+  flex-direction: row;
+}
+
+.actions-menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.isSmall {
+  transform: scale(0.9);
+}

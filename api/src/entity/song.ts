@@ -54,15 +54,9 @@ export class Song extends BaseEntity {
 
   @OneToMany(
     type => LikeDislike,
-    likeDislike => likeDislike.songLike,
+    likeDislike => likeDislike.songLikeDislike,
   )
-  like: LikeDislike[];
-
-  @OneToMany(
-    type => LikeDislike,
-    likeDislike => likeDislike.songDislike,
-  )
-  dislike: LikeDislike[];
+  likeDislike: LikeDislike[];
 
   likeCount: number;
   dislikeCount: number;

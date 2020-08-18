@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+}
+
+.comment-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding-right: 25px;
+}
+
+.comments-header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-right: 20px;
+  margin-bottom: 5px;
+}

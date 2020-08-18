@@ -6,6 +6,10 @@ import { getCommentsBySongId } from '../../endpoints/song/getCommentsBySongId';
 import { addCommentBySongId } from '../../endpoints/song/addCommentBySongId';
 import { editCommentByCommentId } from '../../endpoints/song/editCommentByCommentId';
 import { deleteCommentByCommentId } from '../../endpoints/song/deleteCommentByCommentId';
+import { getChildCommentsByCommentId } from '../../endpoints/song/getChildCommentsByCommentId';
+import { addChildCommentByCommentId } from '../../endpoints/song/addChildCommentByCommentId';
+import { editChildCommentByChildCommentId } from '../../endpoints/song/editChildCommentByChildCommentId';
+import { deleteChildCommentByChildCommentId } from '../../endpoints/song/deleteChildCommentByChildCommentId';
 
 export const songRoutes = {
   '/song/{id}': {
@@ -17,16 +21,34 @@ export const songRoutes = {
   '/song/{songId}/like': {
     post: postSongLike,
   },
+  '/song/comments/{commentId}/like': {
+    post: postSongLike,
+  },
+  '/song/comments/child/{childCommentId}/like': {
+    post: postSongLike,
+  },
   '/song/{songId}/comments': {
     get: getCommentsBySongId,
   },
   '/song/{songId}/comments/add': {
     post: addCommentBySongId,
   },
-  '/song/{songId}/comments/{commentId}/edit': {
+  '/song/comments/{commentId}/edit': {
     post: editCommentByCommentId,
   },
-  '/song/{songId}/comments/{commentId}/delete': {
+  '/song/comments/{commentId}/delete': {
     delete: deleteCommentByCommentId,
+  },
+  '/song/comments/{commentId}/child': {
+    get: getChildCommentsByCommentId,
+  },
+  '/song/comments/{commentId}/child/add': {
+    post: addChildCommentByCommentId,
+  },
+  '/song/comments/child/{childCommentId}/edit': {
+    post: editChildCommentByChildCommentId,
+  },
+  '/song/comments/child/{childCommentId}/delete': {
+    delete: deleteChildCommentByChildCommentId,
   },
 };

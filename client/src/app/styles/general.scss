@@ -43,3 +43,8 @@ a {
 .mat-expansion-panel-header-description, .mat-expansion-indicator::after {
   color: rgba(251, 251, 251, 0.54);
 }
+
+.confirmation-delete-modal {
+  border: 3px solid red;
+  border-radius: 5px;
+}

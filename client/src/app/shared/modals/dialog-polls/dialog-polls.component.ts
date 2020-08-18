@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IGiveVoiceBody, ISong } from '@core/entities/song/song.types';
-import { IUser } from '@core/entities/user/user.types';
+import { IGiveVoiceBody, ISong } from '../../../core/entities/song/song.types';
+import { IUser } from '../../../core/entities/user/user.types';
 
 @Component({
   selector: 'san-dialog-polls',

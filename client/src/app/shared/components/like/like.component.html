@@ -6,6 +6,7 @@
       (click)="setLike()"
       [disabled]="!isAuth"
       [class.pressed-like]="likeStatus === likeEnumStatus.like"
+      [class.isSmall]="isSmall"
     >
       <mat-icon [class.thumb_up_alt]="isAuth">thumb_up_alt</mat-icon>
       {{ like }}
@@ -16,6 +17,7 @@
       (click)="setDislike()"
       [disabled]="!isAuth"
       [class.pressed-dislike]="likeStatus === likeEnumStatus.dislike"
+      [class.isSmall]="isSmall"
     >
       <mat-icon [class.thumb_down_alt]="isAuth">thumb_down_alt</mat-icon>
       {{ dislike }}

@@ -2,31 +2,6 @@
   width: 100%;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-
-  mat-form-field {
-    min-width: auto;
-    width: 100%;
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-left: 15px;
-    button {
-      margin-left: 10px;
-    }
-  }
-}
-
-.comment-content {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
 .comments-title {
   margin-top: 15px;
   margin-bottom: 40px;
@@ -42,21 +17,4 @@ ul {
       color: #888888;
     }
   }
-}
-
-.comments-header {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-}
-
-.user-name {
-  font-weight: bold;
-  margin-right: 20px;
-  margin-bottom: 5px;
-}
-
-.comments-footer {
-  display: flex;
-  flex-direction: row;
 }

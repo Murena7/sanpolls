@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
 import { ICreateSong, ISong } from '@core/entities/song/song.types';
 import { switchMap } from 'rxjs/operators';
-import { DialogPollsComponent } from '@components/dialog-polls/dialog-polls.component';
+import { DialogPollsComponent } from '@components/../../shared/modals/dialog-polls/dialog-polls.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';

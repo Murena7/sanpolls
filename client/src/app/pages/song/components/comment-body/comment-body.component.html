@@ -1,0 +1,5 @@
+<div class="comments-header">
+  <h4 class="user-name">{{ comment.user.username }}</h4>
+  <small>{{ comment.createdAt | date: 'dd/MM/yy HH:MM' }}</small>
+</div>
+<p class="comment-content">{{ comment.text }}</p>

@@ -42,6 +42,27 @@ export interface ISongLikeBody {
   likeStatus: LikeStatus;
 }
 
+export interface ICommentReqLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
+}
+
+export interface ICommentLikeBody {
+  likeStatus: LikeStatus;
+  index: number;
+}
+
+export interface IChildCommentLikeBody {
+  likeStatus: LikeStatus;
+  index?: number;
+  childIndex?: number;
+}
+
+export interface IChildCommentReqLikeBody {
+  likeId?: string;
+  likeStatus: LikeStatus;
+}
+
 export interface IGetCommentBySongIdParams {
   take: number;
   skip: number;

@@ -20,6 +20,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRippleModule } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -47,6 +48,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TextFieldModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -72,6 +74,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TextFieldModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}

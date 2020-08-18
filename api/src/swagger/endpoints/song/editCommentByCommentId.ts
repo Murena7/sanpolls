@@ -1,3 +1,5 @@
+import { ResponseStatusMessage } from '../../../interfaces/response';
+
 export const editCommentByCommentId = {
   tags: ['Song'],
   summary: '[AUTH]',
@@ -41,7 +43,7 @@ export const editCommentByCommentId = {
       content: {
         'application/json': {
           example: {
-            data: {},
+            status: ResponseStatusMessage.Success,
           },
         },
       },
