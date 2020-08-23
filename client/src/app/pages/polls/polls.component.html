@@ -6,11 +6,12 @@
       [activePollType]="activePollType"
     ></san-countdown>
   </div>
-  <div satPopoverAnchor #anchor=satPopoverAnchor (click)="anchor.popover.toggle()">
+  <div satPopoverAnchor #anchor="satPopoverAnchor" (click)="anchor.popover.toggle()">
     <span class="material-icons info">info</span>
   </div>
   <sat-popover [anchor]="anchor" hasBackdrop verticalAlign="center" horizontalAlign="center">
-    <p class="popover-text">Ваши песни выделены цветом:
+    <p class="popover-text">
+      Ваши песни выделены цветом:
       <span class="song-color"></span>
     </p>
   </sat-popover>
@@ -26,7 +27,7 @@
 <mat-divider [vertical]="true"></mat-divider>
 <div class="right">
   <div class="polls-results-block">
-    <san-short-history-table></san-short-history-table>
+    <san-short-history-table [songData]="lastArchivedHistoryData"></san-short-history-table>
   </div>
   <mat-divider></mat-divider>
   <div class="add-song-block">

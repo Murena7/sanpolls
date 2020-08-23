@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { UserService } from '@core/api-services/user.service';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { IUser } from '@core/entities/user/user.types';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
@@ -21,6 +21,7 @@ import { VoteService } from '../../core/api-services/vote.service';
 })
 export class PollsComponent implements OnInit, OnDestroy {
   pollsTableData: ISong[] = [];
+  lastArchivedHistoryData: ISong[] = [];
   totalPollsTableElements: number;
   isTableLoading = false;
   isNoMoreTableResult = false;
@@ -48,18 +49,26 @@ export class PollsComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
 
-    this.pollService
-      .getActivePoll()
+    forkJoin({
+      getActivePoll: this.pollService.getActivePoll(),
+      getLastArchivedPoll: this.pollService.getLastArchivedPoll(),
+    })
       .pipe(
-        switchMap((activeEvent) => {
-          this.activePollEndDate = activeEvent.endDate;
-          this.activePollID = activeEvent.id;
-          this.activePollType = activeEvent.type;
-          this.activePollName = activeEvent.name;
-          return this.pollService.getPolls({ id: activeEvent.id });
+        switchMap((result) => {
+          this.activePollEndDate = result.getActivePoll.endDate;
+          this.activePollID = result.getActivePoll.id;
+          this.activePollType = result.getActivePoll.type;
+          this.activePollName = result.getActivePoll.name;
+          return forkJoin({
+            pollsTableData: this.pollService.getPolls({ id: result.getActivePoll.id }),
+            lastArchivedHistoryData: this.pollService.getPolls({ id: result.getLastArchivedPoll.data.id }),
+          });
         })
       )
-      .subscribe((res) => (this.pollsTableData = res.data));
+      .subscribe((res) => {
+        this.pollsTableData = res.pollsTableData.data;
+        this.lastArchivedHistoryData = res.lastArchivedHistoryData.data.slice(0, 3);
+      });
   }
 
   ngOnDestroy(): void {

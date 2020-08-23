@@ -4,8 +4,8 @@
     <h2>Добавить свою песню:</h2>
 
     <mat-form-field class="add-song-form-full-width">
-      <mat-label>Исполнитель</mat-label>
-      <input matInput placeholder="Rammstein" value="" formControlName="songSinger" />
+      <mat-label>Кто должен исполнить песню</mat-label>
+      <input matInput placeholder="Путин" value="" formControlName="coverSinger" />
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width">
@@ -14,8 +14,8 @@
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width">
-      <mat-label>Кто должен исполнить песню</mat-label>
-      <input matInput placeholder="Путин" value="" formControlName="coverSinger" />
+      <mat-label>Исполнитель</mat-label>
+      <input matInput placeholder="Rammstein" value="" formControlName="songSinger" />
     </mat-form-field>
 
     <mat-form-field class="add-song-form-full-width">
@@ -31,7 +31,7 @@
     <mat-form-field class="add-song-form-full-width" appearance="fill">
       <mat-label>Отдать свой голос за новую песню</mat-label>
 
-      <input matInput min="1" formControlName="voiceCount" [max]="userData.voiceBalance" type="number" />
+      <input matInput min="1" autocomplete="off" formControlName="voiceCount" [max]="userData.voiceBalance" type="number" />
       <mat-error>
         <p *ngIf="form.get('voiceCount').errors">Колличество Ваших голосов: {{ userData.voiceBalance }}.</p>
       </mat-error>

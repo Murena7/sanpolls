@@ -2,7 +2,7 @@
   <div class="short-history-list">
     <h3 class="history-list-title">Результаты предыдущих голосований</h3>
     <ol>
-      <li *ngFor="let h of historyData">{{ h.title }}</li>
+      <li *ngFor="let song of songData">{{ song.coverSinger }}: {{ song.songName }}</li>
     </ol>
   </div>
   <button mat-raised-button color="primary" [routerLink]="['/profile', 'polls-history']">История</button>

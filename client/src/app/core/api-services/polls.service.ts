@@ -30,6 +30,10 @@ export class PollsService {
     return this.http.get<IBasicResponse<IPollEvent[]>>(`${apiUrl}/poll/all-archived`);
   }
 
+  getLastArchivedPoll(): Observable<IBasicResponse<IPollEvent>> {
+    return this.http.get<IBasicResponse<IPollEvent>>(`${apiUrl}/poll/last-archived`);
+  }
+
   getActivePoll(): Observable<IPollEvent> {
     return this.http.get<IBasicResponse<IPollEvent>>(`${apiUrl}/poll/active`).pipe(map((data) => data.data));
   }

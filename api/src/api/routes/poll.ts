@@ -40,6 +40,21 @@ export default (app: Router) => {
     }
   });
 
+  route.get('/last-archived', async (req: Request, res: Response, next: NextFunction) => {
+    const logger: Logger = Container.get('logger');
+    logger.debug('Calling /poll/last-archived endpoint');
+    try {
+      const pollServiceInstance = Container.get(PollService);
+
+      const result: IBasicResponse = await pollServiceInstance.getLastArchivedPoll();
+
+      return res.status(200).json(result);
+    } catch (e) {
+      logger.error('🔥 error: %o', e);
+      return next(e);
+    }
+  });
+
   route.get(
     '/rating-list',
     celebrate({

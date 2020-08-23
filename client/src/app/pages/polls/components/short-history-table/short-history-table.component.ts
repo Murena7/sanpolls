@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IUser } from '../../../../core/entities/user/user.types';
+import { ISong } from '../../../../core/entities/song/song.types';
 
 @Component({
   selector: 'san-short-history-table',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./short-history-table.component.scss'],
 })
 export class ShortHistoryTableComponent implements OnInit {
-  historyData = [{ title: 'Путин - Ветер северный' }, { title: 'Rammstein - Muter' }, { title: 'Rammstein - Sonne' }];
+  @Input() songData: ISong[];
 
   ngOnInit(): void {}
 }

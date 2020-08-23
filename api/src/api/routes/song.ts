@@ -432,10 +432,10 @@ export default (app: Router) => {
           .min(1)
           .required(),
         additionalTextInfo: Joi.string()
-          .allow('')
+          .allow(['', null])
           .max(500),
         youtubeVideoId: Joi.string()
-          .allow('')
+          .allow(['', null])
           .max(50),
       }),
     }),

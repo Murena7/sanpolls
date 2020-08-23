@@ -56,6 +56,20 @@ export default class PollService {
     }
   }
 
+  public async getLastArchivedPoll(): Promise<IBasicResponse> {
+    try {
+      const result = await this.pollEventRepository.findOne({
+        where: { status: EventStatus.Archived },
+        order: { createdAt: 'DESC' },
+      });
+
+      return { data: result };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
   public async activePoll(): Promise<IBasicResponse> {
     try {
       const activeEvent = await this.pollEventRepository.findOne({ status: EventStatus.Active });
