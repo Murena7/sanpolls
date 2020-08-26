@@ -12,19 +12,48 @@
     (scroll)="onScroll($event.offsetY)"
     (activate)="rowClick($event)"
   >
-    <ngx-datatable-column name="Место" prop="text" [flexGrow]="0.7">
+    <!-- Row Detail Template -->
+    <ngx-datatable-row-detail [rowHeight]="80" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-rowIndex="rowIndex" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div style="padding-left: 35px;">
+          <div>Место в рейтинге: <strong>{{ rowIndex + 1 }}</strong></div>
+          <div>Иполнитель: <strong>{{ row.songSinger }}</strong></div>
+          <div>Общее колличество голосов: <strong>{{ row.voiceCount }}</strong></div>
+        </div>
+      </ng-template>
+    </ngx-datatable-row-detail>
+    <!-- Column Templates -->
+    <ngx-datatable-column name="" *ngIf="isSmall"
+      [width]="10"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="false"
+    >
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+        <a
+          href="javascript:void(0)"
+          [class.datatable-icon-right]="!expanded"
+          [class.datatable-icon-down]="expanded"
+          title="Expand/Collapse Row"
+          (click)="toggleExpandRow(row)"
+        >
+        </a>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Место" prop="text" [flexGrow]="0.6">
       <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
         <span class="poll-link">{{ rowIndex + 1 }}</span>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="1.5">
+    <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="1.5" *ngIf="!isSmall">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <span class="poll-link">{{ row.songSinger }}</span>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="3">
+    <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="1.5">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <span class="poll-link">{{ row.songName }}</span>
       </ng-template>
@@ -36,15 +65,23 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.7">
+    <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.7" *ngIf="!isSmall">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <span class="poll-link">{{ row.voiceCount }}</span>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Проголосовать" [flexGrow]="1.5">
+    <ngx-datatable-column name="Голосовать" [flexGrow]="1.2" *ngIf="!isSmall">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <a class="poll-button" mat-raised-button color="accent" (click)="openDialog(row)">Проголосовать</a>
+        <a class="poll-button" mat-raised-button color="accent" (click)="openDialog(row)">Голосовать</a>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="" [flexGrow]="0.7" *ngIf="isSmall">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a class="poll-button" (click)="openDialog(row)">
+          <span class="material-icons check_circle">check_circle</span>
+        </a>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

@@ -16,6 +16,7 @@
     </p>
   </sat-popover>
   <san-polls-table
+    [isSmall]="isSmall"
     [rows]="pollsTableData"
     [isLoading]="isTableLoading"
     [currentUser]="currentUser"
@@ -24,12 +25,12 @@
     (vote)="openGiveVoiceDialog($event)"
   ></san-polls-table>
 </div>
-<mat-divider [vertical]="true"></mat-divider>
+<mat-divider [vertical]="true" class="main-divider"></mat-divider>
 <div class="right">
   <div class="polls-results-block">
     <san-short-history-table [songData]="lastArchivedHistoryData"></san-short-history-table>
   </div>
-  <mat-divider></mat-divider>
+  <mat-divider class="right-divider"></mat-divider>
   <div class="add-song-block">
     <san-add-song [activePollID]="activePollID" [userData]="currentUser" (addSong)="addSong($event)"></san-add-song>
   </div>

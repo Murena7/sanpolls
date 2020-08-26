@@ -1,22 +1,38 @@
 .add-song {
+  min-width: 370px;
   padding: 15px;
   background-color: #ffffff;
   border: 1px solid #0000001f;
   border-radius: 5px;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
   &-voices {
     text-align: left;
   }
+
   &-form {
     min-width: 140px;
     max-width: 500px;
     width: 100%;
+
     &-full-width {
       width: 90%;
     }
   }
+
   button {
     margin-top: 20px;
+  }
+}
+
+.add-song-btn {
+  min-width: 250px;
+}
+
+@media only screen and (max-width: 420px) {
+  .add-song {
+    min-width: 300px;
+    padding: 10px;
   }
 }

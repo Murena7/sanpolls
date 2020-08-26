@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ISong } from '@core/entities/song/song.types';
-import { IUser } from '@core/entities/user/user.types';
-import { IPollsTablePagination } from '@pages/polls/polls.types';
-import { WindowSizeService } from '@core/api-services/window-size.service';
-import { Router } from '@angular/router';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ISong} from '@core/entities/song/song.types';
+import {IUser} from '@core/entities/user/user.types';
+import {IPollsTablePagination} from '@pages/polls/polls.types';
+import {WindowSizeService} from '@core/api-services/window-size.service';
+import {Router} from '@angular/router';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'san-polls-table',
@@ -15,6 +16,7 @@ export class PollsTableComponent implements OnInit {
   @Input() currentUser: IUser;
   @Input() isLoading = false;
   @Input() isNoMoreResult = false;
+  @Input() isSmall: boolean;
   @Output() pagination = new EventEmitter<IPollsTablePagination>();
   @Output() vote = new EventEmitter<ISong>();
 
@@ -22,9 +24,11 @@ export class PollsTableComponent implements OnInit {
   readonly rowHeight = 50;
   readonly pageLimit = 60;
 
-  @ViewChild('pollsTable', { static: true }) table: ElementRef;
+  @ViewChild('pollsTable', {static: true}) table: ElementRef;
+  @ViewChild(DatatableComponent, {static: true}) tableData: DatatableComponent;
 
-  constructor(public windowSizeService: WindowSizeService, private router: Router) {}
+  constructor(public windowSizeService: WindowSizeService, private router: Router) {
+  }
 
   ngOnInit() {
     this.onScroll(0);
@@ -62,8 +66,15 @@ export class PollsTableComponent implements OnInit {
   }
 
   rowClick(event: any) {
-    if (event.type === 'click' && event.column.name !== 'Проголосовать') {
+    if (event.type === 'click' && event.column.name !== 'Голосовать' && event.column.name !== '') {
       this.router.navigate(['/song', event.row.id]);
     }
+  }
+
+  onDetailToggle(event) {
+  }
+
+  toggleExpandRow(row) {
+    this.tableData.rowDetail.toggleExpandRow(row);
   }
 }
