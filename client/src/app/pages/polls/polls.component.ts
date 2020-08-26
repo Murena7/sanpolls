@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
 import { ICreateSong, ISong } from '@core/entities/song/song.types';
 import { switchMap } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { forkJoin, Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
+import {WindowSizeService} from '../../core/api-services/window-size.service';
 
 @Component({
   selector: 'san-polls',
@@ -32,6 +33,8 @@ export class PollsComponent implements OnInit, OnDestroy {
   activePollID: string;
   currentUser: IUser;
   userSubscription: Subscription;
+  isSmall: boolean;
+  wsSub: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -41,7 +44,8 @@ export class PollsComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private snackbarNotificationService: SnackbarNotificationService,
     private songService: SongService,
-    private voteService: VoteService
+    private voteService: VoteService,
+    public windowSizeService: WindowSizeService,
   ) {}
 
   ngOnInit(): void {
@@ -65,14 +69,26 @@ export class PollsComponent implements OnInit, OnDestroy {
           });
         })
       )
-      .subscribe((res) => {
+      
+    .subscribe((res) => {
         this.pollsTableData = res.pollsTableData.data;
         this.lastArchivedHistoryData = res.lastArchivedHistoryData.data.slice(0, 3);
       });
+
+    this.wsSub = this.windowSizeService.windowSizeChanged.subscribe(
+      value => {
+        if (value.width <= 699) {
+          this.isSmall = true;
+        } else {
+          this.isSmall = false;
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.wsSub.unsubscribe();
   }
 
   pollsTablePagination(params: IPollsTablePagination) {

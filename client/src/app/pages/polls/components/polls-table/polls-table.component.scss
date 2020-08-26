@@ -1,12 +1,15 @@
 .place-column {
   width: 10px;
 }
+
 .poll-link:hover {
   outline: none;
 }
 
 .poll-button {
-  margin: -7px;
+  margin: -6px;
+  font-size: 13px;
+  padding: 0 13px;
 }
 
 ::ng-deep .highlight-song {
@@ -15,4 +18,14 @@
 
 ::ng-deep .row-cursor:hover {
   cursor: pointer;
+}
+
+.check_circle {
+  color: #ff4081;
+}
+
+@media only screen and (max-width: 420px) {
+  .check_circle {
+    font-size: 20px;
+  }
 }

@@ -26,3 +26,10 @@ button {
   font-weight: bold;
   text-align: center;
 }
+
+@media only screen and (max-width: 420px) {
+  .polls-short-history {
+    min-width: 300px;
+    flex-direction: column;
+  }
+}
