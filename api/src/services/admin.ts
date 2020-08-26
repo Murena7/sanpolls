@@ -7,13 +7,14 @@ import { IBasicResponse } from '../interfaces/response-types';
 import { User } from '../entity/user';
 import { ResponseStatusMessage } from '../interfaces/response';
 import { Role } from '../interfaces/user';
-import { IAddVoiceBody, IStatisticTotal } from '../interfaces/admin';
-import { AddVoiceByAdminTransaction } from '../transaction/addVoiceByAdmin';
+import { IAddVoiceBody, IAddVoiceByTypeBody, IStatisticTotal } from '../interfaces/admin';
+import { AddVoiceByTypeTransaction } from '../transaction/addVoiceByType';
 import { classToPlain, plainToClass } from 'class-transformer';
 import { PollTransaction } from '../entity';
 import moment from 'moment';
 import { isDef } from '../helpers/common';
 import { EventStatus, ICreatePollBody } from '../interfaces/poll-event';
+import { TransactionSource } from '../interfaces/poll-transaction';
 
 @Service()
 export default class AdminService {
@@ -44,7 +45,8 @@ export default class AdminService {
 
   public async addVoiceByUserId(body: IAddVoiceBody): Promise<IBasicResponse> {
     try {
-      const transactionStatus = await AddVoiceByAdminTransaction(body);
+      const data: IAddVoiceByTypeBody = { ...body, source: TransactionSource.ByAdmin };
+      const transactionStatus = await AddVoiceByTypeTransaction(data);
 
       return { status: ResponseStatusMessage.Success };
     } catch (e) {

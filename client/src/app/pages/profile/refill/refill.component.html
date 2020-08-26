@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="header">
+    <h2>Пополнение голосов</h2>
+    <mat-divider></mat-divider>
+  </div>
+  <ng-container [ngSwitch]="payStepValue">
+    <ng-container *ngSwitchCase="payStep.calculator">
+      <ng-container *ngTemplateOutlet="refillCalculator"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="payStep.list">
+      <ng-container *ngTemplateOutlet="refillList"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="payStep.obmenka">
+      <ng-container *ngTemplateOutlet="refillObmenka"></ng-container>
+    </ng-container>
+  </ng-container>
+  <mat-divider></mat-divider>
+  <div class="history-container">
+    <h2 class="subtitle-text">История платежей</h2>
+    <ngx-datatable
+      class="material expandable table-style"
+      [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 305"
+      [rows]="billHistory"
+      [columnMode]="ColumnMode.force"
+      [rowHeight]="rowHeight"
+      [headerHeight]="headerHeight"
+      [scrollbarV]="true"
+      [footerHeight]="35"
+      ><!-- Row Detail Template -->
+      <ngx-datatable-row-detail [rowHeight]="60" #myDetailRow (toggle)="onDetailToggle($event)">
+        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+          <div style="padding-left: 35px;">
+            <div class="row-detail">ID платежа: {{ row.id }}</div>
+          </div>
+        </ng-template>
+      </ngx-datatable-row-detail>
+      <!-- Column Templates -->
+      <ngx-datatable-column
+        [width]="50"
+        [resizeable]="false"
+        [sortable]="false"
+        [draggable]="false"
+        [canAutoResize]="false"
+      >
+        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+          <a
+            href="javascript:void(0)"
+            [class.datatable-icon-right]="!expanded"
+            [class.datatable-icon-down]="expanded"
+            title="Expand/Collapse Row"
+            (click)="toggleExpandRow(row)"
+          >
+          </a>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Источник">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <strong>{{ row.payType }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Статус">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <strong>{{ row.status }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Сумма">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <strong>{{ row.amount }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Валюта">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <strong>{{ row.currency }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button
+            matTooltip="Проверить статус"
+            [disabled]="row.status === billStatus.FINISHED"
+            (click)="checkBillStatus(row.id)"
+            mat-icon-button
+            class="check-button"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button
+            matTooltip="Удалить"
+            [disabled]="row.status === billStatus.FINISHED"
+            (click)="removeBill(row.id)"
+            mat-icon-button
+            class="remove-button"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #refillCalculator>
+  <div class="calculator-container">
+    <div class="item-container">
+      <div class="item item-width">1 голос</div>
+      <div class="equal">=</div>
+      <div class="item item-width">1 рубль</div>
+    </div>
+    <form [formGroup]="refillForm" (ngSubmit)="formSubmit()">
+      <div class="item-container">
+        <div class="item-width">
+          <mat-form-field class="item-width" appearance="fill">
+            <mat-label>Введите количество голосов</mat-label>
+            <input formControlName="count" type="number" matInput />
+          </mat-form-field>
+        </div>
+        <div class="equal">=</div>
+        <div class="item item-width">{{ refillForm.get('count').value }} р.</div>
+      </div>
+      <div class="item-container">
+        <button [disabled]="refillForm.invalid" mat-flat-button type="submit" color="primary">
+          Добавить {{ refillForm.get('count').value }} голосов
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #refillList>
+  <div class="calculator-container">
+    <h2>Выберите агрегатор платежей</h2>
+    <div class="pay-type-container">
+      <img src="/assets/bill/obmenka.png" />
+      <button mat-flat-button type="submit" (click)="payObmenka()" color="accent">Выбрать</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #refillObmenka>
+  <div class="calculator-container">
+    <form #form action="https://acquiring.obmenka.ua/acs" method="POST">
+      <div class="obmenka-pay-container">
+        <input type="hidden" name="CLIENT_ID" value="{{ obmenkaPostFormData.clientId }}" />
+        <input type="hidden" name="INVOICE_ID" value="{{ obmenkaPostFormData.invoiceId }}" />
+        <input type="hidden" name="AMOUNT" value="{{ obmenkaPostFormData.amount }}" />
+        <input type="hidden" name="CURRENCY" value="{{ obmenkaPostFormData.currency }}" />
+        <input type="hidden" name="SUCCESS_URL" value="{{ obmenkaPostFormData.successUrl }}" />
+        <input type="hidden" name="FAIL_URL" value="{{ obmenkaPostFormData.failUrl }}" />
+        <input type="hidden" name="STATUS_URL" value="{{ obmenkaPostFormData.statusUrl }}" />
+        <input type="hidden" name="SIGN" value="{{ obmenkaPostFormData.sign }}" />
+        <input type="hidden" name="SIGN_ORDER" value="{{ obmenkaPostFormData.signOrder }}" />
+        <img src="/assets/bill/obmenka.png" />
+        <button mat-flat-button type="submit" (click)="form.submit()" color="accent">
+          Оплатить {{ refillForm.get('count').value }} рублей
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

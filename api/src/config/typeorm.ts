@@ -1,5 +1,6 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { ChildComment, Comment, LikeDislike, PollEvent, PollTransaction, Song, User } from '../entity';
+import {Bill} from '../entity/bill';
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: 'postgres',
@@ -18,7 +19,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
     /* eslint-disable @typescript-eslint/camelcase */
     statement_timeout: 10000,
   },
-  entities: [ChildComment, Comment, LikeDislike, PollEvent, PollTransaction, Song, User],
+  entities: [ChildComment, Comment, LikeDislike, PollEvent, PollTransaction, Song, User, Bill],
 };
 
 export { typeOrmConfig };

@@ -13,7 +13,7 @@ const apiUrl = environment.UI_SERVER;
 export class VoteService {
   constructor(private http: HttpService) {}
 
-  giveVote(body): Observable<any> {
+  giveVote(body): Observable<IBasicResponse<any>> {
     return this.http.post<IBasicResponse<any>>(`${apiUrl}/vote/give`, body).pipe(map((data) => data.data));
   }
 }

@@ -4,6 +4,7 @@ import { pollRoutes } from './routes/poll';
 import { adminRoutes } from './routes/admin';
 import { songRoutes } from './routes/song';
 import { voteRoutes } from './routes/vote';
+import { billRoutes } from './routes/bill';
 
 export const swaggerDocument = {
   openapi: '3.0.1',
@@ -47,5 +48,6 @@ export const swaggerDocument = {
     ...adminRoutes,
     ...songRoutes,
     ...voteRoutes,
+    ...billRoutes,
   },
 };

@@ -9,9 +9,19 @@ import { PollsHistoryComponent } from '@pages/profile/polls-history/polls-histor
 import { MyProfileComponent } from '@pages/profile/my-profile/my-profile.component';
 import { PasswordComponent } from './password/password.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MyVoicesComponent } from './my-voices/my-voices.component';
+import { RefillComponent } from './refill/refill.component';
 
 @NgModule({
-  declarations: [ProfileComponent, HistoryComponent, PollsHistoryComponent, MyProfileComponent, PasswordComponent],
-  imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, NgxDatatableModule]
+  declarations: [
+    ProfileComponent,
+    HistoryComponent,
+    PollsHistoryComponent,
+    MyProfileComponent,
+    PasswordComponent,
+    MyVoicesComponent,
+    RefillComponent,
+  ],
+  imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, NgxDatatableModule],
 })
 export class ProfileModule {}

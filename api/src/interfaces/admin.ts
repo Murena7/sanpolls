@@ -1,6 +1,14 @@
+import { TransactionSource } from './poll-transaction';
+
 export interface IAddVoiceBody {
   userId: string;
   amount: number;
+}
+
+export interface IAddVoiceByTypeBody {
+  userId: string;
+  amount: number;
+  source: TransactionSource;
 }
 
 export interface IStatisticTotal {

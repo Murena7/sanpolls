@@ -2,11 +2,10 @@ import { getManager, Repository } from 'typeorm';
 import { User } from '../entity/user';
 import { PollTransaction } from '../entity/poll-transaction';
 import { plainToClass } from 'class-transformer';
-import { TransactionSource } from '../interfaces/poll-transaction';
 import { ResponseStatusMessage } from '../interfaces/response';
-import { IAddVoiceBody } from '../interfaces/admin';
+import { IAddVoiceByTypeBody } from '../interfaces/admin';
 
-export const AddVoiceByAdminTransaction = async (body: IAddVoiceBody) => {
+export const AddVoiceByTypeTransaction = async (body: IAddVoiceByTypeBody) => {
   return getManager().transaction('READ COMMITTED', async transactionalEntityManager => {
     const userRepository: Repository<User> = transactionalEntityManager.getRepository(User);
     const pollTransactionRepository: Repository<PollTransaction> = transactionalEntityManager.getRepository(
@@ -26,7 +25,7 @@ export const AddVoiceByAdminTransaction = async (body: IAddVoiceBody) => {
     const newPollTransactionData = {
       userId: user.id,
       amount: body.amount,
-      source: TransactionSource.ByAdmin,
+      source: body.source,
     };
 
     const newPollTransaction = await transactionalEntityManager.save(

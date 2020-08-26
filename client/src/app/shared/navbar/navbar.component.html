@@ -1,7 +1,7 @@
 <nav class="navbar-header">
   <nav class="left-menu">
     <a class="nav-logo" mat-button routerLink="/">
-      <img src="assets/logo/logo-text.png" alt="SanSan" class="logo-mini"/>
+      <img src="assets/logo/logo-text.png" alt="SanSan" class="logo-mini" />
     </a>
     <div class="nav-menu">
       <a mat-button routerLink="/polls">Голосование</a>
@@ -25,15 +25,9 @@
   <nav>
     <span *ngIf="userData && userData.status" class="voices">
       Мои голоса:
-      <div
-        class="ripple-container"
-        matRipple
-        [matRippleCentered]="centered"
-        [matRippleDisabled]="disabled"
-        [matRippleUnbounded]="unbounded"
-      >
+      <a routerLink="/profile/my-voices" class="ripple-container" mat-flat-button color="accent">
         {{ userData.voiceBalance }}
-      </div>
+      </a>
     </span>
     <button *ngIf="userData && userData.status" mat-button [matMenuTriggerFor]="afterMenu">
       <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i>
@@ -43,10 +37,12 @@
       </i>
     </button>
     <mat-menu #afterMenu="matMenu">
-      <button mat-menu-item routerLink="/profile">Профиль пользователя</button>
-      <button mat-menu-item routerLink="/profile/history">Моя история</button>
+      <button mat-menu-item routerLink="/profile">Профиль</button>
+      <button mat-menu-item routerLink="/profile/my-voices">Мои голоса</button>
+      <button mat-menu-item routerLink="/profile/history">Мои песни</button>
       <button mat-menu-item routerLink="/profile/polls-history">История голосований</button>
       <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>
+      <button mat-menu-item routerLink="/profile/refill">Пополнение</button>
       <button mat-menu-item (click)="logout()">Выйти</button>
       <button mat-menu-item *ngIf="userData && userData.role === role.Admin" routerLink="/san-admin">
         <mat-icon color="primary">admin_panel_settings</mat-icon>

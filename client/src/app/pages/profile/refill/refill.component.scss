@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  .header {
+    h2 {
+      margin: unset;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.history-container {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.table-style {
+  background: unset !important;
+  box-shadow: unset !important;
+}
+
+.row-detail {
+  text-align: left;
+}
+
+.remove-button {
+  margin: -12px;
+  margin-left: 30px;
+}
+
+.check-button {
+  margin: -12px;
+}
+
+.calculator-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  margin-bottom: 20px;
+  .item-container {
+    display: flex;
+    width: 420px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    button {
+      width: 100%;
+    }
+    .item-width {
+      width: 180px;
+    }
+    .item {
+      padding: 6px;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: left;
+    }
+    .equal {
+      padding: 6px;
+      font-size: 20px;
+      font-weight: 600;
+      width: 40px;
+    }
+  }
+}
+
+.pay-type-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  position: relative;
+  background-color: #3f51b5;
+  width: 420px;
+  border-radius: 5px;
+  img {
+    height: 60px;
+  }
+}
+
+.obmenka-pay-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 140px;
+  position: relative;
+  background-color: #3f51b5;
+  width: 420px;
+  border-radius: 5px;
+  img {
+    height: 60px;
+  }
+}

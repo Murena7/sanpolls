@@ -5,4 +5,5 @@ export enum TransactionSource {
   AddSong = 'add-song',
   GiveVote = 'give-vote',
   ByAdmin = 'by-admin',
+  PayObmenka = 'pay-obmenka',
 }

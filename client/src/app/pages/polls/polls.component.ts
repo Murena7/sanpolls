@@ -144,7 +144,7 @@ export class PollsComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/polls' } });
     }
   }
 
