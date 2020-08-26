@@ -74,7 +74,12 @@ export class LoginComponent implements OnInit {
 
     this.authApiService.login(user).subscribe(
       () => {
-        this.router.navigate(['/polls']);
+        if (this.route.snapshot.queryParams?.returnUrl) {
+          this.router.navigate([this.route.snapshot.queryParams?.returnUrl]);
+        } else {
+          this.router.navigate(['/polls']);
+        }
+
         this.submitted = false;
       },
       (error) => {

@@ -44,6 +44,11 @@ export default {
     level: process.env.LOG_LEVEL || 'silly',
   },
 
+  bill: {
+    obmenkaClientId: process.env.OBMENKA_CLIENT_ID,
+    obmenkaSecret: process.env.OBMENKA_SECRET,
+  },
+
   /**
    * Agenda.js stuff
    */

@@ -7,6 +7,7 @@ import poll from './routes/poll';
 import song from './routes/song';
 import vote from './routes/vote';
 import admin from './routes/admin';
+import bill from './routes/bill';
 
 // guaranteed to get dependencies
 export default () => {
@@ -19,6 +20,7 @@ export default () => {
   song(app);
   vote(app);
   admin(app);
+  bill(app);
 
   return app;
 };

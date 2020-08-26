@@ -1,5 +1,5 @@
 <div class="comments-header">
   <h4 class="user-name" [class.self-comment]="currentUser?.id === comment?.userId">{{ comment.user.username }}</h4>
-  <small>{{ comment.createdAt | date: 'dd/MM/yy HH:MM' }}</small>
+  <small>{{ comment.createdAt | date: 'dd/MM/yy HH:mm' }}</small>
 </div>
 <p class="comment-content">{{ comment.text }}</p>

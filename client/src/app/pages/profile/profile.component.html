@@ -7,14 +7,20 @@
         [routerLinkActiveOptions]="{ exact: true }"
         >Профиль</mat-button-toggle
       >
+      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'my-voices']"
+        >Мои голоса</mat-button-toggle
+      >
       <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'history']"
-        >Моя история</mat-button-toggle
+        >Мои песни</mat-button-toggle
       >
       <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'polls-history']"
         >История голосований</mat-button-toggle
       >
       <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'password']"
         >Изменить пароль</mat-button-toggle
+      >
+      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'refill']"
+        >Пополнение</mat-button-toggle
       >
     </mat-button-toggle-group>
   </mat-drawer>

@@ -98,7 +98,7 @@ export class SongComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { queryParams: { returnUrl: `/song/${this.currentSong.id}` } });
     }
   }
 

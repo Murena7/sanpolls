@@ -42,6 +42,6 @@
 </div>
 <ng-template #showButton>
   <p class="add-song-btn">
-    <button mat-raised-button color="primary" routerLink="/login">Добавить песню</button>
+    <button mat-raised-button color="primary" routerLink="/login" [queryParams]="{ returnUrl: '/polls' }">Добавить песню</button>
   </p>
 </ng-template>
