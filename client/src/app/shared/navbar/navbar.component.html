@@ -9,6 +9,43 @@
       <a mat-button routerLink="/contacts">Контакты</a>
       <a mat-button routerLink="/faqpage">FAQ</a>
     </div>
+  </nav>
+
+  <nav class="right-menu">
+    <span *ngIf="userData && userData.status" class="voices">
+      Мои голоса:
+      <a routerLink="/profile/my-voices" class="ripple-container" mat-flat-button color="accent">
+        {{ userData.voiceBalance }}
+      </a>
+    </span>
+    <div>
+      <button *ngIf="userData && userData.status" mat-button [matMenuTriggerFor]="afterMenu">
+        <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i>
+        Мой профиль
+        <i class="material-icons">
+          expand_more
+        </i>
+      </button>
+      <mat-menu #afterMenu="matMenu">
+        <span mat-menu-item routerLink="/profile/my-voices" *ngIf="userData && userData.status" class="mobile-voices">
+          Мои голоса:
+          <a class="ripple-container" mat-flat-button color="accent">
+            {{ userData.voiceBalance }}
+          </a>
+        </span>
+        <button mat-menu-item routerLink="/profile">Профиль</button>
+        <button mat-menu-item routerLink="/profile/my-voices" class="voices">Мои голоса</button>
+        <button mat-menu-item routerLink="/profile/history">Мои песни</button>
+        <button mat-menu-item routerLink="/profile/polls-history">История голосований</button>
+        <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>
+        <button mat-menu-item routerLink="/profile/refill">Пополнение</button>
+        <button mat-menu-item (click)="logout()">Выйти</button>
+        <button mat-menu-item *ngIf="userData && userData.role === role.Admin" routerLink="/san-admin">
+          <mat-icon color="primary">admin_panel_settings</mat-icon>
+        </button>
+      </mat-menu>
+    </div>
+    <a *ngIf="!userData" mat-button routerLink="/login">Авторизация</a>
     <div class="nav-mat-icon">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
@@ -20,34 +57,5 @@
         <a mat-menu-item routerLink="/faqpage">FAQ</a>
       </mat-menu>
     </div>
-  </nav>
-
-  <nav>
-    <span *ngIf="userData && userData.status" class="voices">
-      Мои голоса:
-      <a routerLink="/profile/my-voices" class="ripple-container" mat-flat-button color="accent">
-        {{ userData.voiceBalance }}
-      </a>
-    </span>
-    <button *ngIf="userData && userData.status" mat-button [matMenuTriggerFor]="afterMenu">
-      <i class="material-icons md-light" [class.admin-icon]="userData && userData.role === role.Admin">face </i>
-      Мой профиль
-      <i class="material-icons">
-        expand_more
-      </i>
-    </button>
-    <mat-menu #afterMenu="matMenu">
-      <button mat-menu-item routerLink="/profile">Профиль</button>
-      <button mat-menu-item routerLink="/profile/my-voices">Мои голоса</button>
-      <button mat-menu-item routerLink="/profile/history">Мои песни</button>
-      <button mat-menu-item routerLink="/profile/polls-history">История голосований</button>
-      <button mat-menu-item routerLink="/profile/password">Изменить пароль</button>
-      <button mat-menu-item routerLink="/profile/refill">Пополнение</button>
-      <button mat-menu-item (click)="logout()">Выйти</button>
-      <button mat-menu-item *ngIf="userData && userData.role === role.Admin" routerLink="/san-admin">
-        <mat-icon color="primary">admin_panel_settings</mat-icon>
-      </button>
-    </mat-menu>
-    <a *ngIf="!userData" mat-button routerLink="/login">Авторизация</a>
   </nav>
 </nav>

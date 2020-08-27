@@ -11,7 +11,6 @@
 .navbar-header {
   min-height: 56px;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   padding: 8px 16px;
   background: #3f51b5;
@@ -29,7 +28,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
   }
 }
 
@@ -53,28 +51,40 @@
 
 .left-menu {
   display: flex;
+  align-items: center;
 }
 
-@media only screen and (max-width: 799px) {
-  .navbar-header {
-    justify-content: center;
-    padding: 5px 10px;
-  }
+.right-menu {
+  display: flex;
+  align-items: center;
 }
 
-@media only screen and (max-width: 520px) {
+.mobile-voices {
+  display: none;
+}
+
+@media only screen and (max-width: 825px) {
   .left-menu {
     display: flex;
-    flex-direction: row-reverse;
     justify-content: space-between;
     width: 100%;
   }
 
-  .left-menu .nav-menu, .voices {
+  .left-menu .nav-menu,
+  .voices {
     display: none;
+  }
+
+  .mobile-voices {
+    display: block;
   }
 
   .nav-mat-icon {
     display: block;
+  }
+
+  .navbar-header {
+    justify-content: center;
+    padding: 5px 10px;
   }
 }
