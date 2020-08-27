@@ -5,21 +5,29 @@ import { PollEvent } from '../entity/poll-event';
 import { Song } from '../entity/song';
 import { IBasicResponse } from '../interfaces/response-types';
 import { User } from '../entity/user';
-import { IChangePassword, IUpdateProfile, IUserSongHistoryBody } from '../interfaces/user';
+import {
+  IChangePassword,
+  IUpdateProfile,
+  IUserSongHistoryBody,
+  IUserPollTransactionHistoryBody,
+} from '../interfaces/user';
 import { ResponseStatusMessage } from '../interfaces/response';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
+import { PollTransaction } from '../entity';
 
 @Service()
 export default class UserService {
   pollEventRepository: Repository<PollEvent>;
   songRepository: Repository<Song>;
   userRepository: Repository<User>;
+  pollTransactionRepository: Repository<PollTransaction>;
 
   constructor(@Inject('logger') private logger, @EventDispatcher() private eventDispatcher: EventDispatcherInterface) {
     this.pollEventRepository = getRepository(PollEvent);
     this.songRepository = getRepository(Song);
     this.userRepository = getRepository(User);
+    this.pollTransactionRepository = getRepository(PollTransaction);
   }
 
   public async updateProfile(body: IUpdateProfile, currentUser: User): Promise<IBasicResponse> {
@@ -82,6 +90,31 @@ export default class UserService {
         .addSelect('event.name')
         .where('song.userId = :userId', { userId: currentUser.id })
         .orderBy('song.createdAt', 'DESC')
+        .skip(skip)
+        .take(take)
+        .getManyAndCount();
+
+      return { data: result, count: total };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async userPollTransactionHistory(
+    body: IUserPollTransactionHistoryBody,
+    currentUser: User,
+  ): Promise<IBasicResponse> {
+    try {
+      const take: number = +body.take || 3000;
+      const skip: number = +body.skip || 0;
+
+      const [result, total] = await this.pollTransactionRepository
+        .createQueryBuilder('poll_transaction')
+        .leftJoin('poll_transaction.song', 'song')
+        .addSelect('song')
+        .where('poll_transaction.userId = :userId', { userId: currentUser.id })
+        .orderBy('poll_transaction.createdAt', 'DESC')
         .skip(skip)
         .take(take)
         .getManyAndCount();

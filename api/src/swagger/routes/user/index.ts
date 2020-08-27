@@ -1,8 +1,9 @@
 //// USER Routes
-import {getMe} from '../../endpoints/user/getMe';
-import {postUserProfileUpdate} from '../../endpoints/user/postUserProfileUpdate';
-import {postUserPasswordChange} from '../../endpoints/user/postUserPasswordChange';
-import {getUserSongHistory} from '../../endpoints/user/getUserSongHistory';
+import { getMe } from '../../endpoints/user/getMe';
+import { postUserProfileUpdate } from '../../endpoints/user/postUserProfileUpdate';
+import { postUserPasswordChange } from '../../endpoints/user/postUserPasswordChange';
+import { getUserSongHistory } from '../../endpoints/user/getUserSongHistory';
+import { getUserPollTransactionHistory } from '../../endpoints/user/getUserPollTransactionHistory';
 
 export const userRoutes = {
   '/user/me': {
@@ -16,5 +17,8 @@ export const userRoutes = {
   },
   '/user/song/history': {
     get: getUserSongHistory,
+  },
+  '/user/poll-transaction/history': {
+    get: getUserPollTransactionHistory,
   },
 };

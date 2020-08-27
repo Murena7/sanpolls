@@ -8,6 +8,7 @@ import { IBasicResponse } from '@core/core.types';
 import { IChangePasswordBody, IUpdateProfileBody, IUser } from '@core/entities/user/user.types';
 import { AuthService } from '@core/auth/auth.service';
 import { ISong } from '@core/entities/song/song.types';
+import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
 
 const apiUrl = environment.UI_SERVER;
 
@@ -46,5 +47,11 @@ export class UserService {
 
   userSongHistory(): Observable<ISong[]> {
     return this.http.get<IBasicResponse<ISong[]>>(`${apiUrl}/user/song/history`).pipe(map((data) => data.data));
+  }
+
+  userPollTransactionHistory(): Observable<IPollTransaction[]> {
+    return this.http
+      .get<IBasicResponse<IPollTransaction[]>>(`${apiUrl}/user/poll-transaction/history`)
+      .pipe(map((data) => data.data));
   }
 }

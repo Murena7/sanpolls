@@ -1,6 +1,4 @@
-import { Service, Inject } from 'typedi';
-import MailerService from './mailer';
-import config from '../config';
+import { Inject, Service } from 'typedi';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { IUserSignUpBody, Role } from '../interfaces/user';
@@ -12,6 +10,9 @@ import lodash from 'lodash';
 import { Profile } from 'passport-facebook';
 import { Profile as ProfileGoogle } from 'passport-google-oauth';
 import generatePassword from 'generate-password';
+import { AddVoiceByTypeTransaction } from '../transaction/addVoiceByType';
+import { IAddVoiceByTypeBody } from '../interfaces/admin';
+import { TransactionSource } from '../interfaces/poll-transaction';
 
 @Service()
 export default class AuthService {
@@ -72,6 +73,13 @@ export default class AuthService {
 
       this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
 
+      //SignUp Voice Bonus
+      const signUpBonusTransactionData: IAddVoiceByTypeBody = {
+        userId: userRecord.id,
+        amount: 20,
+        source: TransactionSource.SignUpBonus,
+      };
+      await AddVoiceByTypeTransaction(signUpBonusTransactionData);
       /**
        * @TODO This is not the best way to deal with this
        * There should exist a 'Mapper' layer
@@ -135,7 +143,14 @@ export default class AuthService {
       // await this.mailer.SendWelcomeEmail(userRecord);
 
       this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
-
+      //SignUp Voice Bonus
+      const signUpBonusTransactionData: IAddVoiceByTypeBody = {
+        userId: userRecord.id,
+        amount: 20,
+        source: TransactionSource.SignUpBonus,
+      };
+      await AddVoiceByTypeTransaction(signUpBonusTransactionData);
+      //
       const user = userRecord;
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');

@@ -107,4 +107,33 @@ export default (app: Router) => {
       }
     },
   );
+
+  route.get(
+    '/poll-transaction/history',
+    celebrate({
+      query: Joi.object({
+        skip: Joi.number(),
+        take: Joi.number(),
+      }),
+    }),
+    middlewares.checkAuth(),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /user/transaction/history endpoint');
+      try {
+        const userServiceInstance = Container.get(UserService);
+        const result: IBasicResponse = await userServiceInstance.userPollTransactionHistory(
+          {
+            skip: req.query.skip,
+            take: req.query.take,
+          },
+          req.user as User,
+        );
+        return res.status(200).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
 };

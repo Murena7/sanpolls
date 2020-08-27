@@ -1,20 +1,25 @@
 <div class="container">
-  <div class="my-history-title">История моих песен</div>
-  <h3 class="subtitle-text">Список добавленых мною песен</h3>
+  <div class="my-history-title">История голосов</div>
+  <h3 class="subtitle-text">Списания/зачисления моих голосов</h3>
   <ngx-datatable
     class="material expandable table-style"
     [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 305"
-    [rows]="songs"
+    [rows]="pollTransaction"
     [columnMode]="ColumnMode.force"
     [rowHeight]="rowHeight"
     [headerHeight]="headerHeight"
     [scrollbarV]="true"
     [footerHeight]="35"
     ><!-- Row Detail Template -->
-    <ngx-datatable-row-detail [rowHeight]="60" #myDetailRow (toggle)="onDetailToggle($event)">
+    <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
         <div style="padding-left: 35px;">
-          <div>Название голосования: {{ row.event.name }}</div>
+          <div>Id транзакции: {{ row.id }}</div>
+          <ng-container *ngIf="row?.song">
+            <div>Кто будет петь: {{ row?.song?.songSinger }}</div>
+            <div>Имя песни: {{ row?.song?.songName }}</div>
+            <div>Исполнитель: {{ row?.song?.songSinger }}</div>
+          </ng-container>
         </div>
       </ng-template>
     </ngx-datatable-row-detail>
@@ -42,24 +47,14 @@
         <strong>{{ rowIndex + 1 }}</strong>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Исполнитель">
+    <ngx-datatable-column name="Количество голосов">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <strong>{{ row.songSinger }}</strong>
+        <strong>{{ row.amount > 0 ? '+' : '' }}{{ row.amount }}</strong>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Песня">
+    <ngx-datatable-column name="Тип операции">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <strong>{{ row.songName }}</strong>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Поет">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <strong>{{ row.coverSinger }}</strong>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Голоса">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <strong>{{ row.voiceCount }}</strong>
+        <strong>{{ row.source }}</strong>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

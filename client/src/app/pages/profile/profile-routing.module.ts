@@ -8,6 +8,7 @@ import { PasswordComponent } from '@pages/profile/password/password.component';
 import { AuthGuard } from '@core/auth/auth.guard';
 import { MyVoicesComponent } from './my-voices/my-voices.component';
 import { RefillComponent } from './refill/refill.component';
+import { PollTransactionHistoryComponent } from './poll-transaction-history/poll-transaction-history.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'password', component: PasswordComponent },
       { path: 'my-voices', component: MyVoicesComponent },
       { path: 'refill', component: RefillComponent },
+      { path: 'voice-history', component: PollTransactionHistoryComponent },
     ],
   },
 ];

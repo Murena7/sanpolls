@@ -28,6 +28,11 @@ export interface IUserSongHistoryBody {
   take?: string;
 }
 
+export interface IUserPollTransactionHistoryBody {
+  skip?: string;
+  take?: string;
+}
+
 export interface IUpdateProfile {
   username: string;
 }

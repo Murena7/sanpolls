@@ -11,6 +11,7 @@ import { PasswordComponent } from './password/password.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MyVoicesComponent } from './my-voices/my-voices.component';
 import { RefillComponent } from './refill/refill.component';
+import { PollTransactionHistoryComponent } from './poll-transaction-history/poll-transaction-history.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RefillComponent } from './refill/refill.component';
     PasswordComponent,
     MyVoicesComponent,
     RefillComponent,
+    PollTransactionHistoryComponent,
   ],
   imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, NgxDatatableModule],
 })
