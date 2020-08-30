@@ -80,6 +80,7 @@ export class SongComponent implements OnInit, OnDestroy {
   openDialog() {
     if (this.currentUser) {
       const dialogRef = this.dialog.open(GiveVoteModalComponent, {
+        width: '400px',
         data: {
           songData: this.currentSong,
           userData: this.currentUser,

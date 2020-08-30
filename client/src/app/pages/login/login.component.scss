@@ -1,6 +1,5 @@
 :host {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
 .fb-icon {
@@ -56,7 +55,7 @@
   width: 100%;
 }
 
-.login-card {
+.login-container {
   margin: 50px auto;
   max-width: 400px;
   min-height: 300px;
@@ -69,10 +68,6 @@
 .stretched-tabs {
   max-width: 800px;
   height: 100%;
-}
-
-.mat-card-content {
-  overflow: hidden;
 }
 
 .form-field {

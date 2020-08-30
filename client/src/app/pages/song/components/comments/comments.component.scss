@@ -18,3 +18,9 @@ ul {
     }
   }
 }
+
+@media only screen and (max-width: 825px) {
+  .comment-list-container {
+    padding-inline-start: unset;
+  }
+}

@@ -1,90 +1,86 @@
-<mat-card class="login-card">
+<div class="login-container">
   <mat-tab-group class="stretched-tabs">
-    <mat-tab class="mat-tab" label="Войти">
-      <mat-card-content class="mat-card-content">
-        <div class="button-container">
-          <a class="fbl-button" mat-stroked-button href="/api/auth/facebook">
-            <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
-            Вход с Facebook</a
+    <mat-tab label="Войти">
+      <div class="button-container">
+        <a class="fbl-button" mat-stroked-button href="/api/auth/facebook">
+          <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
+          Вход с Facebook</a
+        >
+      </div>
+      <div class="button-container">
+        <a class="googlel-button" mat-stroked-button href="/api/auth/google">
+          <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
+          Вход с Google</a
+        >
+      </div>
+      <div class="login-form-or">
+        <span>или</span>
+      </div>
+      <form class="login-form" [formGroup]="formLog" (ngSubmit)="submitLogin()">
+        <mat-form-field class="full-width form-field">
+          <input matInput placeholder="Email" type="email" id="email" required formControlName="email" />
+          <mat-error>{{ errors.email | error: formLog.get('email').errors }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width form-field">
+          <input matInput placeholder="Пароль" type="password" id="password" required formControlName="password" />
+          <mat-error>{{ errors.password | error: formLog.get('password').errors }}</mat-error>
+        </mat-form-field>
+        <span class="forgot-password-link">
+          <small routerLink="/forgotpassword">Не можете войти?</small>
+        </span>
+        <div>
+          <button
+            class="registration-button"
+            mat-raised-button
+            type="submit"
+            color="primary"
+            [disabled]="formLog.invalid || submitted"
           >
+            Войти
+          </button>
         </div>
-        <div class="button-container">
-          <a class="googlel-button" mat-stroked-button href="/api/auth/google">
-            <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
-            Вход с Google</a
-          >
-        </div>
-        <div class="login-form-or">
-          <span>или</span>
-        </div>
-        <form class="login-form" [formGroup]="formLog" (ngSubmit)="submitLogin()">
-          <mat-form-field class="full-width form-field">
-            <input matInput placeholder="Email" type="email" id="email" required formControlName="email" />
-            <mat-error>{{ errors.email | error: formLog.get('email').errors }}</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width form-field">
-            <input matInput placeholder="Пароль" type="password" id="password" required formControlName="password" />
-            <mat-error>{{ errors.password | error: formLog.get('password').errors }}</mat-error>
-          </mat-form-field>
-          <span class="forgot-password-link">
-            <small routerLink="/forgotpassword">Не можете войти?</small>
-          </span>
-          <div>
-            <button
-              class="registration-button"
-              mat-raised-button
-              type="submit"
-              color="primary"
-              [disabled]="formLog.invalid || submitted"
-            >
-              Войти
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
+      </form>
     </mat-tab>
-    <mat-tab class="mat-tab" label="Регистрация">
-      <mat-card-content>
-        <div class="button-container">
-          <a class="fbl-button" mat-stroked-button href="/api/auth/facebook">
-            <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
-            Регистрация с Facebook</a
+    <mat-tab label="Регистрация">
+      <div class="button-container">
+        <a class="fbl-button" mat-stroked-button href="/api/auth/facebook">
+          <fa-icon class="fb-icon" [icon]="faFacebook"></fa-icon>
+          Регистрация с Facebook</a
+        >
+      </div>
+      <div class="button-container">
+        <a class="googlel-button" mat-stroked-button href="/api/auth/google">
+          <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
+          Регистрация с Google</a
+        >
+      </div>
+      <div class="login-form-or">
+        <span>или</span>
+      </div>
+      <form class="login-form" [formGroup]="formReg" (ngSubmit)="submitRegister()">
+        <mat-form-field class="full-width form-field">
+          <input matInput placeholder="Email" type="email" id="regEmail" required formControlName="email" />
+          <mat-error>{{ errors.email | error: formReg.get('email').errors }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width form-field">
+          <input matInput placeholder="Пароль" type="password" id="regPassword" required formControlName="password" />
+          <mat-error>{{ errors.password | error: formReg.get('password').errors }}</mat-error>
+        </mat-form-field>
+        <mat-checkbox formControlName="checkbox" class="checkbox-field">
+          <small>* Я соглашаюсь с правилами сервиса.</small>
+        </mat-checkbox>
+        <div>
+          <button
+            class="registration-button"
+            mat-raised-button
+            type="submit"
+            color="primary"
+            [disabled]="formReg.invalid || submitted"
           >
+            Зарегистрироваться
+          </button>
         </div>
-        <div class="button-container">
-          <a class="googlel-button" mat-stroked-button href="/api/auth/google">
-            <fa-icon class="google-icon" [icon]="faGoogle"></fa-icon>
-            Регистрация с Google</a
-          >
-        </div>
-        <div class="login-form-or">
-          <span>или</span>
-        </div>
-        <form class="login-form" [formGroup]="formReg" (ngSubmit)="submitRegister()">
-          <mat-form-field class="full-width form-field">
-            <input matInput placeholder="Email" type="email" id="regEmail" required formControlName="email" />
-            <mat-error>{{ errors.email | error: formReg.get('email').errors }}</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width form-field">
-            <input matInput placeholder="Пароль" type="password" id="regPassword" required formControlName="password" />
-            <mat-error>{{ errors.password | error: formReg.get('password').errors }}</mat-error>
-          </mat-form-field>
-          <mat-checkbox formControlName="checkbox" class="checkbox-field">
-            <small>* Я соглашаюсь с правилами использования сервиса.</small>
-          </mat-checkbox>
-          <div>
-            <button
-              class="registration-button"
-              mat-raised-button
-              type="submit"
-              color="primary"
-              [disabled]="formReg.invalid || submitted"
-            >
-              Зарегистрироваться
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
+      </form>
     </mat-tab>
   </mat-tab-group>
-</mat-card>
+</div>

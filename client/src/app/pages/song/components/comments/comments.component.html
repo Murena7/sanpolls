@@ -1,6 +1,6 @@
 <h3 class="comments-title">Комментарии:</h3>
 <san-textarea-form [isAuth]="!!currentUser" (addComment)="addComment.emit($event)"></san-textarea-form>
-<ul>
+<ul class="comment-list-container">
   <li *ngFor="let comment of comments; let i = index">
     <san-comment
       [currentUser]="currentUser"

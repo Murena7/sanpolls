@@ -117,6 +117,7 @@ export class PollsComponent implements OnInit, OnDestroy {
   openGiveVoiceDialog(song) {
     if (this.currentUser) {
       const dialogRef = this.dialog.open(GiveVoteModalComponent, {
+        width: '400px',
         data: {
           songData: song,
           userData: this.currentUser,
