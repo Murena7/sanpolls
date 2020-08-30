@@ -114,8 +114,10 @@
     flex-direction: column;
     position: relative;
     margin-right: 5px;
+
     .img-container {
       position: relative;
+
       &:after {
         content: '';
         display: block;
@@ -128,12 +130,14 @@
         background-color: rgba(#7986cb, 0.5);
         transition: 250ms background-color;
       }
+
       &:hover {
         &:after {
           background-color: rgba(#7986cb, 0);
         }
       }
     }
+
     img {
       width: 140px;
       height: 140px;
@@ -144,5 +148,104 @@
       margin-top: 5px;
       font-weight: 600;
     }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .text-container {
+    width: 800px;
+
+    .text-wrapper-left {
+      width: 700px;
+    }
+
+    .text-wrapper-right {
+      width: 700px;
+    }
+
+    .text-1, .text-2, .team-detail {
+      min-width: 680px;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .text-container {
+    width: 600px;
+    padding-top: 60px;
+    .text-wrapper-left {
+      width: 500px;
+    }
+
+    .text-wrapper-right {
+      width: 450px;
+    }
+
+    .text-1, .text-2, .team-detail {
+      min-width: 480px;
+    }
+  }
+  .text-detail-1 {
+    font-size: 18px;
+  }
+  .text-container .text-1 {
+    font-size: 23px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .text-container {
+    width: 400px;
+    .text-wrapper-left, .text-wrapper-right {
+      width: 350px;
+    }
+
+    .text-1, .team-detail, .text-2 {
+      min-width: 350px;
+    }
+
+    .text-2 {
+      font-size: 20px;
+    }
+  }
+  .text-detail-1 {
+    font-size: 17px;
+  }
+  .text-container .text-1 {
+    font-size: 20px;
+  }
+
+  .san-about-container {
+    flex-direction: column;
+  }
+  .avatar-container {
+    margin-bottom: 20px;
+  }
+}
+
+
+@media only screen and (max-width: 410px) {
+  .text-container {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    .text-wrapper-left {
+      width: 310px;
+    }
+
+    .text-wrapper-right {
+      width: 310px;
+    }
+
+    .text-1, .text-2, .team-detail {
+      min-width: 310px;
+    }
+  }
+  .text-detail-1 {
+    font-size: 15px;
+  }
+  .text-container .text-1 {
+    font-size: 18px;
   }
 }
