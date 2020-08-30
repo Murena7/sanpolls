@@ -1,27 +1,21 @@
-<mat-card class="polls-history-card">
-  <mat-card-title>Профиль пользователя</mat-card-title>
-  <mat-card-content class="mat-card-content">
-    <form class="form" [formGroup]="form" (ngSubmit)="submit()">
-      <mat-form-field class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput disabled value="{{ userData.email }}" />
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="nickName" formControlName="nickName" />
-        <mat-error *ngIf="form.get('nickName').touched && form.get('nickName').invalid" class="validation">
-          <p *ngIf="form.get('nickName').errors.required">Введите имя пользователя</p>
-          <p *ngIf="form.get('nickName').errors.minlength">
-            Колличество символов должно быть не менее {{ form.get('nickName').errors.minlength.requiredLength }}. Вы
-            ввели {{ form.get('nickName').errors.minlength.actualLength }}
-          </p>
-        </mat-error>
-      </mat-form-field>
-      <p class="text">Введите ваш Никнейм и нажмите "Сохранить"</p>
-      <mat-card-actions>
-        <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid">
-          Сохранить
-        </button>
-      </mat-card-actions>
-    </form>
-  </mat-card-content>
-</mat-card>
+<h2>Профиль пользователя</h2>
+<form class="form" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput disabled value="{{ userData.email }}" />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="nickName" formControlName="nickName" />
+    <mat-error *ngIf="form.get('nickName').touched && form.get('nickName').invalid" class="validation">
+      <p *ngIf="form.get('nickName').errors.required">Введите имя пользователя</p>
+      <p *ngIf="form.get('nickName').errors.minlength">
+        Колличество символов должно быть не менее {{ form.get('nickName').errors.minlength.requiredLength }}. Вы ввели
+        {{ form.get('nickName').errors.minlength.actualLength }}
+      </p>
+    </mat-error>
+  </mat-form-field>
+  <p class="text">Введите ваш Никнейм и нажмите "Сохранить"</p>
+  <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid">
+    Сохранить
+  </button>
+</form>

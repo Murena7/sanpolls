@@ -1,15 +1,17 @@
 <div class="container">
   <div class="my-history-title">История голосов</div>
-  <h3 class="subtitle-text">Списания/зачисления моих голосов</h3>
+  <div class="text-1">
+    <h3 class="subtitle-text">Списания/зачисления моих голосов</h3>
+  </div>
   <ngx-datatable
     class="material expandable table-style"
-    [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 305"
+    [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 285"
     [rows]="pollTransaction"
     [columnMode]="ColumnMode.force"
     [rowHeight]="rowHeight"
     [headerHeight]="headerHeight"
     [scrollbarV]="true"
-    [footerHeight]="35"
+    [footerHeight]="30"
     ><!-- Row Detail Template -->
     <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
@@ -42,7 +44,7 @@
         </a>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="№" [width]="40">
+    <ngx-datatable-column name="№" [width]="40" *ngIf="!isSmall">
       <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
         <strong>{{ rowIndex + 1 }}</strong>
       </ng-template>
@@ -57,5 +59,25 @@
         <strong>{{ row.source }}</strong>
       </ng-template>
     </ngx-datatable-column>
+    <ngx-datatable-footer>
+      <ng-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+        ngx-datatable-footer-template
+      >
+        <san-datatable-pager
+          [page]="curPage"
+          [visiblePagesCount]="3"
+          [size]="pageSize"
+          [count]="rowCount"
+          [hidden]="false"
+          (change)="table.onFooterPage($event)"
+        >
+        </san-datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
   </ngx-datatable>
 </div>

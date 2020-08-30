@@ -27,10 +27,14 @@
       [scrollbarV]="true"
       [footerHeight]="35"
       ><!-- Row Detail Template -->
-      <ngx-datatable-row-detail [rowHeight]="60" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ngx-datatable-row-detail [rowHeight]="90" #myDetailRow (toggle)="onDetailToggle($event)">
         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
           <div style="padding-left: 35px;">
             <div class="row-detail">ID платежа: {{ row.id }}</div>
+            <ng-container *ngIf="isSmall">
+              <div class="row-detail">Валюта: {{ row.payType }}</div>
+              <div class="row-detail">Источник: {{ row.currency }}</div>
+            </ng-container>
           </div>
         </ng-template>
       </ngx-datatable-row-detail>
@@ -53,7 +57,7 @@
           </a>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Источник">
+      <ngx-datatable-column name="Источник" *ngIf="!isSmall">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <strong>{{ row.payType }}</strong>
         </ng-template>
@@ -68,7 +72,7 @@
           <strong>{{ row.amount }}</strong>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Валюта">
+      <ngx-datatable-column name="Валюта" *ngIf="!isSmall">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <strong>{{ row.currency }}</strong>
         </ng-template>
@@ -95,6 +99,26 @@
           </button>
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-footer>
+        <ng-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset"
+          ngx-datatable-footer-template
+        >
+          <san-datatable-pager
+            [page]="curPage"
+            [visiblePagesCount]="3"
+            [size]="pageSize"
+            [count]="rowCount"
+            [hidden]="false"
+            (change)="table.onFooterPage($event)"
+          >
+          </san-datatable-pager>
+        </ng-template>
+      </ngx-datatable-footer>
     </ngx-datatable>
   </div>
 </div>
@@ -111,7 +135,7 @@
         <div class="item-width">
           <mat-form-field class="item-width" appearance="fill">
             <mat-label>Введите количество голосов</mat-label>
-            <input formControlName="count" type="number" matInput />
+            <input formControlName="count" type="number" autocomplete="off" matInput />
           </mat-form-field>
         </div>
         <div class="equal">=</div>
@@ -138,7 +162,7 @@
 
 <ng-template #refillObmenka>
   <div class="calculator-container">
-    <form #form action="https://acquiring.obmenka.ua/acs" method="POST">
+    <form class="obmenka-form" #form action="https://acquiring.obmenka.ua/acs" method="POST">
       <div class="obmenka-pay-container">
         <input type="hidden" name="CLIENT_ID" value="{{ obmenkaPostFormData.clientId }}" />
         <input type="hidden" name="INVOICE_ID" value="{{ obmenkaPostFormData.invoiceId }}" />

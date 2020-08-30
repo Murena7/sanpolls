@@ -1,16 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
 import { ISong } from '@core/entities/song/song.types';
 import { IPollEvent } from '../../../core/entities/poll-event/poll-event.types';
 import { WindowSizeService } from '../../../core/api-services/window-size.service';
 import { IPollsTablePagination } from '../../polls/polls.types';
+import { Subscription } from 'rxjs';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'san-polls-history',
   templateUrl: './polls-history.component.html',
   styleUrls: ['./polls-history.component.scss'],
 })
-export class PollsHistoryComponent implements OnInit {
+export class PollsHistoryComponent implements OnInit, OnDestroy {
   pollsSongList: ISong[] = [];
   eventPoll: IPollEvent[] = [];
   selectedPoll = '';
@@ -23,13 +25,36 @@ export class PollsHistoryComponent implements OnInit {
   readonly rowHeight = 50;
   readonly pageLimit = 60;
 
+  windowSizeSub: Subscription;
+  isSmall = false;
+
   @ViewChild('pollsTable', { static: true }) table: ElementRef;
+  @ViewChild(DatatableComponent, { static: false }) tableData: DatatableComponent;
 
   constructor(private pollsService: PollsService, public windowSizeService: WindowSizeService) {}
 
   ngOnInit(): void {
     this.pollsService.getAllArchivedPoll().subscribe((res) => {
       this.eventPoll = res.data;
+    });
+
+    this.initWindowSize();
+  }
+
+  ngOnDestroy() {
+    this.windowSizeSub.unsubscribe();
+  }
+
+  toggleExpandRow(row) {
+    this.tableData.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {
+  }
+
+  initWindowSize() {
+    this.windowSizeSub = this.windowSizeService.windowSizeChanged.subscribe((res) => {
+      res.width <= 825 ? (this.isSmall = true) : (this.isSmall = false);
     });
   }
 

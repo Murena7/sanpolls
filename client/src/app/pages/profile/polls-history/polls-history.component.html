@@ -1,58 +1,93 @@
-<mat-card class="polls-history-card">
-  <mat-card-title class="polls-history-title">История голосований</mat-card-title>
-  <mat-card-content class="mat-card-content">
-    <form class="form">
-      <mat-form-field appearance="fill">
-        <mat-label>Выбрать голосование</mat-label>
-        <mat-select [(value)]="selectedPoll" (selectionChange)="selectionChange()">
-          <mat-option [value]="option.id" *ngFor="let option of eventPoll">{{ option.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-    <div #pollsTable>
-      <div class="container" *ngIf="isSomeSelected">
-        <ngx-datatable
-          class="material table-style"
-          [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 345"
-          [rows]="pollsSongList"
-          [columnMode]="'flex'"
-          [headerHeight]="headerHeight"
-          [rowHeight]="rowHeight"
-          [loadingIndicator]="isLoading"
-          [scrollbarV]="true"
-          (scroll)="onScroll($event.offsetY)"
+<div class="container">
+  <h2>История голосований</h2>
+  <div class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Выбрать голосование</mat-label>
+      <mat-select [(value)]="selectedPoll" (selectionChange)="selectionChange()">
+        <mat-option [value]="option.id" *ngFor="let option of eventPoll">{{ option.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div #pollsTable class="table-container">
+    <div *ngIf="isSomeSelected">
+      <ngx-datatable
+        class="material table-style"
+        [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 315"
+        [rows]="pollsSongList"
+        [columnMode]="'flex'"
+        [headerHeight]="headerHeight"
+        [rowHeight]="rowHeight"
+        [loadingIndicator]="isLoading"
+        [scrollbarV]="true"
+        (scroll)="onScroll($event.offsetY)"
+      >
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="80" #myDetailRow (toggle)="onDetailToggle($event)">
+          <ng-template let-row="row" let-rowIndex="rowIndex" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left: 35px;">
+              <div>
+                Место в рейтинге: <strong>{{ rowIndex + 1 }}</strong>
+              </div>
+              <div>
+                Иполнитель: <strong>{{ row.songSinger }}</strong>
+              </div>
+              <div>
+                Общее колличество голосов: <strong>{{ row.voiceCount }}</strong>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          name=""
+          *ngIf="isSmall"
+          [width]="10"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
         >
-          <ngx-datatable-column name="Место" prop="text" [flexGrow]="0.7">
-            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-              <span class="poll-link">{{ rowIndex + 1 }}</span>
-            </ng-template>
-          </ngx-datatable-column>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0)"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="toggleExpandRow(row)"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Место" prop="text" [flexGrow]="0.6">
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <span class="poll-link">{{ rowIndex + 1 }}</span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="1.5">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <span class="poll-link">{{ row.songSinger }}</span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="Иполнитель" prop="contextText" [flexGrow]="1.5" *ngIf="!isSmall">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="poll-link">{{ row.songSinger }}</span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="3">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <span class="poll-link">{{ row.songName }}</span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="Песня" prop="contextText" [flexGrow]="1.5">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="poll-link">{{ row.songName }}</span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="1.5">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <span class="poll-link">{{ row.coverSinger }}</span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="Кто исполнит" prop="contextText" [flexGrow]="1.5">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="poll-link">{{ row.coverSinger }}</span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.7">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <span class="poll-link">{{ row.voiceCount }}</span>
-            </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>
-      </div>
+        <ngx-datatable-column name="Голоса" prop="votesCount" [flexGrow]="0.7" *ngIf="!isSmall">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="poll-link">{{ row.voiceCount }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

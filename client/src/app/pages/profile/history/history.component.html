@@ -1,9 +1,11 @@
 <div class="container">
   <div class="my-history-title">История моих песен</div>
-  <h3 class="subtitle-text">Список добавленых мною песен</h3>
+  <div class="text-1">
+    <h3 class="subtitle-text">Список добавленых мною песен</h3>
+  </div>
   <ngx-datatable
     class="material expandable table-style"
-    [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 305"
+    [style.height.px]="(windowSizeService.windowSizeChanged | async).height - 280"
     [rows]="songs"
     [columnMode]="ColumnMode.force"
     [rowHeight]="rowHeight"
@@ -15,6 +17,7 @@
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
         <div style="padding-left: 35px;">
           <div>Название голосования: {{ row.event.name }}</div>
+          <div *ngIf="isSmall">Исполнитель: {{ row.songSinger }}</div>
         </div>
       </ng-template>
     </ngx-datatable-row-detail>
@@ -37,12 +40,12 @@
         </a>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="№" [width]="40">
+    <ngx-datatable-column name="№" [maxWidth]="40" *ngIf="!isSmall">
       <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
         <strong>{{ rowIndex + 1 }}</strong>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Исполнитель">
+    <ngx-datatable-column name="Исполнитель" *ngIf="!isSmall">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <strong>{{ row.songSinger }}</strong>
       </ng-template>
@@ -62,5 +65,25 @@
         <strong>{{ row.voiceCount }}</strong>
       </ng-template>
     </ngx-datatable-column>
+    <ngx-datatable-footer>
+      <ng-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+        ngx-datatable-footer-template
+      >
+        <san-datatable-pager
+          [page]="curPage"
+          [visiblePagesCount]="3"
+          [size]="pageSize"
+          [count]="rowCount"
+          [hidden]="false"
+          (change)="table.onFooterPage($event)"
+        >
+        </san-datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
   </ngx-datatable>
 </div>

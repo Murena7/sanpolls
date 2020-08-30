@@ -1,33 +1,69 @@
-<mat-drawer-container class="profile-container">
-  <mat-drawer mode="side" opened>
-    <mat-button-toggle-group class="profile-nav">
-      <mat-button-toggle
-        routerLinkActive="mat-button-toggle-checked"
-        [routerLink]="['/profile']"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Профиль</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'my-voices']"
-        >Мои голоса</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'voice-history']"
-        >История голосов</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'history']"
-        >Мои песни</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'polls-history']"
-        >История голосований</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'password']"
-        >Изменить пароль</mat-button-toggle
-      >
-      <mat-button-toggle routerLinkActive="mat-button-toggle-checked" [routerLink]="['/profile', 'refill']"
-        >Пополнение</mat-button-toggle
-      >
-    </mat-button-toggle-group>
-  </mat-drawer>
-  <mat-drawer-content>
-    <router-outlet></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile']"
+    routerLinkActive
+    #rla1="routerLinkActive"
+    [active]="rla1.isActive"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Профиль
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'my-voices']"
+    routerLinkActive
+    #rla2="routerLinkActive"
+    [active]="rla2.isActive"
+  >
+    Мои голоса
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'voice-history']"
+    routerLinkActive
+    #rla3="routerLinkActive"
+    [active]="rla3.isActive"
+  >
+    История голосов
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'history']"
+    routerLinkActive
+    #rla4="routerLinkActive"
+    [active]="rla4.isActive"
+  >
+    Мои песни
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'polls-history']"
+    routerLinkActive
+    #rla5="routerLinkActive"
+    [active]="rla5.isActive"
+  >
+    История голосований
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'password']"
+    routerLinkActive
+    #rla6="routerLinkActive"
+    [active]="rla6.isActive"
+  >
+    Изменить пароль
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/profile', 'refill']"
+    routerLinkActive
+    #rla7="routerLinkActive"
+    [active]="rla7.isActive"
+  >
+    Пополнение
+  </a>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

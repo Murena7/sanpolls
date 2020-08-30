@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
 import { ICreateSong, ISong } from '@core/entities/song/song.types';
 import { switchMap } from 'rxjs/operators';
-import { DialogPollsComponent } from '@components/../../shared/modals/dialog-polls/dialog-polls.component';
+import { GiveVoteModalComponent } from '../../shared/modals/give-vote-modal/give-vote-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { forkJoin, Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
-import {WindowSizeService} from '../../core/api-services/window-size.service';
+import { WindowSizeService } from '../../core/api-services/window-size.service';
 
 @Component({
   selector: 'san-polls',
@@ -45,7 +45,7 @@ export class PollsComponent implements OnInit, OnDestroy {
     private snackbarNotificationService: SnackbarNotificationService,
     private songService: SongService,
     private voteService: VoteService,
-    public windowSizeService: WindowSizeService,
+    public windowSizeService: WindowSizeService
   ) {}
 
   ngOnInit(): void {
@@ -69,21 +69,14 @@ export class PollsComponent implements OnInit, OnDestroy {
           });
         })
       )
-      
-    .subscribe((res) => {
+      .subscribe((res) => {
         this.pollsTableData = res.pollsTableData.data;
         this.lastArchivedHistoryData = res.lastArchivedHistoryData.data.slice(0, 3);
       });
 
-    this.wsSub = this.windowSizeService.windowSizeChanged.subscribe(
-      value => {
-        if (value.width <= 699) {
-          this.isSmall = true;
-        } else {
-          this.isSmall = false;
-        }
-      }
-    );
+    this.wsSub = this.windowSizeService.windowSizeChanged.subscribe((value) => {
+      value.width <= 699 ? (this.isSmall = true) : (this.isSmall = false);
+    });
   }
 
   ngOnDestroy(): void {
@@ -123,7 +116,7 @@ export class PollsComponent implements OnInit, OnDestroy {
 
   openGiveVoiceDialog(song) {
     if (this.currentUser) {
-      const dialogRef = this.dialog.open(DialogPollsComponent, {
+      const dialogRef = this.dialog.open(GiveVoteModalComponent, {
         data: {
           songData: song,
           userData: this.currentUser,

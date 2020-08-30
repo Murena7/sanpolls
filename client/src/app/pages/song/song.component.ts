@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogPollsComponent } from '@components/../../shared/modals/dialog-polls/dialog-polls.component';
+import { GiveVoteModalComponent } from '../../shared/modals/give-vote-modal/give-vote-modal.component';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PollsService } from '@core/api-services/polls.service';
@@ -79,7 +79,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
   openDialog() {
     if (this.currentUser) {
-      const dialogRef = this.dialog.open(DialogPollsComponent, {
+      const dialogRef = this.dialog.open(GiveVoteModalComponent, {
         data: {
           songData: this.currentSong,
           userData: this.currentUser,

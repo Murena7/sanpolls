@@ -1,17 +1,39 @@
+:host {
+  width: 100%;
+}
 .container {
   text-align: left;
   padding: 15px;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
 }
 
 .my-history-title {
   text-align: center;
   font-size: 24px;
   font-weight: 500;
-  margin-top: 25px;
   margin-bottom: 25px;
 }
 
 .table-style {
   background: unset !important;
   box-shadow: unset !important;
+}
+
+.desktop-hidden {
+  display: none;
+}
+.mobile-hidden {
+  display: initial;
+}
+
+@media screen and (max-width: 825px) {
+  .container {
+    padding: 0px;
+  }
+}
+
+.text-1 {
+  text-align: center;
 }

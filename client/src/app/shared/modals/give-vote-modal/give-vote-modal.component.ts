@@ -5,17 +5,16 @@ import { IGiveVoiceBody, ISong } from '../../../core/entities/song/song.types';
 import { IUser } from '../../../core/entities/user/user.types';
 
 @Component({
-  selector: 'san-dialog-polls',
-  templateUrl: './dialog-polls.component.html',
-  styleUrls: ['./dialog-polls.component.scss']
+  templateUrl: './give-vote-modal.component.html',
+  styleUrls: ['./give-vote-modal.component.scss'],
 })
-export class DialogPollsComponent implements OnInit {
+export class GiveVoteModalComponent implements OnInit {
   form: FormGroup;
 
   currentUser: IUser;
   currentSong: ISong;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<DialogPollsComponent>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<GiveVoteModalComponent>) {}
 
   ngOnInit(): void {
     if (this.data) {
@@ -25,8 +24,8 @@ export class DialogPollsComponent implements OnInit {
         inputNumber: new FormControl(1, [
           Validators.required,
           Validators.min(1),
-          Validators.max(this.currentUser.voiceBalance)
-        ])
+          Validators.max(this.currentUser.voiceBalance),
+        ]),
       });
     }
   }
@@ -34,7 +33,7 @@ export class DialogPollsComponent implements OnInit {
   submit() {
     const result: IGiveVoiceBody = {
       songId: this.currentSong.id,
-      voiceCount: this.form.value.inputNumber
+      voiceCount: this.form.value.inputNumber,
     };
     this.dialogRef.close(result);
   }

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+::ng-deep .ngx-datatable .datatable-footer .page-count {
+  flex: unset;
+}

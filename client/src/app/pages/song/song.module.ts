@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogPollsComponent } from '@components/../../shared/modals/dialog-polls/dialog-polls.component';
+import { GiveVoteModalComponent } from '../../shared/modals/give-vote-modal/give-vote-modal.component';
 import { MaterialModule } from '@shared/material/material.module';
 import { SongComponent } from '@pages/song/song.component';
 import { SongRoutingModule } from '@pages/song/song-routing.module';
@@ -12,7 +12,7 @@ import { CommentBodyComponent } from './components/comment-body/comment-body.com
 
 @NgModule({
   declarations: [SongComponent, CommentsComponent, CommentComponent, TextareaFormComponent, CommentBodyComponent],
-  entryComponents: [DialogPollsComponent],
+  entryComponents: [GiveVoteModalComponent],
   imports: [CommonModule, MaterialModule, SongRoutingModule, SharedModule]
 })
 export class SongModule {}

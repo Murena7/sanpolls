@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -17,15 +17,14 @@ import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { switchMap } from 'rxjs/operators';
 import { PayStep } from './refill.types';
 import { UserService } from '../../../core/api-services/user.service';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'san-refill',
   templateUrl: './refill.component.html',
   styleUrls: ['./refill.component.scss'],
 })
-export class RefillComponent implements OnInit {
-
+export class RefillComponent implements OnInit, OnDestroy {
   payStep = PayStep;
   payStepValue = this.payStep.calculator;
   obmenkaPostFormData: IBillCreateResponse;
@@ -34,6 +33,9 @@ export class RefillComponent implements OnInit {
   ColumnMode = ColumnMode;
   billStatus = Status;
   @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
+
+  windowSizeSub: Subscription;
+  isSmall = false;
 
   readonly headerHeight = 50;
   readonly rowHeight = 50;
@@ -55,6 +57,18 @@ export class RefillComponent implements OnInit {
     this.checkCallbackQueryStatus();
     this.billService.history().subscribe((res) => {
       this.billHistory = res;
+    });
+
+    this.initWindowSize();
+  }
+
+  ngOnDestroy() {
+    this.windowSizeSub.unsubscribe();
+  }
+
+  initWindowSize() {
+    this.windowSizeSub = this.windowSizeService.windowSizeChanged.subscribe((res) => {
+      res.width <= 825 ? (this.isSmall = true) : (this.isSmall = false);
     });
   }
 

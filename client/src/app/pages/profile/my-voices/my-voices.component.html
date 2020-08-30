@@ -1,6 +1,8 @@
 <div class="container">
   <div class="voice-container">
-    <h2>На вашем балансе <span class="color-1">{{ userData.voiceBalance }}</span> голосов</h2>
+    <h2>
+      На вашем балансе <span class="color-1">{{ userData.voiceBalance }}</span> голосов
+    </h2>
   </div>
   <mat-divider></mat-divider>
   <div class="choice-header-container">
@@ -8,8 +10,14 @@
   </div>
   <div class="choice-container">
     <div class="choice">
+      <div>1. Пополни голоса любым удобным способом</div>
       <div>
-        1. Подпишись на YouTube канал SanSan и получай 10 дополнительных голосов каждую неделю - как подписчик канала.
+        <a mat-flat-button routerLink="/profile/refill" color="primary">Пополнить</a>
+      </div>
+    </div>
+    <div class="choice">
+      <div>
+        2. Подпишись на YouTube канал SanSan и получай 10 дополнительных голосов каждую неделю - как подписчик канала.
       </div>
       <div>
         <button [disabled]="true" mat-flat-button color="primary">Проверить YouTube подписку</button>
@@ -18,19 +26,13 @@
     <mat-divider></mat-divider>
     <div class="choice">
       <div>
-        2. Стань спонсором YouTube канала SanSan и получай от 1000 до 10000 дополнительных голосов каждую неделю.
+        3. Стань спонсором YouTube канала SanSan и получай от 1000 до 10000 дополнительных голосов каждую неделю.
       </div>
       <div>
         <button [disabled]="true" mat-flat-button color="primary">Проверить YouTube подписку спонсора</button>
       </div>
     </div>
     <mat-divider></mat-divider>
-    <div class="choice">
-      <div>3. Пополни голоса любым удобным способом</div>
-      <div>
-        <a mat-flat-button routerLink="/profile/refill" color="primary">Пополнить</a>
-      </div>
-    </div>
     <mat-divider></mat-divider>
   </div>
 </div>
