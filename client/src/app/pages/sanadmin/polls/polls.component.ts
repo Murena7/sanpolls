@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { AdminApiService } from '@core/api-services/admin-api.service';
 import { EventStatus, IPollEvent } from '@core/entities/poll-event/poll-event.types';
-import { WindowSizeService } from '@core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { WarnNotificationService } from '@core/common-services/warn-notification.service';

@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { PollsService } from '@core/api-services/polls.service';
 import { ISong } from '@core/entities/song/song.types';
 import { IPollEvent } from '../../../core/entities/poll-event/poll-event.types';
-import { WindowSizeService } from '../../../core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { IPollsTablePagination } from '../../polls/polls.types';
 import { Subscription } from 'rxjs';
 import { DatatableComponent } from '@swimlane/ngx-datatable';

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ISong } from '@core/entities/song/song.types';
 import { UserService } from '../../../core/api-services/user.service';
-import { WindowSizeService } from '../../../core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Subscription } from 'rxjs';
 

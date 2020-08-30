@@ -13,7 +13,7 @@ import { forkJoin, Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { SongService } from '../../core/api-services/song.service';
 import { VoteService } from '../../core/api-services/vote.service';
-import { WindowSizeService } from '../../core/api-services/window-size.service';
+import { WindowSizeService } from '../../core/common-services/window-size.service';
 
 @Component({
   selector: 'san-polls',

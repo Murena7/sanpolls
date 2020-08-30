@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} f
 import {ISong} from '@core/entities/song/song.types';
 import {IUser} from '@core/entities/user/user.types';
 import {IPollsTablePagination} from '@pages/polls/polls.types';
-import {WindowSizeService} from '@core/api-services/window-size.service';
+import {WindowSizeService} from '../../../../core/common-services/window-size.service';
 import {Router} from '@angular/router';
 import {DatatableComponent} from '@swimlane/ngx-datatable';
 

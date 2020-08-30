@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { IUser } from '@core/entities/user/user.types';
 import { AdminApiService } from '@core/api-services/admin-api.service';
-import { WindowSizeService } from '@core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddVoiceComponent } from '@pages/sanadmin/users/modals/add-voice/add-voice.component';
 import { IAddVoiceModalResult } from '@pages/sanadmin/users/modals/add-voice/add-voice.types';

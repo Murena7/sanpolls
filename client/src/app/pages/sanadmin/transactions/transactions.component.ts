@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { AdminApiService } from '@core/api-services/admin-api.service';
-import { WindowSizeService } from '@core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';

@@ -12,7 +12,7 @@ import {
 } from '../../../core/entities/bill/bill.types';
 import { SnackbarNotificationService } from '../../../core/common-services/snackbar-notification.service';
 import { BillService } from '../../../core/api-services/bill.service';
-import { WindowSizeService } from '../../../core/api-services/window-size.service';
+import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { switchMap } from 'rxjs/operators';
 import { PayStep } from './refill.types';
