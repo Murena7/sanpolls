@@ -1,6 +1,5 @@
 <div class="container">
   <div class="user-data">
-    <small>Пользователь: {{ currentUser.username }}</small>
     <small>Колличество доступных голосов: {{ data.userData.voiceBalance }}</small>
   </div>
 
@@ -10,7 +9,14 @@
     <div mat-dialog-content>
       <mat-form-field>
         <mat-label>Колличество голосов:</mat-label>
-        <input matInput min="1" formControlName="inputNumber" [max]="currentUser.voiceBalance" autocomplete="off" type="number" />
+        <input
+          matInput
+          min="1"
+          formControlName="inputNumber"
+          [max]="currentUser.voiceBalance"
+          autocomplete="off"
+          type="number"
+        />
         <mat-error>
           <p *ngIf="form.get('inputNumber').errors">Колличество Ваших голосов: {{ currentUser.voiceBalance }}.</p>
         </mat-error>
