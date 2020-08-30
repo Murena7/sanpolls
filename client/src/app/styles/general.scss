@@ -17,7 +17,7 @@ body {
   input,
   select,
   textarea {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
 
@@ -48,7 +48,8 @@ a {
   color: white;
 }
 
-.mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+.mat-expansion-panel-header-description,
+.mat-expansion-indicator::after {
   color: rgba(251, 251, 251, 0.54);
 }
 
@@ -60,8 +61,8 @@ a {
 .ngx-datatable {
   .datatable-footer-inner {
     display: flex;
-    flex-flow: row nowrap;  // can't wrap because footer height fixed
-    justify-content: space-between;  // probably not needed because .page-count flex grows
+    flex-flow: row nowrap; // can't wrap because footer height fixed
+    justify-content: space-between; // probably not needed because .page-count flex grows
     > .page-count {
       // remove padding so there's more room in-between
       padding-right: 0 !important;
