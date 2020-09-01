@@ -2,6 +2,8 @@ import { Service, Inject } from 'typedi';
 import { User } from '../entity/user';
 import config from '../config';
 import { Mailgun } from 'mailgun-js';
+import { welcomeEmail } from '../email-templates/welcome-email';
+import { passwordRecoveryEmail } from '../email-templates/password-recovery';
 
 @Service()
 export default class MailerService {
@@ -11,8 +13,8 @@ export default class MailerService {
     const data = {
       from: `SanSan <me@samples.mailgun.org>`,
       to: email, //your email address
-      subject: 'Регистрация SanSan',
-      text: `Вы успешно зарегистрировались на сайте SanSan! ${verificationLink}`,
+      subject: 'Подтверждение регистрации SanSan',
+      text: welcomeEmail(verificationLink),
     };
 
     this.emailClient.messages().send(data);
@@ -24,7 +26,7 @@ export default class MailerService {
       from: `SanSan <me@samples.mailgun.org>`,
       to: email, //your email address
       subject: 'Восстановление пароля SanSan',
-      text: `Вы успешно зарегистрировались на сайте SanSan! ${password}`,
+      text: passwordRecoveryEmail(password),
     };
 
     this.emailClient.messages().send(data);

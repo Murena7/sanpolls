@@ -19,13 +19,13 @@ import { likeSongTransaction } from '../transaction/likeSong';
 import { ChildComment, Comment, LikeDislike } from '../entity';
 import { ParentType } from '../interfaces/like-dislike';
 import { ResponseStatusMessage } from '../interfaces/response';
-import { rawSqlSongById } from '../rawSql/song/songById';
+import { rawSqlSongById } from '../raw-sql/song/songById';
 import { likeCommentTransaction } from '../transaction/likeComment';
 import { likeChildCommentTransaction } from '../transaction/likeChildComment';
-import { rawSqlGetSongComments } from '../rawSql/song/getSongComments';
-import { rawSqlGetCommentById } from '../rawSql/song/getCommentById';
-import { rawSqlGetChildCommentById } from '../rawSql/song/getChildCommentById';
-import { rawSqlGetChildComments } from '../rawSql/song/getChildComments';
+import { rawSqlGetSongComments } from '../raw-sql/song/getSongComments';
+import { rawSqlGetCommentById } from '../raw-sql/song/getCommentById';
+import { rawSqlGetChildCommentById } from '../raw-sql/song/getChildCommentById';
+import { rawSqlGetChildComments } from '../raw-sql/song/getChildComments';
 
 @Service()
 export default class SongService {
