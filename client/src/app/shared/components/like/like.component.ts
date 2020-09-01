@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ILikeDislike, LikeStatus } from '@core/entities/like-dislike/like-dislike.types';
+import { ILikeDislike, LikeStatus } from '@core/interfaces/like-dislike/like-dislike.types';
 
 @Component({
   selector: 'san-like',

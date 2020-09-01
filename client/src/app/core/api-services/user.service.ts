@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
-import { IChangePasswordBody, IUpdateProfileBody, IUser } from '@core/entities/user/user.types';
+import { IChangePasswordBody, IUpdateProfileBody, IUser } from '@core/interfaces/user/user.types';
 import { AuthService } from '@core/auth/auth.service';
-import { ISong } from '@core/entities/song/song.types';
-import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
+import { ISong } from '@core/interfaces/song/song.types';
+import { IPollTransaction } from '@core/interfaces/poll-transaction/poll-transaction.types';
 
 const apiUrl = environment.UI_SERVER;
 

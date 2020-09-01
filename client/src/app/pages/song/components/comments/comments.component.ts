@@ -7,10 +7,10 @@ import {
   IEditCommentBody,
   ILoadChildComment,
   ITextAreaEmitBody,
-} from '../../../../core/entities/comment/comment';
-import { LikeStatus } from '../../../../core/entities/like-dislike/like-dislike.types';
-import { IUser } from '../../../../core/entities/user/user.types';
-import { IChildCommentLikeBody, ICommentLikeBody } from '../../../../core/entities/song/song.types';
+} from '../../../../core/interfaces/comment/comment';
+import { LikeStatus } from '../../../../core/interfaces/like-dislike/like-dislike.types';
+import { IUser } from '../../../../core/interfaces/user/user.types';
+import { IChildCommentLikeBody, ICommentLikeBody } from '../../../../core/interfaces/song/song.types';
 
 @Component({
   selector: 'san-comments',

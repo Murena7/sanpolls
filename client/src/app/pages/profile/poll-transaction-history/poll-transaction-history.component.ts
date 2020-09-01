@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ISong } from '../../../core/entities/song/song.types';
+import { ISong } from '../../../core/interfaces/song/song.types';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { UserService } from '../../../core/api-services/user.service';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';
-import { IPollTransaction } from '../../../core/entities/poll-transaction/poll-transaction.types';
+import { IPollTransaction } from '../../../core/interfaces/poll-transaction/poll-transaction.types';
 import { Subscription } from 'rxjs';
 
 @Component({

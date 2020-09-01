@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { ITextAreaEmitBody} from '../../../../core/entities/comment/comment';
+import { ITextAreaEmitBody} from '../../../../core/interfaces/comment/comment';
 import { MatInput, MatTextareaAutosize } from '@angular/material/input';
 
 const labelText = {

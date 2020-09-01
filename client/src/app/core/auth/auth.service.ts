@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { removeAllCookies } from '../../../mock/core/cookie.helper';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

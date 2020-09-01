@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { ISong } from '@core/entities/song/song.types';
+import { ISong } from '@core/interfaces/song/song.types';
 import { switchMap } from 'rxjs/operators';
 
 @Component({

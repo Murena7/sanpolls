@@ -1,5 +1,5 @@
 import { Factory } from '../core/types';
-import { ISong } from '@core/entities/song/song.types';
+import { ISong } from '@core/interfaces/song/song.types';
 
 export class PollsListFactory implements Factory<ISong> {
   db = 'polls';

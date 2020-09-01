@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IUser } from '../../../../core/entities/user/user.types';
-import { ISong } from '../../../../core/entities/song/song.types';
+import { IUser } from '../../../../core/interfaces/user/user.types';
+import { ISong } from '../../../../core/interfaces/song/song.types';
 
 @Component({
   selector: 'san-short-history-table',

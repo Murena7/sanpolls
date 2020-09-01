@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUserRegistrationBody, UserStatus } from '@core/entities/user/user.types';
+import { IUserRegistrationBody, UserStatus } from '@core/interfaces/user/user.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
 import { UserService } from '../../core/api-services/user.service';
 import { faFacebookSquare, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';

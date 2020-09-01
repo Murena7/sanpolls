@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { IAddVoiceModalResult } from '@pages/sanadmin/users/modals/add-voice/add-voice.types';
 
 @Component({

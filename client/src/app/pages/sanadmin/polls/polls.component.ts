@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { AdminApiService } from '@core/api-services/admin-api.service';
-import { EventStatus, IPollEvent } from '@core/entities/poll-event/poll-event.types';
+import { EventStatus, IPollEvent } from '@core/interfaces/poll-event/poll-event.types';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
 import { WarnNotificationService } from '@core/common-services/warn-notification.service';
 import { CreateEditComponent } from './modals/create-edit/create-edit.component';
 import { ICreateEditModalData } from './polls.types';
-import { ICreatePollBody } from '../../../core/entities/admin/admin.types';
+import { ICreatePollBody } from '../../../core/interfaces/admin/admin.types';
 
 @Component({
   templateUrl: './polls.component.html',

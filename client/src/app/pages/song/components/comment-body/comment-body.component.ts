@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IComment } from '../../../../core/entities/comment/comment';
-import { IChildComment } from '../../../../core/entities/child-comment/child-comment';
-import { IUser } from '../../../../core/entities/user/user.types';
+import { IComment } from '../../../../core/interfaces/comment/comment';
+import { IChildComment } from '../../../../core/interfaces/child-comment/child-comment';
+import { IUser } from '../../../../core/interfaces/user/user.types';
 
 @Component({
   selector: 'san-comment-body',

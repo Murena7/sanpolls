@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
-import { ICreateSong, ISong } from '@core/entities/song/song.types';
-import { IGetPollsQueryParams, IPollEvent } from '@core/entities/poll-event/poll-event.types';
+import { ICreateSong, ISong } from '@core/interfaces/song/song.types';
+import { IGetPollsQueryParams, IPollEvent } from '@core/interfaces/poll-event/poll-event.types';
 import { toQueryString } from '@core/helpers/http';
 
 const apiUrl = environment.UI_SERVER;

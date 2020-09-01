@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { ICreateSong, ISong } from '@core/entities/song/song.types';
+import { ICreateSong, ISong } from '@core/interfaces/song/song.types';
 import { switchMap } from 'rxjs/operators';
 import { GiveVoteModalComponent } from '../../shared/modals/give-vote-modal/give-vote-modal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { AuthService } from '@core/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '@core/api-services/user.service';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { forkJoin, Subscription } from 'rxjs';
 import { IPollsTablePagination } from '@pages/polls/polls.types';
 import { SongService } from '../../core/api-services/song.service';

@@ -1,6 +1,6 @@
-import { ILikeDislike, LikeStatus } from '@core/entities/like-dislike/like-dislike.types';
-import { IUser } from '@core/entities/user/user.types';
-import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
+import { ILikeDislike, LikeStatus } from '@core/interfaces/like-dislike/like-dislike.types';
+import { IUser } from '@core/interfaces/user/user.types';
+import { IPollEvent } from '@core/interfaces/poll-event/poll-event.types';
 
 export interface ISong {
   id: string;

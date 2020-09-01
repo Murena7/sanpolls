@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { AdminApiService } from '@core/api-services/admin-api.service';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';

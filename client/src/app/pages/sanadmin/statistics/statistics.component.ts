@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '@core/api-services/admin-api.service';
-import { IStatisticTotal } from '@core/entities/statistic/statistic.types';
+import { IStatisticTotal } from '@core/interfaces/statistic/statistic.types';
 
 @Component({
   templateUrl: './statistics.component.html',

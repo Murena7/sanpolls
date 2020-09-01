@@ -1,4 +1,4 @@
-import { EventStatus, EventType } from '@core/entities/poll-event/poll-event.types';
+import { EventStatus, EventType } from '@core/interfaces/poll-event/poll-event.types';
 
 export interface IAddVoiceBody {
   userId: string;

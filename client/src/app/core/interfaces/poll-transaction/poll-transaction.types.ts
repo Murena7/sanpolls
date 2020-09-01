@@ -1,6 +1,6 @@
-import { IUser } from '@core/entities/user/user.types';
-import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
-import { ISong } from '@core/entities/song/song.types';
+import { IUser } from '@core/interfaces/user/user.types';
+import { IPollEvent } from '@core/interfaces/poll-event/poll-event.types';
+import { ISong } from '@core/interfaces/song/song.types';
 
 export interface IPollTransaction {
   id: string;

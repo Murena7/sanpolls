@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PollsService } from '@core/api-services/polls.service';
-import { ISong } from '@core/entities/song/song.types';
-import { IPollEvent } from '../../../core/entities/poll-event/poll-event.types';
+import { ISong } from '@core/interfaces/song/song.types';
+import { IPollEvent } from '../../../core/interfaces/poll-event/poll-event.types';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { IPollsTablePagination } from '../../polls/polls.types';
 import { Subscription } from 'rxjs';

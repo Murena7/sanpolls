@@ -4,7 +4,7 @@ import { IBasicResponse } from '../core.types';
 import { map } from 'rxjs/operators';
 import { HttpService } from '../common-services/http.service';
 import { environment } from '../../../environments/environment';
-import { IBill, IBillCreateBody, IBillCreateResponse, IStatusObmenkaResponse } from '../entities/bill/bill.types';
+import { IBill, IBillCreateBody, IBillCreateResponse, IStatusObmenkaResponse } from '../interfaces/bill/bill.types';
 
 const apiUrl = environment.UI_SERVER;
 

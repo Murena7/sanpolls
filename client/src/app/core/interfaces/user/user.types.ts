@@ -1,4 +1,4 @@
-import { UserRole } from '@core/entities/user/role.types';
+import { UserRole } from '@core/interfaces/user/role.types';
 
 export enum UserStatus {
   Active = 'active',

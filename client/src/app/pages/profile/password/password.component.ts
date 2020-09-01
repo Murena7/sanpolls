@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MustMatch } from '@core/helpers/must-match.validator';
 import { UserService } from '../../../core/api-services/user.service';
-import { IChangePasswordBody } from '../../../core/entities/user/user.types';
+import { IChangePasswordBody } from '../../../core/interfaces/user/user.types';
 import { SnackbarNotificationService } from '../../../core/common-services/snackbar-notification.service';
 
 export const Errors = {

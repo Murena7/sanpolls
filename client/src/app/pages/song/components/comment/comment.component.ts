@@ -4,15 +4,15 @@ import {
   IDeleteCommentBody,
   IEditCommentBody,
   ITextAreaEmitBody,
-} from '../../../../core/entities/comment/comment';
-import { LikeStatus } from '../../../../core/entities/like-dislike/like-dislike.types';
+} from '../../../../core/interfaces/comment/comment';
+import { LikeStatus } from '../../../../core/interfaces/like-dislike/like-dislike.types';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCommentModalComponent } from '../../../../shared/modals/edit-comment-modal/edit-comment-modal.component';
 import { IEditCommentModalDataBody } from '../../../../shared/modals/edit-comment-modal/edit-comment-modal.types';
 import { ConfirmationModalComponent } from '../../../../shared/modals/confirmation-modal/confirmation-modal.component';
 import { IConfirmationModalDataBody } from '../../../../shared/modals/confirmation-modal/confirmation-modal.types';
-import { IUser } from '../../../../core/entities/user/user.types';
-import { IChildComment } from '../../../../core/entities/child-comment/child-comment';
+import { IUser } from '../../../../core/interfaces/user/user.types';
+import { IChildComment } from '../../../../core/interfaces/child-comment/child-comment';
 
 @Component({
   selector: 'san-comment',

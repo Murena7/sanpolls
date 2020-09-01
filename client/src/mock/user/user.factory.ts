@@ -1,7 +1,7 @@
 import { Factory } from '../core/types';
-import { IUser, UserStatus } from '@core/entities/user/user.types';
+import { IUser, UserStatus } from '@core/interfaces/user/user.types';
 import { now } from '@core/helpers/moment';
-import { UserRole } from '@core/entities/user/role.types';
+import { UserRole } from '@core/interfaces/user/role.types';
 
 export class UserFactory implements Factory<IUser> {
   db = 'users';

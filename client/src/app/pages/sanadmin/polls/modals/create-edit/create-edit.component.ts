@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EventStatus, EventType } from '../../../../../core/entities/poll-event/poll-event.types';
+import { EventStatus, EventType } from '../../../../../core/interfaces/poll-event/poll-event.types';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ICreateEditModalData } from '../../polls.types';
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { ICreateSong } from '@core/entities/song/song.types';
-import { IUser } from '@core/entities/user/user.types';
+import { ICreateSong } from '@core/interfaces/song/song.types';
+import { IUser } from '@core/interfaces/user/user.types';
 
 @Component({
   selector: 'san-add-song',

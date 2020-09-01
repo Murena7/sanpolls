@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { IUser, UserStatus } from '@core/entities/user/user.types';
+import { IUser, UserStatus } from '@core/interfaces/user/user.types';
 import { Router } from '@angular/router';
-import { UserRole } from '@core/entities/user/role.types';
+import { UserRole } from '@core/interfaces/user/role.types';
 import { AuthApiService } from '@core/api-services/auth-api.service';
 
 @Component({

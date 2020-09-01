@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { AuthService } from '@core/auth/auth.service';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse } from '@core/core.types';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { Observable } from 'rxjs';
 import { IEmailVerificationBody, IEmailVerificationResponse } from '@core/auth/auth.types';
 

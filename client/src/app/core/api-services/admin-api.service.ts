@@ -4,12 +4,12 @@ import { environment } from '@environment';
 import { map } from 'rxjs/operators';
 import { HttpService } from '@core/common-services/http.service';
 import { IBasicResponse, ResponseStatusMessage } from '@core/core.types';
-import { IAddVoiceBody, ICreatePollBody, IPaginationQueryParams } from '@core/entities/admin/admin.types';
+import { IAddVoiceBody, ICreatePollBody, IPaginationQueryParams } from '@core/interfaces/admin/admin.types';
 import { toQueryString } from '@core/helpers/http';
-import { IPollEvent } from '@core/entities/poll-event/poll-event.types';
-import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
-import { IStatisticTotal } from '@core/entities/statistic/statistic.types';
-import { IUser } from '@core/entities/user/user.types';
+import { IPollEvent } from '@core/interfaces/poll-event/poll-event.types';
+import { IPollTransaction } from '@core/interfaces/poll-transaction/poll-transaction.types';
+import { IStatisticTotal } from '@core/interfaces/statistic/statistic.types';
+import { IUser } from '@core/interfaces/user/user.types';
 
 @Injectable()
 export class AdminApiService {

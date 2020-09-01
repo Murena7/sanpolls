@@ -3,7 +3,7 @@ import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { Router } from '@angular/router';
 
 @Injectable({

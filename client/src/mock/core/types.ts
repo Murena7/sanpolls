@@ -1,6 +1,6 @@
 import { Database, DatabaseSchema, Response, Router } from 'kakapo';
-import { IUser } from '@core/entities/user/user.types';
-import { ISong } from '@core/entities/song/song.types';
+import { IUser } from '@core/interfaces/user/user.types';
+import { ISong } from '@core/interfaces/song/song.types';
 
 export interface DbSchema extends DatabaseSchema {
   polls: ISong;

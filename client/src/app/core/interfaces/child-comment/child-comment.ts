@@ -1,5 +1,5 @@
-import { ILikeDislike } from '@core/entities/like-dislike/like-dislike.types';
-import { IComment } from '@core/entities/comment/comment';
+import { ILikeDislike } from '@core/interfaces/like-dislike/like-dislike.types';
+import { IComment } from '@core/interfaces/comment/comment';
 import {IUser} from '../user/user.types';
 
 export interface IChildComment {

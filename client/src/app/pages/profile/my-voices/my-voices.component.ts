@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/auth/auth.service';
-import { IUser } from '../../../core/entities/user/user.types';
+import { IUser } from '../../../core/interfaces/user/user.types';
 
 @Component({
   selector: 'san-my-voices',

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ISong } from '@core/entities/song/song.types';
+import { ISong } from '@core/interfaces/song/song.types';
 
 @Component({
   selector: 'san-polls-short-table',

@@ -1,4 +1,4 @@
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 
 export interface ILoginResponse {
   data: IUser;

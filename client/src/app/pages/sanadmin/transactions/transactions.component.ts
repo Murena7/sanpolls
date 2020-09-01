@@ -4,7 +4,7 @@ import { AdminApiService } from '@core/api-services/admin-api.service';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
-import { IPollTransaction } from '@core/entities/poll-transaction/poll-transaction.types';
+import { IPollTransaction } from '@core/interfaces/poll-transaction/poll-transaction.types';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

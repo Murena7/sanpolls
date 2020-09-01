@@ -9,7 +9,7 @@ import {
   IBillCreateResponse,
   PayType,
   Status,
-} from '../../../core/entities/bill/bill.types';
+} from '../../../core/interfaces/bill/bill.types';
 import { SnackbarNotificationService } from '../../../core/common-services/snackbar-notification.service';
 import { BillService } from '../../../core/api-services/bill.service';
 import { WindowSizeService } from '../../../core/common-services/window-size.service';

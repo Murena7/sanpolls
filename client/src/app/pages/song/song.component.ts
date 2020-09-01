@@ -12,10 +12,10 @@ import {
   IGiveVoiceBody,
   ISong,
   ISongLikeBody,
-} from '@core/entities/song/song.types';
-import { LikeStatus } from '@core/entities/like-dislike/like-dislike.types';
+} from '@core/interfaces/song/song.types';
+import { LikeStatus } from '@core/interfaces/like-dislike/like-dislike.types';
 import { SnackbarNotificationService } from '@core/common-services/snackbar-notification.service';
-import { IUser } from '@core/entities/user/user.types';
+import { IUser } from '@core/interfaces/user/user.types';
 import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '@core/api-services/user.service';
 import { SongService } from '../../core/api-services/song.service';
@@ -28,7 +28,7 @@ import {
   IEditCommentBody,
   IEditCommentReqBody,
   ILoadChildComment,
-} from '../../core/entities/comment/comment';
+} from '../../core/interfaces/comment/comment';
 import { forkJoin, Subscription } from 'rxjs';
 
 @Component({

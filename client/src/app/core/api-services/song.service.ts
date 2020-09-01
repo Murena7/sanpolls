@@ -7,14 +7,14 @@ import {
   IGetCommentBySongIdParams,
   ISong,
   ISongLikeBody,
-} from '../entities/song/song.types';
+} from '../interfaces/song/song.types';
 import { IBasicResponse, ResponseStatusMessage } from '../core.types';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HttpService } from '../common-services/http.service';
 import { toQueryString } from '../helpers/http';
-import { IAddCommentReqBody, IComment, IEditCommentReqBody } from '../entities/comment/comment';
-import { IChildComment } from '../entities/child-comment/child-comment';
+import { IAddCommentReqBody, IComment, IEditCommentReqBody } from '../interfaces/comment/comment';
+import { IChildComment } from '../interfaces/child-comment/child-comment';
 
 const apiUrl = environment.UI_SERVER;
 

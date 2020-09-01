@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@core/auth/auth.service';
 import { UserService } from '../../../core/api-services/user.service';
 import { SnackbarNotificationService } from '../../../core/common-services/snackbar-notification.service';
-import { IUpdateProfileBody } from '../../../core/entities/user/user.types';
+import { IUpdateProfileBody } from '../../../core/interfaces/user/user.types';
 
 @Component({
   selector: 'san-my-profile',

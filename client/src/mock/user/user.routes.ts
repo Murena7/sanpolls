@@ -2,7 +2,7 @@ import { Request } from 'kakapo';
 import { environment } from '@environment';
 import { MyDatabase, MyOptions, ErrorResponse } from '../core/types';
 import { now } from '@core/helpers/moment';
-import { IUser, UserResponse } from '@core/entities/user/user.types';
+import { IUser, UserResponse } from '@core/interfaces/user/user.types';
 import { getCookie } from '../core/cookie.helper';
 
 export default class UsersRoutes {
