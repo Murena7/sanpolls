@@ -24,7 +24,7 @@ export class Song extends BaseEntity {
   @Expose()
   userId: string;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 

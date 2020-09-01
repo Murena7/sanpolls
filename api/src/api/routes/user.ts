@@ -17,7 +17,6 @@ export default (app: Router) => {
     try {
       const user = { ...req.user };
       Reflect.deleteProperty(user, 'password');
-      Reflect.deleteProperty(user, 'salt');
       const apiResponse: IBasicResponse = { data: user };
       return res.json(apiResponse).status(200);
     } catch (e) {

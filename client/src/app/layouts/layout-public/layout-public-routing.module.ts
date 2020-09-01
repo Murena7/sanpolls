@@ -15,18 +15,6 @@ const routes: Routes = [
       { path: 'contacts', loadChildren: () => import('@pages/contacts/contacts.module').then(m => m.ContactsModule) },
       { path: 'faqpage', loadChildren: () => import('@pages/faqpage/faqpage.module').then(m => m.FaqpageModule) },
       { path: 'login', loadChildren: () => import('@pages/login/login.module').then(m => m.LoginModule) },
-      {
-        path: 'emailcheck',
-        loadChildren: () =>
-          import('@pages/login/components/email-confirmation/email-confirmation.module').then(
-            m => m.EmailConfirmationModule
-          ),
-      },
-      {
-        path: 'forgotpassword',
-        loadChildren: () =>
-          import('@pages/login/components/forgotpassword/forgotpassword.module').then(m => m.ForgotpasswordModule),
-      },
       { path: 'song/:id', loadChildren: () => import('@pages/song/song.module').then(m => m.SongModule) },
       {
         path: 'profile',

@@ -27,7 +27,7 @@ export default (app: Router) => {
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get('logger');
-      logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
+      logger.debug('Calling Sign-Up endpoint');
       try {
         const authServiceInstance = Container.get(AuthService);
 
@@ -57,6 +57,56 @@ export default (app: Router) => {
   );
 
   route.post(
+    '/forgot-password',
+    celebrate({
+      body: Joi.object({
+        email: Joi.string()
+          .email()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling forgot-password endpoint');
+      try {
+        const authServiceInstance = Container.get(AuthService);
+
+        const result: IBasicResponse = await authServiceInstance.forgotPassword(req.body.email);
+
+        return res.status(201).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/resend-verification',
+    celebrate({
+      body: Joi.object({
+        email: Joi.string()
+          .email()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling resend-verification endpoint');
+      try {
+        const authServiceInstance = Container.get(AuthService);
+
+        const result: IBasicResponse = await authServiceInstance.resendVerification(req.body.email);
+
+        return res.status(201).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
     '/login',
     celebrate({
       body: Joi.object({
@@ -76,6 +126,32 @@ export default (app: Router) => {
         const user = req.user;
         const apiResponse: IBasicResponse = { data: user };
         return res.json(apiResponse).status(200);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
+
+  route.post(
+    '/verification',
+    celebrate({
+      query: Joi.object({
+        token: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling /verification endpoint');
+      try {
+        const authServiceInstance = Container.get(AuthService);
+
+        const result: IBasicResponse = await authServiceInstance.emailVerification(req.query.token, req.query.email);
+
+        return res.status(200).json(result);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);

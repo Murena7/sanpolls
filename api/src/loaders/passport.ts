@@ -41,8 +41,7 @@ export default ({ app, redisConnection }: { app: express.Application; redisConne
       async (req, accessToken, refreshToken, profile, cb) => {
         try {
           const authServiceInstance = Container.get(AuthService);
-          const userRecord = await authServiceInstance.loginOrSignUpSocial(profile);
-          cb(null, userRecord);
+          return await authServiceInstance.loginOrSignUpSocial(profile, cb);
         } catch (err) {
           cb(err);
         }
@@ -61,8 +60,7 @@ export default ({ app, redisConnection }: { app: express.Application; redisConne
       async (req, accessToken, refreshToken, profile, cb) => {
         try {
           const authServiceInstance = Container.get(AuthService);
-          const userRecord = await authServiceInstance.loginOrSignUpSocial(profile);
-          cb(null, userRecord);
+          return await authServiceInstance.loginOrSignUpSocial(profile, cb);
         } catch (err) {
           cb(err);
         }

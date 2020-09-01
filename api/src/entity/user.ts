@@ -31,10 +31,6 @@ export class User extends BaseEntity {
   @Column({ type: 'int', default: 0 })
   voiceBalance: number;
 
-  @Column({ type: 'varchar', select: false })
-  @Exclude()
-  salt: string;
-
   @Column({
     type: 'enum',
     enum: UserStatus,
@@ -42,7 +38,7 @@ export class User extends BaseEntity {
   })
   status: UserStatus;
 
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'boolean', default: false })
   emailConfirmed: boolean;
 
   @Column({ type: 'timestamp', default: null, nullable: true })

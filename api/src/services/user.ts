@@ -56,7 +56,6 @@ export default class UserService {
         .createQueryBuilder('user')
         .where('user.id = :id', { id: currentUser.id })
         .addSelect('user.password')
-        .addSelect('user.salt')
         .getOne();
 
       this.logger.silly('Checking password');
@@ -68,7 +67,6 @@ export default class UserService {
       this.logger.silly('Hashing New password');
       const newSalt = randomBytes(32);
       userWithPassword.password = await argon2.hash(body.newPassword, { salt: newSalt });
-      userWithPassword.salt = newSalt.toString('hex');
 
       await userWithPassword.save();
 

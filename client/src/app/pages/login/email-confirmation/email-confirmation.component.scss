@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.confirmation-card {
+  margin-top: 80px;
+  width: 400px;
+  min-height: 300px;
+  padding: 25px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 5px;
+}
+.confirmation-text {
+  padding-top: 25px;
+  padding-bottom: 20px;
+}
+.button-back {
+  display: block;
+  text-align: left;
+  margin-bottom: 30px;
+}

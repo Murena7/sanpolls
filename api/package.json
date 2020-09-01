@@ -32,7 +32,6 @@
     "express"
   ],
   "dependencies": {
-    "@types/axios": "^0.14.0",
     "argon2": "^0.21.0",
     "axios": "^0.19.0",
     "body-parser": "^1.18.2",
@@ -45,6 +44,7 @@
     "connect-redis": "^4.0.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.4",
+    "crypto-random-string": "^3.2.0",
     "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.0",
@@ -77,10 +77,12 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bull": "^3.13.0",
     "@types/connect-redis": "0.0.14",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
+    "@types/crypto-random-string": "^2.0.0",
     "@types/express": "^4.16.0",
     "@types/express-session": "^1.17.0",
     "@types/helmet": "0.0.47",
@@ -88,6 +90,7 @@
     "@types/jest": "^23.3.8",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.118",
+    "@types/mailgun-js": "^0.22.10",
     "@types/node": "^10.17.24",
     "@types/passport": "^1.0.3",
     "@types/passport-facebook": "^2.1.10",

@@ -1,25 +1,36 @@
 import { Service, Inject } from 'typedi';
 import { User } from '../entity/user';
+import config from '../config';
+import { Mailgun } from 'mailgun-js';
 
 @Service()
 export default class MailerService {
-  constructor(@Inject('emailClient') private emailClient) {}
+  constructor(@Inject('emailClient') private emailClient: Mailgun) {}
 
-  public async SendWelcomeEmail(email) {
-    /**
-     * @TODO Call Mailchimp/Sendgrid or whatever
-     */
-    // Added example for sending mail from mailgun
+  public async SendWelcomeEmail(email: string, verificationLink: string) {
     const data = {
-      from: 'Excited User <me@samples.mailgun.org>',
+      from: `SanSan <me@samples.mailgun.org>`,
       to: email, //your email address
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomness!',
+      subject: 'Регистрация SanSan',
+      text: `Вы успешно зарегистрировались на сайте SanSan! ${verificationLink}`,
     };
 
     this.emailClient.messages().send(data);
     return { delivered: 1, status: 'ok' };
   }
+
+  public async SendPasswordRecoveryEmail(email: string, password: string) {
+    const data = {
+      from: `SanSan <me@samples.mailgun.org>`,
+      to: email, //your email address
+      subject: 'Восстановление пароля SanSan',
+      text: `Вы успешно зарегистрировались на сайте SanSan! ${password}`,
+    };
+
+    this.emailClient.messages().send(data);
+    return { delivered: 1, status: 'ok' };
+  }
+
   public StartEmailSequence(sequence: string, user: Partial<User>) {
     if (!user.email) {
       throw new Error('No email provided');

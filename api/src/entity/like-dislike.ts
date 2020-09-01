@@ -23,7 +23,7 @@ export class LikeDislike extends BaseEntity {
   @Column({ nullable: true })
   userId: string;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 

@@ -6,7 +6,7 @@
   </mat-form-field>
   <mat-form-field class="full-width">
     <input matInput placeholder="nickName" formControlName="nickName" />
-    <mat-error *ngIf="form.get('nickName').touched && form.get('nickName').invalid" class="validation">
+    <mat-error *ngIf="form.get('nickName').touched && form.get('nickName').invalid">
       <p *ngIf="form.get('nickName').errors.required">Введите имя пользователя</p>
       <p *ngIf="form.get('nickName').errors.minlength">
         Колличество символов должно быть не менее {{ form.get('nickName').errors.minlength.requiredLength }}. Вы ввели

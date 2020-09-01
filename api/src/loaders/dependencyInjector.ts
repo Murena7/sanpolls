@@ -10,7 +10,7 @@ export default ({ bullJobs }: { bullJobs: { name: string; job: any }[] }) => {
     });
 
     Container.set('logger', LoggerInstance);
-    // Container.set('emailClient', mailgun({ apiKey: config.emails.apiKey, domain: config.emails.domain }))
+    Container.set('emailClient', mailgun({ apiKey: config.emails.apiKey, domain: config.emails.domain }));
 
     LoggerInstance.info('✌️ Models injected into container');
   } catch (e) {

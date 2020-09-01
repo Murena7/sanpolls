@@ -8,14 +8,11 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { LikeDislike } from './like-dislike';
 import moment from 'moment';
-import { Comment } from './comment';
-import { OneToMany } from 'typeorm/index';
 import { User } from './user';
 
 @Entity()
-export class ChildComment extends BaseEntity {
+export class EmailVerificationTokens extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -26,30 +23,8 @@ export class ChildComment extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @Column({ nullable: true })
-  commentId: string;
-
-  @ManyToOne(
-    type => Comment,
-    comment => comment.childComments,
-    { onDelete: 'CASCADE' },
-  )
-  @JoinColumn()
-  comment: Comment;
-
-  @Column({ type: 'varchar' })
-  text: string;
-
-  @OneToMany(
-    type => LikeDislike,
-    likeDislike => likeDislike.childCommentLikeDislike,
-  )
-  @JoinColumn()
-  likeDislike: LikeDislike[];
-
-  likeCount: number;
-  dislikeCount: number;
-  selfLike?: LikeDislike;
+  @Column()
+  token: string;
 
   @Column({ type: 'timestamp' })
   createdAt: string;

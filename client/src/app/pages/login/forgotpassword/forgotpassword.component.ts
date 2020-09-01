@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthApiService } from '../../../core/api-services/auth-api.service';
 
 @Component({
   selector: 'san-forgotpassword',
@@ -7,9 +8,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./forgotpassword.component.scss'],
 })
 export class ForgotpasswordComponent implements OnInit {
+  isSubmitted = false;
   form: FormGroup;
 
-  constructor() {}
+  constructor(private authApiService: AuthApiService) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -23,5 +25,9 @@ export class ForgotpasswordComponent implements OnInit {
     }
 
     const email = this.form.value.email;
+
+    this.authApiService.forgotPassword(email).subscribe((res) => {
+      this.isSubmitted = true;
+    });
   }
 }

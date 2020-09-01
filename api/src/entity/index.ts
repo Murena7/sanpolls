@@ -5,3 +5,5 @@ export * from './poll-event';
 export * from './poll-transaction';
 export * from './song';
 export * from './user';
+export * from './bill';
+export * from './email-verification-tokens';

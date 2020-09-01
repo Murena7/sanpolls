@@ -5,6 +5,8 @@ import { IUserRegistrationBody, UserStatus } from '@core/entities/user/user.type
 import { AuthApiService } from '@core/api-services/auth-api.service';
 import { UserService } from '../../core/api-services/user.service';
 import { faFacebookSquare, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
+import { EmailVerificationStatus, IEmailVerificationBody } from '../../core/auth/auth.types';
+import { SnackbarNotificationService } from '../../core/common-services/snackbar-notification.service';
 
 export const Errors = {
   email: {
@@ -13,6 +15,7 @@ export const Errors = {
     incorrect: 'Неверный логин или пароль',
     in_use: 'Этот email уже занят',
     not_create: 'Пользователь не может быть создан',
+    verification: 'Подтвердите свой email адрес',
   },
   password: {
     required: 'Введите пароль',
@@ -29,6 +32,7 @@ export const Errors = {
 export class LoginComponent implements OnInit {
   formLog: FormGroup;
   formReg: FormGroup;
+  isSignUpSubmitted = false;
   submitted = false;
   public errors = Errors;
 
@@ -42,11 +46,13 @@ export class LoginComponent implements OnInit {
     private authApiService: AuthApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private snackBarNotificationService: SnackbarNotificationService
   ) {}
 
   ngOnInit() {
     this.socialCallbackIntercept();
+    this.verificationEmailIntercept();
     this.initForms();
   }
 
@@ -88,8 +94,34 @@ export class LoginComponent implements OnInit {
         if (errorMessage === 'Unauthorized') {
           this.formLog.get('password').setErrors({ incorrect: true });
         }
+
+        if (errorMessage === 'Email didn\'t confirm') {
+          this.formLog.get('email').setErrors({ verification: true });
+        }
       }
     );
+  }
+
+  verificationEmailIntercept() {
+    if (this.route.snapshot.queryParams?.verificationToken && this.route.snapshot.queryParams?.email) {
+      const body: IEmailVerificationBody = {
+        token: this.route.snapshot.queryParams.verificationToken,
+        email: this.route.snapshot.queryParams.email,
+      };
+      this.authApiService.emailVerification(body).subscribe((res) => {
+        switch (res.data.verificationStatus) {
+          case EmailVerificationStatus.confirmed:
+            this.snackBarNotificationService.successfully('Email подтвержден');
+            break;
+          case EmailVerificationStatus.notValidToken:
+            this.snackBarNotificationService.error('Токен подтверждения недействительный');
+            break;
+          case EmailVerificationStatus.notValidUserEmail:
+            this.snackBarNotificationService.error('Email недействительный');
+            break;
+        }
+      });
+    }
   }
 
   socialCallbackIntercept() {
@@ -110,8 +142,8 @@ export class LoginComponent implements OnInit {
 
     this.authApiService.createNewUser(userReg).subscribe(
       () => {
-        this.router.navigate(['/emailcheck']);
         this.submitted = false;
+        this.isSignUpSubmitted = true;
       },
       (error) => {
         const errorMessage = error?.error?.errors?.message;

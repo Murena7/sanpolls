@@ -77,9 +77,9 @@
 
 .forgot-password-link {
   display: flex;
-  align-self: start;
+  justify-content: space-between;
   cursor: pointer;
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .mat-card-actions {
@@ -88,4 +88,10 @@
 
 mat-checkbox {
   margin: 13px;
+}
+
+.email-confirm-card {
+  width: 400px;
+  min-height: 250px;
+  padding: 20px;
 }

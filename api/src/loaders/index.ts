@@ -12,14 +12,6 @@ export default async ({ expressApp }) => {
   const pgConnection = await pgLoader();
   Logger.info('✌️ DB loaded and connected!');
 
-  /**
-   * WTF is going on here?
-   *
-   * We are injecting the mongoose entity into the DI container.
-   * I know this is controversial but will provide a lot of flexibility at the time
-   * of writing unit tests, just go and check how beautiful they are!
-   */
-
   const bullJobs: { name: string; job: any }[] = await jobsLoader({ redisConnection: redisConnection });
   Logger.info('✌️ Jobs loaded');
 

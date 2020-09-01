@@ -23,7 +23,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
-  logout() {
+  public logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('isAuthorized');
     removeAllCookies();
