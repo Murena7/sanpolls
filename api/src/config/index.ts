@@ -72,10 +72,10 @@ export default {
   },
 
   /**
-   * Agendash config
+   * bullBoard config
    */
   bullBoard: {
-    user: 'agendash',
+    user: 'bullBoard',
     password: '123456',
   },
   /**

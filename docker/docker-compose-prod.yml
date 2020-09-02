@@ -1,0 +1,83 @@
+version: "3"
+services:
+  sansan-redis-dev:
+    image: redis:latest
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes",
+        "--requirepass",
+        "testpass123",
+        "--bind",
+        "0.0.0.0",
+      ]
+    restart: always
+    volumes:
+      - /home/sansanpolls/redis/1:/data
+    ports:
+      - 6379:6379
+    networks:
+      mongo-express_default:
+      default:
+        ipv4_address: 109.73.11.111
+  sansan-dbpostgres-dev:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - /home/sansanpolls/postgresql/1:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: testpass123
+      POSTGRES_DB: test
+    networks:
+      mongo-express_default:
+      default:
+        ipv4_address: 109.73.11.111
+  sansan-web-dev:
+    image: sansanwebdev
+    build:
+      context: ../
+      dockerfile: ./docker/dockerfile-full
+    restart: always
+    links:
+      - sansan-redis-dev
+      - sansan-dbpostgres-dev
+    command: pm2-runtime ./api/dist/server/app.js -i 2
+    environment:
+      - NODE_ENV=production
+      - APP_ID=api
+      - PORT=80
+      - LOG_LEVEL=debug
+      - REQUEST_LIMIT=100kb
+      - PGSQL_USER=test
+      - PGSQL_PASS=testpass123
+      - PGSQL_DB=test
+      - PGSQL_HOST=sansan-dbpostgres-dev
+      - REDIS_URI=redis://:testpass123@sansan-redis-dev:6379/0
+      - SESSION_SECRET=test
+      - FACEBOOK_APP_ID=test
+      - FACEBOOK_APP_SECRET=test
+      - GOOGLE_APP_ID=test
+      - GOOGLE_APP_SECRET=test
+      - SERVER_API_URL=http://test.test.com
+      - OBMENKA_CLIENT_ID=test
+      - OBMENKA_SECRET=test
+      - MAILGUN_API_KEY=test
+      - MAILGUN_DOMAIN=test
+    networks:
+      mongo-express_default:
+      default:
+        ipv4_address: 109.73.11.111
+    depends_on:
+      - sansan-redis-dev
+      - sansan-dbpostgres-dev
+networks:
+  default:
+    external:
+      name: dokmacvlan
+  mongo-express_default:
+    external:
+      name: mongo-express_default
